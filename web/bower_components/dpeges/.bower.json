@@ -1,0 +1,31 @@
+{
+  "name": "dpeges",
+  "description": "Create an SVG graphic for DPE and GES diagnostics.",
+  "main": "dpeges.js",
+  "version": "0.0.1-rc3",
+  "homepage": "https://github.com/Pascalz/dpeges",
+  "authors": [
+    "Pascalz <pascal@pascalz.com> (http://www.pascalz.com)"
+  ],
+  "keywords": [
+    "DPE",
+    "GES"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "0.0.1-rc3",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.0.1-rc3",
+    "commit": "1306b41aed5ed1d5f5a40963280b91b7c500df4a"
+  },
+  "_source": "https://github.com/Pascalz/dpeges.git",
+  "_target": "0.0.1-rc3",
+  "_originalSource": "dpeges"
+}

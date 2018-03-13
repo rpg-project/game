@@ -1,0 +1,34 @@
+{
+  "name": "baserpg",
+  "authors": [
+    "pinkman <rpg.project.game@gmail.com>"
+  ],
+  "description": "rpg game",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "dependencies": {
+    "fontawesome": "4.6.3",
+    "imgLiquid": "0.9.944",
+    "jquery": "3.1.0",
+    "numeral": "1.5.3",
+    "photoswipe": "4.1.1",
+    "select2": "4.0",
+    "sprintf": "1.0.3",
+    "swiper": "4.0.7",
+    "izimodal": "1.5.1",
+    "js-md5": "2.3.1",
+    "dpeges": "0.0.1-rc3",
+    "toastr": "2.1",
+    "mobile-detect": "hgoebl/mobile-detect.js#^1.4.1",
+    "lodash": "4.17",
+    "cookies-js": "1.2.3"
+  },
+  "resolutions": {
+    "jquery": ">=1.8.1"
+  },
+  "devDependencies": {
+    "izimodal": "*"
+  }
+}
