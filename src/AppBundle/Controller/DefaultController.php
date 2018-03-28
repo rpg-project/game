@@ -16,4 +16,14 @@ class DefaultController extends Controller
 
         return $this->render('default/index.html.twig');
     }
+
+
+    /**
+     * @Route("/toto", name="toto")
+     */
+    public function totoAction(Request $request)
+    {
+
+        return $this->render('default/toto.html.twig');
+    }
 }
