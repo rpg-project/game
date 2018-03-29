@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <h1> Recrutement </h1>
+            <ul>
+                <li><a href="{{ path("summons", {'level' : place.level, 'placeType' : place.type, 'summonType': 1 }) }}">Invocation Simple</a></li>
+                <li><a href="{{ path("summons", {'level' : place.level, 'placeType' : place.type, 'summonType': 10 }) }}">Multi-Invocation</a></li>
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}

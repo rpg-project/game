@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Users;
 use AppBundle\Entity\Places;
 use AppBundle\Entity\Characterlocation;
+use AppBundle\Entity\Followersbycharacter;
 
 
 class PlaceController extends Controller
@@ -34,11 +35,27 @@ class PlaceController extends Controller
     }
 
     /**
-     * @Route("/summon/{level}/{placeType}", name="summon")
+     * @Route("/summonPlace/{placeId}", name="summon")
      */
-    public function summonAction($level, $placeType){
+    public function summonPlaceAction($placeId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $place = $em->getRepository("AppBundle:Places")->find($placeId);
+
+        return $this->render('default/summons.html.twig', [
+            'place' => $place,
+        ]);
+    }
+
+    /**
+     * @Route("/summon/{level}/{placeType}/{summonType}", name="summons")
+     */
+    public function summonAction($level, $placeType, $summonType){
 
         $em = $this->getDoctrine()->getManager();
+
+        $character = $em->getRepository("AppBundle:Characters")->find(24);
 
         $followers = $em->getRepository("AppBundle:Followers")->findBy([
             'levelMin' => $level,
@@ -57,18 +74,32 @@ class PlaceController extends Controller
 
         $summonResult = array();
 
-        for($i=0; $i < 10; $i++){
+        for($i=0; $i < $summonType; $i++){
             $summonResult[] = $summonTable[$i];
+            $newFollower = new Followersbycharacter();
+            $newFollower->setTeamed(0);
+            $newFollower->setCharacterid($character);
+            $newFollower->setFollowerid($summonTable[$i]);
+
+            $em->persist($newFollower);
+            $em->flush();
+        }
+
+        if($summonType === "1"){
+            $summonLabel = "Invocation simple";
+        } else {
+            $summonLabel = "Multi-Invocation";
         }
 
         return $this->render('default/summon.html.twig', [
+            'summonTitle' => $summonLabel,
             'summons' => $summonResult,
         ]);
 
     }
 
     /**
-     * @Route("/quest/{level}", name="quest")
+     * @Route("/quest/{placeId}", name="quest")
      */
     public function questAction($level){
 
@@ -77,7 +108,7 @@ class PlaceController extends Controller
     }
 
     /**
-     * @Route("/training/{level}", name="training")
+     * @Route("/training/{placeId}", name="training")
      */
     public function trainingAction($level){
 
@@ -86,7 +117,7 @@ class PlaceController extends Controller
     }
 
     /**
-     * @Route("/craft/{level}", name="craft")
+     * @Route("/craft/{placeId}", name="craft")
      */
     public function craftAction($level){
 
@@ -95,7 +126,7 @@ class PlaceController extends Controller
     }
 
     /**
-     * @Route("/sell/{level}", name="sell")
+     * @Route("/sell/{placeId}", name="sell")
      */
     public function sellAction($level){
 
@@ -104,7 +135,7 @@ class PlaceController extends Controller
     }
 
     /**
-     * @Route("/buy/{level}", name="buy")
+     * @Route("/buy/{placeId}", name="buy")
      */
     public function buyAction($level){
 
@@ -113,7 +144,7 @@ class PlaceController extends Controller
     }
 
     /**
-     * @Route("/healing/{level}", name="healing")
+     * @Route("/healing/{placeId}", name="healing")
      */
     public function healingAction($level){
 
@@ -122,7 +153,7 @@ class PlaceController extends Controller
     }
 
     /**
-     * @Route("/info/{level}", name="info")
+     * @Route("/info/{placeId}", name="info")
      */
     public function infoAction($level){
 
