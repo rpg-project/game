@@ -218,7 +218,7 @@ CREATE TABLE `followersByCharacter` (
   KEY `followerId_idx` (`followerId`),
   CONSTRAINT `FK_492018735AF690F3` FOREIGN KEY (`characterId`) REFERENCES `characters` (`id`),
   CONSTRAINT `FK_49201873F542AA03` FOREIGN KEY (`followerId`) REFERENCES `followers` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -227,7 +227,38 @@ CREATE TABLE `followersByCharacter` (
 
 LOCK TABLES `followersByCharacter` WRITE;
 /*!40000 ALTER TABLE `followersByCharacter` DISABLE KEYS */;
+INSERT INTO `followersByCharacter` VALUES (1,0,9,24),(2,0,1,24),(3,0,11,24),(4,0,11,24),(5,0,12,24),(6,0,11,24),(7,0,8,24),(8,0,10,24),(9,0,9,24),(10,0,10,24),(11,0,9,24),(12,0,8,24),(13,0,12,24);
 /*!40000 ALTER TABLE `followersByCharacter` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `functionsByPlace`
+--
+
+DROP TABLE IF EXISTS `functionsByPlace`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `functionsByPlace` (
+  `id` int(11) NOT NULL,
+  `placeId` int(11) DEFAULT NULL,
+  `functionId` int(11) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `placeId_idx` (`placeId`),
+  KEY `functionId_idx` (`functionId`),
+  CONSTRAINT `functionId` FOREIGN KEY (`functionId`) REFERENCES `placesFunction` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `placeId` FOREIGN KEY (`placeId`) REFERENCES `places` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `functionsByPlace`
+--
+
+LOCK TABLES `functionsByPlace` WRITE;
+/*!40000 ALTER TABLE `functionsByPlace` DISABLE KEYS */;
+INSERT INTO `functionsByPlace` VALUES (1,1,1,'Recrutement'),(2,1,8,'Rumeurs'),(3,1,2,'Embauches'),(4,2,1,'Enrôlement'),(5,2,8,'Informations'),(6,2,2,'Enquêtes'),(7,1,7,'Salle de Repos'),(8,2,3,'Salle d\'entraînement');
+/*!40000 ALTER TABLE `functionsByPlace` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -269,14 +300,7 @@ CREATE TABLE `places` (
   `id` int(11) NOT NULL,
   `description` varchar(50) DEFAULT NULL,
   `type` int(11) DEFAULT NULL,
-  `summon` int(11) DEFAULT NULL,
-  `quest` int(11) DEFAULT NULL,
-  `training` int(11) DEFAULT NULL,
-  `craft` int(11) DEFAULT NULL,
-  `merchant` int(11) DEFAULT NULL,
-  `arena` int(11) DEFAULT NULL,
-  `healing` int(11) DEFAULT NULL,
-  `info` int(11) DEFAULT NULL,
+  `level` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -287,7 +311,7 @@ CREATE TABLE `places` (
 
 LOCK TABLES `places` WRITE;
 /*!40000 ALTER TABLE `places` DISABLE KEYS */;
-INSERT INTO `places` VALUES (1,'Taverne',1,1,1,0,0,0,0,NULL,NULL),(2,'Poste de garde',2,2,2,0,0,0,0,NULL,NULL);
+INSERT INTO `places` VALUES (1,'Taverne',1,1),(2,'Poste de garde',2,1);
 /*!40000 ALTER TABLE `places` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -316,6 +340,31 @@ LOCK TABLES `placesByMap` WRITE;
 /*!40000 ALTER TABLE `placesByMap` DISABLE KEYS */;
 INSERT INTO `placesByMap` VALUES (1,1,1),(2,1,2);
 /*!40000 ALTER TABLE `placesByMap` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `placesFunction`
+--
+
+DROP TABLE IF EXISTS `placesFunction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `placesFunction` (
+  `id` int(11) NOT NULL,
+  `function` varchar(50) DEFAULT NULL,
+  `typeFunction` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `placesFunction`
+--
+
+LOCK TABLES `placesFunction` WRITE;
+/*!40000 ALTER TABLE `placesFunction` DISABLE KEYS */;
+INSERT INTO `placesFunction` VALUES (1,'summon',1),(2,'quest',2),(3,'training',3),(4,'craft',4),(5,'sell',5),(6,'buy',6),(7,'healing',7),(8,'info',8);
+/*!40000 ALTER TABLE `placesFunction` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -384,4 +433,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-29 11:45:34
+-- Dump completed on 2018-03-29 16:43:45
