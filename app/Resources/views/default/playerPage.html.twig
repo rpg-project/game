@@ -3,6 +3,7 @@
 {% block body %}
 <div class="container">
     <div class="row">
+
         <div id="player" class="col-lg-2">
             <table class="table text-center">
                 <tr>
@@ -30,7 +31,7 @@
         <div id="map" class="col-lg-8">
             <h1>{{ map.mapName }}</h1>
             {% for place in places %}
-                <a href="#" class="btn btn-primary">{{ place.description }}</a>
+                <a href="{{ path("places", {'id': place.id}) }}" class="btn btn-primary">{{ place.description }}</a>
             {% endfor %}
         </div>
     </div>
