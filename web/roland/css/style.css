@@ -1,0 +1,17 @@
+.health{
+    background-image: url('/images/health.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.gold{
+    background-image: url('/images/or.jpg');
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.cadre{
+    background-image: url('/images/cadre.jpg');
+    background-repeat: no-repeat;
+    background-size: contain;
+}

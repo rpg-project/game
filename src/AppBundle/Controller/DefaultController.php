@@ -6,6 +6,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+use AppBundle\Entity\Users;
+
 class DefaultController extends Controller
 {
     /**
@@ -13,17 +15,19 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $entityManager = $this->getDoctrine()->getManager();
 
-        return $this->render('default/index.html.twig');
-    }
+        $user = $entityManager->getRepository('AppBundle:Users')->find(1);
+
+        $character = $entityManager->getRepository('AppBundle:Characters')->findBy([
+            'userid' => $user->getId(),
+        ]);
+
+        $nbCharacter = count($character);
 
 
-    /**
-     * @Route("/toto", name="toto")
-     */
-    public function totoAction(Request $request)
-    {
-
-        return $this->render('default/toto.html.twig');
+        return $this->render('default/index.html.twig', [
+            'nbCharacters' => $nbCharacter
+        ]);
     }
 }

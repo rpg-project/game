@@ -1,6 +1,19 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-   index2
+<div class="container">
+    <div class="row">
+            <h1>Accueil</h1>
+
+            {% if nbCharacters == 0 %}
+                <a href="{{ path('create_Character') }}" class="btn btn-primary">Création d'un nouveau compte</a>
+            {% else %}
+                <a href="{{ path('player_homepage') }}" class="btn btn-primary">Se Connecter</a>
+            {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block stylesheets %}
 
 {% endblock %}

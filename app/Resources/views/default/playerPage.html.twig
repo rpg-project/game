@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div id="player" class="col-lg-2">
+            <table class="table text-center">
+                <tr>
+                    <td colspan="2"><img src="{{ character.image }}" width=50 height="50"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">{{ character.name }}</td>
+                </tr>
+                <tr>
+                    <th class="health"></th>
+                    <td>{{ character.health }} / {{ character.maxHealth }}</td>
+                </tr>
+                <tr>
+                    <th  class="gold"></th>
+                    <td>{{ character.gold }}</td>
+                </tr>
+                <tr>
+                    {% for capacity in capacities %}
+                        <td><img src="{{ capacity.description }}" width=40 heigh="40"></td>
+                    {% endfor %}
+                </tr>
+            </table>
+
+        </div>
+        <div id="map" class="col-lg-8">
+            <h1>{{ map.mapName }}</h1>
+            {% for place in places %}
+                <a href="#" class="btn btn-primary">{{ place.description }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row text-center">
+       <table class="table">
+           <tr>
+               <td><a href="#" class="btn btn-primary">Equipe</a></td>
+               <td><a href="#" class="btn btn-primary">Suivants</a></td>
+               <td><a href="#" class="btn btn-primary">Inventaire</a></td>
+               <td><a href="#" class="btn btn-primary">Options</a></td>
+           </tr>
+       </table>
+    </div>
+
+</div>
+
+
+    {#<table class="table">#}
+        {#{% for user in users  %}#}
+            {#<tr><th>Joueur :</th></tr>#}
+            {#<tr><td>{{ user.username }}</td></tr>#}
+
+
+            {#{%  for character in characters  %}#}
+
+                {#{% if character.userid.id == user.id %}#}
+                    {#<tr>#}
+                        {#<th>Personnage :</th>#}
+                    {#</tr>#}
+                    {#<tr>#}
+                        {#<td>{{ character.name }}</td>#}
+                    {#</tr>#}
+                    {#<tr>#}
+                        {#<th>Suivants : </th>#}
+                    {#</tr>#}
+                    {#{% for follower in followersByCharacter %}#}
+
+                        {#{% if follower.characterid.id == character.id %}#}
+                            {#<tr><td>{{ follower.followerid.followerName }}</td></tr>#}
+                        {#{% endif %}#}
+
+                    {#{% endfor %}#}
+                {#{% endif %}#}
+            {#{% endfor %}#}
+
+        {#{% endfor %}#}
+    {#</table>#}
+
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
+

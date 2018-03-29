@@ -1,0 +1,138 @@
+#panier{
+	position : fixed;
+	right:5%;
+	bottom:50%;
+}
+.nofloat{
+	float:none;
+}
+.badge{
+	font-size:10px;
+	vertical-align: top;
+	background-color:red;
+}
+.table > thead > tr > th,
+.table > tbody > tr > th, 
+.table > tfoot > tr > th, 
+.table > thead > tr > td, 
+.table > tbody > tr > td, 
+.table > tfoot > tr > td {
+	vertical-align: middle;
+}
+
+.btn-rounded{
+	border-radius: 9999px;
+}
+
+a>.btn{
+	text-decoration: none;
+}
+
+a{
+  text-decoration: none;
+}
+
+.front{
+
+
+      z-index:101;
+    }
+
+
+     #Abs1{
+    position: absolute;
+    top:25%;
+    left:0;
+  }
+  #photo{
+    position: absolute;
+    top:0;
+    left:0;
+    z-index:10;
+  }
+  #Abs2{
+    position: absolute;
+    top:25%;
+    right:0;
+  }
+  #fond{
+    position: absolute;
+    top:0;
+    left:0;
+    z-index:100;
+  }
+
+  #merge_panel{
+    position:absolute;
+    bottom:5%;
+    left:middle;
+    z-index: 200;
+    width:95%;
+  }
+  
+    #drag-1, #drag-2 {
+      /*width: 25%;
+      height: 100%;
+      min-height: 6.5em;
+      margin: 10%;*/
+
+      background-color: transparent;
+      /*color: white;
+
+      border-radius: 0.75em;
+      padding: 4%;*/
+
+      -webkit-transform: translate(0px, 0px);
+              transform: translate(0px, 0px);
+    }
+
+    #drag-me::before {
+      content: "#" attr(id);
+      font-weight: bold;
+    }
+
+    .resize-drag{
+      box-sizing:border-box;
+      position:absolute;
+      left:0px;
+      top:0px;
+      z-index:10;
+    }
+
+body{
+	background-color: black;
+}
+
+.has-feedback label ~ .form-control-feedback {
+    top: 35px;}
+
+
+
+@media (min-width: 768px) {
+  #merge_panel {
+    width:75%;
+  }
+}
+@media (min-width: 992px) {
+  #merge_panel {
+    width:75%;
+  }
+}
+@media (min-width: 1200px) {
+  #merge_panel {
+    width: 75%;
+  }
+}
+
+.nav-pills > li > a{
+  /*color: #fff;*/
+  background-color: #fff;
+}
+
+.bg-white{
+  background-color: #fff;
+}
+
+ul{
+    list-style-type: none;
+}
