@@ -5,6 +5,9 @@
     <div class="container">
         <div class="row">
             <h1> {{ summonTitle }} </h1>
+            {% if amountMoney == 0 %}
+                {{ noMoney }}
+            {% else %}
             <ul>
                 {% for summon in summons %}
                     <li>
@@ -12,6 +15,7 @@
                     </li>
                 {% endfor %}
             </ul>
+            {% endif %}
 
         </div>
     </div>

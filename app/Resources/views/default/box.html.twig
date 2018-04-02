@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+	    <div class="row">
+	    	<h1>Liste des Suivants</h1>
+
+	        <table class="table">
+	        	<tR>
+	        		<th>Nom du suivant</th>
+	        		<th>En équipe</th>
+	        	</th>
+
+				{% for follower in followers %}
+					<tr>
+					<td><a href ="#" > {{ follower.followerId.name }}</a></td>
+					<td> {% if follower.teamed == 0 %} 
+							Non
+						{% else %}
+							Oui
+						{% endif %}
+					</td>
+					</tr>
+				{% endfor %}
+				
+			</table>
+		</div>
+		<div class="row">
+			{{ character.boxSize }} / {{ character.maxBoxSize }}
+		</div>
+
+	</div>
+{% endblock%}
