@@ -39,19 +39,13 @@
                 <tr>
                     <td>Gloire : {{ character.glory }} </td>
                 </tr>
-                <tr>
-                    <td>Loi : {{ character.law }} </td>
-                </tr>
-                <tr>
-                    <td>Foi : {{ character.faith }} </td>
-                </tr>
             </table>
         </div>
     </div>
     <div class="row text-center">
        <table class="table">
            <tr>
-               <td><a href="#" class="btn btn-primary">Equipe</a></td>
+               <td><a href="{{ path("options_team", {'id': character.id}) }}" class="btn btn-primary">Equipe</a></td>
                <td><a href="{{ path("options_followers", {'id': character.id}) }}" class="btn btn-primary">Suivants</a></td>
                <td><a href="#" class="btn btn-primary">Inventaire</a></td>
                <td><a href="#" class="btn btn-primary">Options</a></td>

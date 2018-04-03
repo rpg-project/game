@@ -20,14 +20,20 @@ class PlayerController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $user = $em->getRepository('AppBundle:Users')->find(1);
+        $session = $this->get('session');
 
-        $character = $em->getRepository('AppBundle:Characters')->findBy([
-            'userid' => $user->getId(),
-        ]);
+        $user = $session->get('user');
+
+        $character = $session->get('character');
+
+        //$user = $em->getRepository('AppBundle:Users')->find(1);
+
+//        $character = $em->getRepository('AppBundle:Characters')->findBy([
+//            'userid' => $user->getId(),
+//        ]);
 
         $capacities = $em->getRepository('AppBundle:Capacitiesbycharacter')->findBy([
-            'characterid' => $character[0]->getId(),
+            'characterid' => $character->getId(),
         ]);
 
         //echo '<pre>'.print_r($capacities, true).'</pre>';
@@ -43,7 +49,7 @@ class PlayerController extends Controller
 
         //echo '<pre>'.print_r($characterCapacities, true).'</pre>';
 
-        $map = $em->getRepository('AppBundle:Map')->find($character[0]->getLocation());
+        $map = $em->getRepository('AppBundle:Map')->find($character->getLocation());
 
         $places = $em->getRepository('AppBundle:Placesbymap')->findBy([
             'mapid' => $map->getId(),
@@ -61,7 +67,7 @@ class PlayerController extends Controller
         }
 
         return $this->render('default/playerPage.html.twig', [
-            'character' => $character[0],
+            'character' => $character,
             'map' => $map,
             'capacities' => $characterCapacities,
             'places' => $placesByMap,

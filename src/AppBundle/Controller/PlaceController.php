@@ -22,11 +22,18 @@ class PlaceController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        $session = $this->get('session');
+
         $place = $em->getRepository("AppBundle:Places")->find($id);
+
+        $session->set('place', $place);
 
         $functions = $em->getRepository("AppBundle:Functionsbyplace")->findBy([
             'placeid' => $place->getId(),
         ]);
+
+        $session->set('functionsPlaces', $functions);
+
 
         return $this->render('default/place.html.twig', [
             'place' => $place,
@@ -41,24 +48,22 @@ class PlaceController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $place = $em->getRepository("AppBundle:Places")->find($placeId);
+        $session = $this->get('session');
 
-        $functions = $em->getRepository("AppBundle:Functionsbyplace")->findBy([
-            'placeid' => $place->getId(),
-            'functionid' => 1,
-        ]);
+        $place = $session->get('place');
 
-        $moneySummon = array(
-            '1' => 'glory',
-            '2' => 'law',
-            '3' => 'faith');
+        $functionsPlaces = $session->get('functionsPlaces');
 
-        $money = $moneySummon[$place->getId()];
+        foreach ($functionsPlaces as $function){
+            if( $function->getFunctionid()->getTypefunction() === 1){
+                $function = $function->getName();
+                break;
+            }
+        }
 
         return $this->render('default/summons.html.twig', [
             'place' => $place,
-            'function' => $functions[0],
-            'money' => $money,
+            'function' => $function,
         ]);
     }
 
@@ -69,24 +74,15 @@ class PlaceController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $character = $em->getRepository("AppBundle:Characters")->find(24);
+        $session = $this->get('session');
+
+        $character = $session->get('character');
+
+        $character = $em->getRepository("AppBundle:Characters")->find($character->getId());
 
         $box = $character->getBoxSize();
 
-        $moneySummon = array(
-            '1' => 'Glory',
-            '2' => 'Law',
-            '3' => 'Faith');
-
-        switch($moneySummon[$placeType]){
-            case 'Glory' : $amountMoney = $character->getGlory();
-                           break;
-            case 'Law' : $amountMoney = $character->getLaw();
-                           break;
-            case 'Faith' : $amountMoney = $character->getFaith();
-                           break;
-
-        }
+        $amountMoney = $character->getGlory();
 
         if($summonType === "1"){
                 $summonLabel = "Invocation simple";
@@ -98,7 +94,7 @@ class PlaceController extends Controller
 
         if ($amountMoney <= $costSummon) {
 
-            $noMoney = "pas assez de " . $moneySummon[$placeType];
+            $noMoney = "pas assez de Gloire";
             $summonResult = null;
 
         } else {
@@ -134,19 +130,14 @@ class PlaceController extends Controller
 
             $amountMoney = $amountMoney - $costSummon;
 
-            switch($moneySummon[$placeType]){
-                case 'Glory' : $character->setGlory($amountMoney);
-                               break;
-                case 'Law' : $character->setLaw($amountMoney);
-                               break;
-                case 'Faith' : $character->setFaith($amountMoney);
-                               break;
-            }
+            $character->setGlory($amountMoney);
 
             $box = $box + $summonType;
             $character->setBoxSize($box);
             $em->persist($character);
             $em->flush();
+
+            $session->set('character', $character);
 
         }
 

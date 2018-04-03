@@ -6,10 +6,10 @@
 	    	<h1>Liste des Suivants</h1>
 
 	        <table class="table">
-	        	<tR>
+	        	<tr>
 	        		<th>Nom du suivant</th>
 	        		<th>En équipe</th>
-	        	</th>
+	        	</tr>
 
 				{% for follower in followers %}
 					<tr>
@@ -27,6 +27,7 @@
 		</div>
 		<div class="row">
 			{{ character.boxSize }} / {{ character.maxBoxSize }}
+			<a href="javascript:history.go(-1)" class="btn btn-primary">Retour</a>
 		</div>
 
 	</div>

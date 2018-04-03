@@ -36,6 +36,13 @@ class Team
     private $id;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="character_id", type="integer", nullable=true)
+     */
+    private $characterId;
+
+    /**
      * @return int
      */
     public function getPlace()
@@ -82,6 +89,23 @@ class Team
     {
         $this->id = $id;
     }
+
+    /**
+     * @return int
+     */
+    public function getCharacterid()
+    {
+        return $this->characterid;
+    }
+
+    /**
+     * @param int $characterid
+     */
+    public function setCharacterid($characterid)
+    {
+        $this->characterid = $characterid;
+    }
+
 
 
 }

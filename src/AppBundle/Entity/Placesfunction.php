@@ -51,6 +51,39 @@ class Placesfunction
         $this->function = $function;
     }
 
+    /**
+     * @return int
+     */
+    public function getTypefunction()
+    {
+        return $this->typefunction;
+    }
+
+    /**
+     * @param int $typefunction
+     */
+    public function setTypefunction($typefunction)
+    {
+        $this->typefunction = $typefunction;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+
 
 }
 

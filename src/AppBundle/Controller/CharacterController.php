@@ -13,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use AppBundle\Entity\Users;
 use AppBundle\Entity\Characters;
 use AppBundle\Entity\Map;
-use AppBundle\Entity\Characterlocation;
 
 class CharacterController extends Controller
 {
@@ -26,7 +25,11 @@ class CharacterController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $user = $em->getRepository('AppBundle:users')->find(1);
+        $session = $this->get('session');
+
+        $user = $session->get('user');
+
+        $user = $em->getRepository('AppBundle:Users')->find($user->getId());
 
         $character = new Characters();
 
@@ -39,7 +42,18 @@ class CharacterController extends Controller
         $character->setMaxEnergy(5);
         $character->setStamina(5);
         $character->setMaxStamina(5);
+        $character->setMove(3);
+        $character->setQuickness(3);
         $character->setLevel(1);
+        $character->setLocation(1);
+        $character->setRepopLocation(1);
+        $character->setBoxSize(0);
+        $character->setMaxBoxSize(10);
+        $character->setImage('/images/tete.jpg');
+        $character->setGold(0);
+        $character->setXp(0);
+        $character->setGlory(0);
+
 
         $form = $this->createFormBuilder($character)
             ->add('name', TextType::class)
@@ -57,6 +71,8 @@ class CharacterController extends Controller
             $em->persist($character);
             $em->flush();
 
+            $session->set('character', $character);
+
             return $this->redirectToRoute('character_success', [
                 'characterId' => $character->getId(),
             ]);
@@ -70,24 +86,20 @@ class CharacterController extends Controller
     }
 
     /**
-     * @Route("/successCharacter/{characterId}", name="character_success")
+     * @Route("/successCharacter/", name="character_success")
      */
-    public function successCharacterAction($characterId)
+    public function successCharacterAction()
     {
 
         $em = $this->getDoctrine()->getManager();
 
-        $character = $em->getRepository('AppBundle:Characters')->find($characterId);
+        $session = $this->get('session');
+
+        $character = $session->get('character');
 
         $map = $em->getRepository('AppBundle:Map')->find(1);
 
-        $location = new Characterlocation();
-
-        $location->setCharacterid($character);
-        $location->setMapid($map);
-        $em->persist($location);
-        $em->flush();
-
+        $session->set('map', $map);
 
         return $this->render('default/successCharacter.html.twig', [
             'character' => $character,
