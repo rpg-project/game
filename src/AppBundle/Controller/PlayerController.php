@@ -26,17 +26,9 @@ class PlayerController extends Controller
 
         $character = $session->get('character');
 
-        //$user = $em->getRepository('AppBundle:Users')->find(1);
-
-//        $character = $em->getRepository('AppBundle:Characters')->findBy([
-//            'userid' => $user->getId(),
-//        ]);
-
         $capacities = $em->getRepository('AppBundle:Capacitiesbycharacter')->findBy([
             'characterid' => $character->getId(),
         ]);
-
-        //echo '<pre>'.print_r($capacities, true).'</pre>';
 
         $characterCapacities = [];
         $x=0;
@@ -47,15 +39,33 @@ class PlayerController extends Controller
             $x++;
         }
 
-        //echo '<pre>'.print_r($characterCapacities, true).'</pre>';
+        $team = $session->get('team');
+
+        $balance = $session->get('balance');
+        if($balance == null){
+            $balance = $character->getLaw() - $character->getChaos();
+            $session->set('balance', $balance);
+        }
+        $goodness = $session->get('goodness');
+        if($goodness == null){
+            $goodness = $character->getGood() - $character->getEvil();
+            $session->set('goodness', $goodness);
+        }
+
+
+        $teamFinal = array();
+        for($i=1; $i <=5; $i++){
+            $teamFinal[$i] = false;
+        }
+        if(!empty($team)){
+            $teamFinal = $team;
+        }
 
         $map = $em->getRepository('AppBundle:Map')->find($character->getLocation());
 
         $places = $em->getRepository('AppBundle:Placesbymap')->findBy([
             'mapid' => $map->getId(),
         ]);
-
-        //echo '<pre>'.print_r($places, true).'</pre>';
 
         $placesByMap = [];
         $x=0;
@@ -71,6 +81,24 @@ class PlayerController extends Controller
             'map' => $map,
             'capacities' => $characterCapacities,
             'places' => $placesByMap,
+            'team' => $teamFinal,
+            'balance' => $balance,
+            'goodness' => $goodness,
+        ]);
+    }
+
+    /**
+     * @Route("/stats_player", name="stats_player")
+     */
+    public function statsAction(){
+        $em = $this->getDoctrine()->getManager();
+
+        $session = $this->get('session');
+
+        $character = $session->get('character');
+
+        return $this->render('default/stats.html.twig', [
+            'stats' => $character,
         ]);
     }
 }

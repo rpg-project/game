@@ -3,6 +3,7 @@
   <entity name="AppBundle\Entity\Team" table="team">
     <indexes>
       <index name="characterId_idx" columns="character_id"/>
+      <index name="mateId_idx" columns="team_mate_id"/>
     </indexes>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
@@ -18,6 +19,11 @@
       </options>
     </field>
     <field name="characterId" type="integer" column="character_id" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="followerId" type="integer" column="follower_id" nullable="true">
       <options>
         <option name="unsigned"/>
       </options>

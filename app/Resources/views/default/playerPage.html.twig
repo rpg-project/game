@@ -4,13 +4,13 @@
 <div class="container">
     <div class="row">
 
-        <div id="player" class="col-lg-2">
+        <div id="player" class="col-lg-2" >
             <table class="table text-center">
                 <tr>
                     <td colspan="2"><img src="{{ character.image }}" width=50 height="50"></td>
                 </tr>
                 <tr>
-                    <td colspan="2">{{ character.name }}</td>
+                    <td colspan="2"><a href="{{ path('stats_player') }}">{{ character.name }}</a></td>
                 </tr>
                 <tr>
                     <th class="health"></th>
@@ -25,8 +25,26 @@
                         <td><img src="{{ capacity.description }}" width=40 heigh="40"></td>
                     {% endfor %}
                 </tr>
-            </table>
 
+                {% for key,mate in team %}
+                    {% if mate == false %}
+                                <tr>
+                                    <td>vide</td>
+                                </tr>
+                            {% else  %}
+                                <tr>
+                                    <td colspan="2"><img src="{{ mate.image }}" width=50 height="50"></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="{{ path("stats_follower", {'id' : mate.id}) }}">{{ mate.name }}</a></td>
+                                </tr>
+                                <tr>
+                                    <th class="health"></th>
+                                    <td>{{ mate.health }} / {{ mate.maxHealth }}</td>
+                                </tr>
+                            {% endif %}
+                {% endfor %}
+            </table>
         </div>
         <div id="map" class="col-lg-8">
             <h1>{{ map.mapName }}</h1>
@@ -37,7 +55,13 @@
         <div id="stats" class="col-lg-2">
             <table class="table text-center">
                 <tr>
-                    <td>Gloire : {{ character.glory }} </td>
+                    <td>Gloire {{ character.glory }} </td>
+                </tr>
+                <tr>
+                    <td>Loi {{ balance }} Chaos</td>
+                </tr>
+                <tr>
+                    <td>Bien {{ goodness }} Mal</td>
                 </tr>
             </table>
         </div>

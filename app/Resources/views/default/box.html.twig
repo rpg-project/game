@@ -13,7 +13,7 @@
 
 				{% for follower in followers %}
 					<tr>
-					<td><a href ="#" > {{ follower.followerId.name }}</a></td>
+					<td><a href ="{{ path('stats_follower', {'id' : follower.id}) }}" > {{ follower.name }}</a></td>
 					<td> {% if follower.teamed == 0 %} 
 							Non
 						{% else %}

@@ -148,6 +148,41 @@ class Followers
     /**
      * @var integer
      *
+     * @ORM\Column(name="unique_rate", type="integer", nullable=true)
+     */
+    private $uniqueRate;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="law", type="integer", nullable=true)
+     */
+    private $law;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="chaos", type="integer", nullable=true)
+     */
+    private $chaos;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="good", type="integer", nullable=true)
+     */
+    private $good;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="evil", type="integer", nullable=true)
+     */
+    private $evil;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -456,6 +491,86 @@ class Followers
     public function setGoal($goal)
     {
         $this->goal = $goal;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUniqueRate()
+    {
+        return $this->uniqueRate;
+    }
+
+    /**
+     * @param int $uniqueRate
+     */
+    public function setUniqueRate($uniqueRate)
+    {
+        $this->uniqueRate = $uniqueRate;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLaw()
+    {
+        return $this->law;
+    }
+
+    /**
+     * @param int $law
+     */
+    public function setLaw($law)
+    {
+        $this->law = $law;
+    }
+
+    /**
+     * @return int
+     */
+    public function getChaos()
+    {
+        return $this->chaos;
+    }
+
+    /**
+     * @param int $chaos
+     */
+    public function setChaos($chaos)
+    {
+        $this->chaos = $chaos;
+    }
+
+    /**
+     * @return int
+     */
+    public function getGood()
+    {
+        return $this->good;
+    }
+
+    /**
+     * @param int $good
+     */
+    public function setGood($good)
+    {
+        $this->good = $good;
+    }
+
+    /**
+     * @return int
+     */
+    public function getEvil()
+    {
+        return $this->evil;
+    }
+
+    /**
+     * @param int $evil
+     */
+    public function setEvil($evil)
+    {
+        $this->evil = $evil;
     }
 
     /**

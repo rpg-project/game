@@ -121,6 +121,28 @@ class PlaceController extends Controller
                 $summonResult[] = $summonTable[$i];
                 $newFollower = new Followersbycharacter();
                 $newFollower->setTeamed(0);
+                $newFollower->setName($summonTable[$i]->getName());
+                $newFollower->setType($summonTable[$i]->getType());
+                $newFollower->setHealth($summonTable[$i]->getHealth());
+                $newFollower->setMaxHealth($summonTable[$i]->getMaxHealth());
+                $newFollower->setEnergy($summonTable[$i]->getEnergy());
+                $newFollower->setMaxEnergy($summonTable[$i]->getMaxEnergy());
+                $newFollower->setMove($summonTable[$i]->getMove());
+                $newFollower->setQuickness($summonTable[$i]->getQuickness());
+                $newFollower->setAttack($summonTable[$i]->getAttack());
+                $newFollower->setDefense($summonTable[$i]->getDefense());
+                $newFollower->setCritical($summonTable[$i]->getCritical());
+                $newFollower->setLevel($summonTable[$i]->getLevel());
+                $newFollower->setXp($summonTable[$i]->getXp());
+                $newFollower->setImage($summonTable[$i]->getImage());
+                $newFollower->setGoal($summonTable[$i]->getGoal());
+                $newFollower->setUniqueRate($summonTable[$i]->getUniqueRate());
+                $newFollower->setRateLabel($summonTable[$i]->getRateLabel());
+                $newFollower->setPriceBack($summonTable[$i]->getPriceBack());
+                $newFollower->setLaw($summonTable[$i]->getLaw());
+                $newFollower->setChaos($summonTable[$i]->getChaos());
+                $newFollower->setGood($summonTable[$i]->getGood());
+                $newFollower->setEvil($summonTable[$i]->getEvil());
                 $newFollower->setCharacterid($character);
                 $newFollower->setFollowerid($summonTable[$i]);
 

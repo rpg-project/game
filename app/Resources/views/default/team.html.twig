@@ -3,57 +3,33 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-6">
                 <h1>Equipe</h1>
                     <table class="table">
-                        <tr>
-                            <th>Position 1</th>
-                            <td><a href="#" class="btn btn-primary">Ajout Equipier 1</a></td>
-                        </tr>
-                        <tr>
-                            <th>Position 2</th>
-                            <td><a href="#" class="btn btn-primary">Ajout Equipier 2</a></td>
-                        </tr>
-                        <tr>
-                            <th>Position 3</th>
-                            <td><a href="#" class="btn btn-primary">Ajout Equipier 3</a></td>
-                        </tr>
-                        <tr>
-                            <th>Position 4</th>
-                            <td><a href="#" class="btn btn-primary">Ajout Equipier 4 </a></td>
-                        </tr>
-                        <tr>
-                            <th>Position 5</th>
-                            <td><a href="#" class="btn btn-primary">Ajout Equipier 5</a></td>
-                        </tr>
+                        {% for key,mate in team %}
+                            {% if mate == false %}
+                                <tr>
+                                    <th>Position {{ key }}</th>
+                                    <td><a href="{{ path("options_team_choice", {'place' : key}) }}" class="btn btn-primary">Ajout Equipier {{ key }}</a></td>
+                                </tr>
+                            {% else  %}
+
+                                    <tr>
+                                        <th>Position {{ key }}</th>
+                                        <td>{{ mate.name }}</td>
+                                        <td><a href="" class="btn btn-primary">Remplacer</a></td>
+                                        <td><a href="" class="btn btn-primary">Retirer</a></td>
+                                        <td></td>
+                                    </tr>
+
+                            {% endif %}
+                        {% endfor %}
                     </table>
             </div>
-            <div class="col-lg-8">
-                <h1>Liste des Suivants</h1>
-                <table class="table">
-                    <tr>
-                        <th>Nom du suivant</th>
-
-                        {% for follower in followers %}
-                    <tr>
-
-                         {% if follower.teamed == 0 %}
-                                <td><a href ="#" > {{ follower.followerId.name }}</a></td>
-                            {% else %}
-                                <td> {{ follower.followerId.name }}</td>
-                            {% endif %}
-
-                    </tr>
-                    {% endfor %}
-
-                </table>
-            </div>
-
-
 
         </div>
         <div class="row">
-            <a href="javascript:history.go(-1)" class="btn btn-primary">Retour</a>
+            <a href="{{ path('player_homepage') }}" class="btn btn-primary">Retour</a>
         </div>
 
     </div>

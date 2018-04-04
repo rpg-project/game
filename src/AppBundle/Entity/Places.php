@@ -87,7 +87,7 @@ class Places
      */
     public function setLevel($level)
     {
-        $this->summon = $level;
+        $this->level = $level;
     }
 
     /**

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Team
  *
- * @ORM\Table(name="team")
+ * @ORM\Table(name="team", indexes={@ORM\Index(name="characterId_idx", columns={"character_id"}), @ORM\Index(name="mateId_idx", columns={"team_mate_id"})})
  * @ORM\Entity
  */
 class Team
@@ -29,18 +29,25 @@ class Team
     /**
      * @var integer
      *
+     * @ORM\Column(name="character_id", type="integer", nullable=true)
+     */
+    private $characterId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="follower_id", type="integer", nullable=true)
+     */
+    private $followerId;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="character_id", type="integer", nullable=true)
-     */
-    private $characterId;
 
     /**
      * @return int
@@ -77,6 +84,38 @@ class Team
     /**
      * @return int
      */
+    public function getCharacterId()
+    {
+        return $this->characterId;
+    }
+
+    /**
+     * @param int $characterId
+     */
+    public function setCharacterId($characterId)
+    {
+        $this->characterId = $characterId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFollowerId()
+    {
+        return $this->followerId;
+    }
+
+    /**
+     * @param int $followerId
+     */
+    public function setFollowerId($followerId)
+    {
+        $this->followerId = $followerId;
+    }
+
+    /**
+     * @return int
+     */
     public function getId()
     {
         return $this->id;
@@ -89,23 +128,6 @@ class Team
     {
         $this->id = $id;
     }
-
-    /**
-     * @return int
-     */
-    public function getCharacterid()
-    {
-        return $this->characterid;
-    }
-
-    /**
-     * @param int $characterid
-     */
-    public function setCharacterid($characterid)
-    {
-        $this->characterid = $characterid;
-    }
-
 
 
 }

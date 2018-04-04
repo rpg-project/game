@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            <h1>Liste des Suivants</h1>
+            <table class="table">
+                <tr>
+                    <th>Nom du suivant</th>
+
+                    {% for follower in followers %}
+                <tr>
+
+                    {% if follower.teamed == 0 %}
+                        <td><a href ="{{ path("options_team_add", {"place": place, "followerId": follower.followerId.id, "teamMateId" : follower.id}) }}" > {{ follower.followerId.name }}</a></td>
+                    {% else %}
+                        <td> {{ follower.followerId.name }}</td>
+                    {% endif %}
+
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <a href="javascript:history.go(-1)" class="btn btn-primary">Retour</a>
+    </div>
+</div>
+{% endblock %}

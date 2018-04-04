@@ -102,5 +102,30 @@
         <option name="unsigned"/>
       </options>
     </field>
+    <field name="uniqueRate" type="integer" column="unique_rate" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="law" type="integer" column="law" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="chaos" type="integer" column="chaos" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="good" type="integer" column="good" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="evil" type="integer" column="evil" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
   </entity>
 </doctrine-mapping>

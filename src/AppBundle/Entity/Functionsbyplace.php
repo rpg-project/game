@@ -13,6 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
 class Functionsbyplace
 {
     /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=45, nullable=true)
+     */
+    private $name;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -42,12 +49,20 @@ class Functionsbyplace
     private $functionid;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=50, nullable=true)
+     * @return string
      */
-    private $name;
+    public function getName()
+    {
+        return $this->name;
+    }
 
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
 
     /**
      * @return int
@@ -96,23 +111,6 @@ class Functionsbyplace
     {
         $this->functionid = $functionid;
     }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
 
 
 }

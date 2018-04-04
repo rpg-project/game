@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <h1> {{ stats.name }}</h1>
+            <table class="table">
+                <tr>
+                    <th>Santé</th>
+                    <td>{{ stats.health }} / {{ stats.maxHealth }}</td>
+                </tr>
+                <tr>
+                    <th>Energie</th>
+                    <td>{{ stats.energy }} / {{ stats.maxEnergy }}</td>
+                </tr>
+                <tr>
+                    <th>Niveau</th>
+                    <th>Expérience</th>
+                </tr>
+                <tr>
+                    <td>{{ stats.level }}</td>
+                    <td>{{ stats.xp }}</td>
+                </tr>
+                <tr>
+                    <th>Déplacement</th>
+                    <th>Vitesse</th>
+                    <th>Attaque</th>
+                    <th>Défense</th>
+                    <th>Critique</th>
+                </tr>
+                <tr>
+                    <td>{{ stats.move }}</td>
+                    <td>{{ stats.quickness }}</td>
+                    <td>{{ stats.attack }}</td>
+                    <td>{{ stats.defense }}</td>
+                    <td>{{ stats.critical }}</td>
+                </tr>
+
+            </table>
+
+        </div>
+        <div class="row">
+            <a href="javascript:history.go(-1)" class="btn btn-primary">Retour</a>
+        </div>
+    </div>
+{% endblock %}

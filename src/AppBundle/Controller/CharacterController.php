@@ -53,6 +53,10 @@ class CharacterController extends Controller
         $character->setGold(0);
         $character->setXp(0);
         $character->setGlory(0);
+        $character->setLaw(0);
+        $character->setChaos(0);
+        $character->setGood(0);
+        $character->setEvil(0);
 
 
         $form = $this->createFormBuilder($character)
