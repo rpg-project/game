@@ -12,10 +12,12 @@
                     {% for follower in followers %}
                 <tr>
 
-                    {% if follower.teamed == 0 %}
-                        <td><a href ="{{ path("options_team_add", {"place": place, "followerId": follower.followerId.id, "teamMateId" : follower.id}) }}" > {{ follower.followerId.name }}</a></td>
-                    {% else %}
-                        <td> {{ follower.followerId.name }}</td>
+                    {% if follower.mate.teamed == 0 %}
+                        {% if follower.avalaible == true %}
+                            <td><a href ="{{ path("options_team_add", {"place": place, "followerId": follower.mate.followerId.id, "teamMateId" : follower.mate.id}) }}" > {{ follower.mate.followerId.name }}</a></td>
+                        {% else %}
+                            <td><a href="{{ path('stats_follower', {'id' : follower.mate.id}) }}" style="color:red;">{{ follower.mate.followerId.name }}</a></td>
+                        {% endif %}
                     {% endif %}
 
                 </tr>

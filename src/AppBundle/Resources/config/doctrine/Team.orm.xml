@@ -13,6 +13,11 @@
         <option name="unsigned"/>
       </options>
     </field>
+    <field name="avalaible" type="integer" column="avalaible" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
     <field name="teamMateId" type="integer" column="team_mate_id" nullable="true">
       <options>
         <option name="unsigned"/>

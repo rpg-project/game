@@ -5,26 +5,29 @@
         <div class="row">
             <div class="col-lg-6">
                 <h1>Equipe</h1>
-                    <table class="table">
-                        {% for key,mate in team %}
-                            {% if mate == false %}
+                <table class="table">
+                    {% for key,follower in team %}
+                        {% if follower.mate == false %}
+                            <tr>
+                                <th>Position {{ key }}</th>
+                                <td><a href="{{ path("options_team_choice", {'place' : key}) }}" class="btn btn-primary">Ajout Equipier {{ key }}</a></td>
+                            </tr>
+                        {% else  %}
+
                                 <tr>
                                     <th>Position {{ key }}</th>
-                                    <td><a href="{{ path("options_team_choice", {'place' : key}) }}" class="btn btn-primary">Ajout Equipier {{ key }}</a></td>
+                                    {% if follower.avalaible == true %}
+                                    <td>{{ follower.mate.name }}</td>
+                                    <td><a href="{{ path("options_team_del", {'place' : key, 'teamMateId' : follower.mate.id}) }}" class="btn btn-primary">Retirer</a></td>
+                                    {% else %}
+                                        <td style="color:red;">{{ follower.mate.name }}</td>
+                                        <td><a href="{{ path("options_team_del", {'place' : key, 'teamMateId' : follower.mate.id}) }}" class="btn btn-primary">Retirer</a></td>
+                                    {% endif %}
                                 </tr>
-                            {% else  %}
 
-                                    <tr>
-                                        <th>Position {{ key }}</th>
-                                        <td>{{ mate.name }}</td>
-                                        <td><a href="" class="btn btn-primary">Remplacer</a></td>
-                                        <td><a href="" class="btn btn-primary">Retirer</a></td>
-                                        <td></td>
-                                    </tr>
-
-                            {% endif %}
-                        {% endfor %}
-                    </table>
+                        {% endif %}
+                    {% endfor %}
+                </table>
             </div>
 
         </div>

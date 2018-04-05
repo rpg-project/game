@@ -26,21 +26,25 @@
                     {% endfor %}
                 </tr>
 
-                {% for key,mate in team %}
-                    {% if mate == false %}
+                {% for key,follower in team %}
+                    {% if follower.mate == false %}
                                 <tr>
                                     <td>vide</td>
                                 </tr>
                             {% else  %}
                                 <tr>
-                                    <td colspan="2"><img src="{{ mate.image }}" width=50 height="50"></td>
+                                    <td colspan="2"><img src="{{ follower.mate.image }}" width=50 height="50"></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="{{ path("stats_follower", {'id' : mate.id}) }}">{{ mate.name }}</a></td>
+                                    {% if follower.avalaible == true %}
+                                    <td><a href="{{ path("stats_follower", {'id' : follower.mate.id}) }}">{{ follower.mate.name }}</a></td>
+                                    {% else %}
+                                        <td><a href="{{ path("stats_follower", {'id' : follower.mate.id}) }}" style="color:red;">{{ follower.mate.name }}</a></td>
+                                    {% endif %}
                                 </tr>
                                 <tr>
                                     <th class="health"></th>
-                                    <td>{{ mate.health }} / {{ mate.maxHealth }}</td>
+                                    <td>{{ follower.mate.health }} / {{ follower.mate.maxHealth }}</td>
                                 </tr>
                             {% endif %}
                 {% endfor %}
@@ -78,38 +82,6 @@
     </div>
 
 </div>
-
-
-    {#<table class="table">#}
-        {#{% for user in users  %}#}
-            {#<tr><th>Joueur :</th></tr>#}
-            {#<tr><td>{{ user.username }}</td></tr>#}
-
-
-            {#{%  for character in characters  %}#}
-
-                {#{% if character.userid.id == user.id %}#}
-                    {#<tr>#}
-                        {#<th>Personnage :</th>#}
-                    {#</tr>#}
-                    {#<tr>#}
-                        {#<td>{{ character.name }}</td>#}
-                    {#</tr>#}
-                    {#<tr>#}
-                        {#<th>Suivants : </th>#}
-                    {#</tr>#}
-                    {#{% for follower in followersByCharacter %}#}
-
-                        {#{% if follower.characterid.id == character.id %}#}
-                            {#<tr><td>{{ follower.followerid.followerName }}</td></tr>#}
-                        {#{% endif %}#}
-
-                    {#{% endfor %}#}
-                {#{% endif %}#}
-            {#{% endfor %}#}
-
-        {#{% endfor %}#}
-    {#</table>#}
 
 {% endblock %}
 

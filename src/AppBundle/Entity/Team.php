@@ -22,6 +22,13 @@ class Team
     /**
      * @var integer
      *
+     * @ORM\Column(name="avalaible", type="integer", nullable=true)
+     */
+    private $avalaible;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="team_mate_id", type="integer", nullable=true)
      */
     private $teamMateId;
@@ -129,6 +136,21 @@ class Team
         $this->id = $id;
     }
 
+    /**
+     * @return int
+     */
+    public function getAvalaible()
+    {
+        return $this->avalaible;
+    }
+
+    /**
+     * @param int $avalaible
+     */
+    public function setAvalaible($avalaible)
+    {
+        $this->avalaible = $avalaible;
+    }
 
 }
 

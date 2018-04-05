@@ -52,25 +52,43 @@ class OptionsController extends Controller
 
         $balance = $character->getLaw()- $character->getChaos();
         $goodness = $character->getGood()- $character->getEvil();
+        $balanceTeam = 0;
+        $goodnessTeam = 0;
+        $session->set('gold', $character->getGold());
 
         $teamFinal = array();
         for($i=1; $i <=5; $i++){
-            $teamFinal[$i] = false;
+            $teamFinal[$i]['mate'] = false;
         }
+        $goldMin = 0;
         if(!empty($team)){
             foreach ($team as $mate){
                 $place = $mate->getPlace();
                 $follower = $em->getRepository('AppBundle:Followersbycharacter')->findBy([
                     'id' => $mate->getTeamMateId(),
                 ]);
-                $teamFinal[$place] = $follower[0];
+                $teamFinal[$place]['mate'] = $follower[0];
+                if($follower[0]->getGoal() == 3){
+                    $goldMin += $follower[0]->getLevel() * $follower[0]->getFollowerid()->getLevelMin();
+                    $session->set('goldMin', $goldMin);
+                }
+                $teamFinal[$place]['avalaible'] = $this->goal($follower[0]->getGoal());
+                if($teamFinal[$place]['avalaible'] == false){
+                    $mate->setAvalaible(1);
+                } else {
+                    $mate->setAvalaible(0);
+                }
                 $balance += $follower[0]->getLaw() - $follower[0]->getChaos();
+                $balanceTeam += $follower[0]->getLaw() - $follower[0]->getChaos();
                 $goodness += $follower[0]->getGood() - $follower[0]->getEvil();
+                $goodnessTeam += $follower[0]->getGood() - $follower[0]->getEvil();
             }
         }
 
         $session->set('balance', $balance);
         $session->set('goodness', $goodness);
+        $session->set('balanceTeam', $balanceTeam);
+        $session->set('goodnessTeam', $goodnessTeam);
 
         ksort($teamFinal);
 
@@ -80,6 +98,8 @@ class OptionsController extends Controller
             'followers' => $followers,
             'character' => $character,
             'team' => $teamFinal,
+            'balanceTeam' => $balanceTeam,
+            'goodnessTeam' => $goodnessTeam,
         ]);
 
     }
@@ -95,22 +115,21 @@ class OptionsController extends Controller
 
         $character = $session->get('character');
 
-        $balance = $session->get('balance');
-        $goodness = $session->get('goodness');
-
-
-
         $followers = $em->getRepository('AppBundle:Followersbycharacter')-> findBy([
             'characterid' => $character->getid(),
             'teamed' => 0,
         ]);
 
-        $teamMates = $em->getRepository('AppBundle:Team')->findBy([
-            'characterId' => $character->getid(),
-        ]);
+        $list = array();
+        $x = 0;
+        foreach ($followers as $follower){
+            $list[$x]['mate'] = $follower;
+            $list[$x]['avalaible'] = $this->goal($follower->getGoal());
+            $x++;
+        }
 
         return $this->render('default/teamChoices.html.twig', [
-            'followers' => $followers,
+            'followers' => $list,
             'place' => $place,
         ]);
     }
@@ -148,18 +167,79 @@ class OptionsController extends Controller
     }
 
     /**
-     *
+     * @Route("/options/team_del/{place}/{teamMateId}", name="options_team_del")
      */
-    public function goal($balance, $goodness, $goal){
+    public function teamDelAction($place, $teamMateId){
 
+        $em = $this->getDoctrine()->getManager();
+
+        $session = $this->get('session');
+
+        $character = $session->get('character');
+
+        $teamMate = $em->getRepository("AppBundle:Team")->findBy([
+            'place' => $place,
+            'characterId' => $character->getId(),
+        ]);
+
+        $em->remove($teamMate[0]);
+        $em->flush();
+
+        $follower = $em->getRepository('AppBundle:Followersbycharacter')->find($teamMateId);
+
+        $follower->setTeamed(0);
+
+        $em->persist($follower);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('options_team', array(
+            'id' => $character->getId(),
+        )));
+
+    }
+
+    /**
+     *  Tester le but du follower pour voir la compatibilité avec le perso et la team
+     */
+    public function goal($goal){
+
+        $session = $this->get('session');
+
+        $balanceTeam = $session->get('balanceTeam');
+        $goodnessTeam = $session->get('goodnessTeam');
+        $balance = $session->get('balance');
+        $goodness = $session->get('goodness');
+        $gold = $session->get('gold');
+        $goldMin = $session->get('goldMin');
 
         switch($goal){
-            case 1 :
-            case 2 :
+            case 1 : if($balanceTeam < 0 || $balance < 0){
+                        return false;
+                    } else {
+                        return true;
+                    }
+                    break;
+            case 2 : if($balanceTeam < 0 || $balance < 0 || $goodnessTeam < 0 || $goodness < 0){
+                        return false;
+                    } else {
+                        return true;
+                    }
+                    break;
+            case 3 : if($gold < $goldMin){
+                        return false;
+                    } else {
+                        return true;
+                    }
+                    break;
+            case 4 : if($balanceTeam > 0 || $balance > 0){
+                        return false;
+                    } else {
+                        return true;
+                    }
+                    break;
+            case 999: return false;
             Default : $available = true;
         }
-
-
 
         return $available;
     }
