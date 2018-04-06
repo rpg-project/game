@@ -154,7 +154,7 @@ CREATE TABLE `characters` (
 
 LOCK TABLES `characters` WRITE;
 /*!40000 ALTER TABLE `characters` DISABLE KEYS */;
-INSERT INTO `characters` VALUES (24,'hhh',0,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,310,0,0,0,0,0,0,0,0,0,10,NULL,1,1),(27,'ddddddddd',0,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,480,0,0,0,0,0,0,0,0,21,10,NULL,2,1);
+INSERT INTO `characters` VALUES (24,'hhh',0,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,310,0,0,0,0,0,0,0,0,0,10,NULL,1,1),(27,'ddddddddd',2,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,380,0,0,0,0,0,5,0,0,31,10,NULL,2,1);
 /*!40000 ALTER TABLE `characters` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -245,7 +245,7 @@ CREATE TABLE `followersByCharacter` (
   KEY `followerId_idx` (`followerId`),
   CONSTRAINT `FK_492018735AF690F3` FOREIGN KEY (`characterId`) REFERENCES `characters` (`id`),
   CONSTRAINT `FK_49201873F542AA03` FOREIGN KEY (`followerId`) REFERENCES `followers` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -254,7 +254,7 @@ CREATE TABLE `followersByCharacter` (
 
 LOCK TABLES `followersByCharacter` WRITE;
 /*!40000 ALTER TABLE `followersByCharacter` DISABLE KEYS */;
-INSERT INTO `followersByCharacter` VALUES (66,0,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',0,'R',0,1,11,27,0,0,0,0),(67,0,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',0,'R',0,1,11,27,0,0,0,0),(68,0,'Merc',1,3,3,0,0,3,3,4,3,1,1,0,' ',3,'R',0,1,8,27,0,0,0,0),(69,0,'Merc',1,3,3,0,0,3,3,4,3,1,1,0,' ',3,'R',0,1,8,27,0,0,0,0),(70,0,'Sonia La Rousse',1,5,5,0,0,3,3,3,3,1,1,0,' ',0,'SR',1,2,2,27,0,0,0,0),(71,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(72,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(73,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(74,0,'Priest',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,12,27,0,0,0,0),(75,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(76,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(77,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(78,0,'Thief',1,3,3,0,0,3,3,2,4,1,1,0,'',4,'R',0,1,10,27,0,10,0,0),(79,0,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',0,'R',0,1,11,27,0,0,0,0),(80,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(81,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(82,0,'Sonia La Rousse',1,5,5,0,0,3,3,3,3,1,1,0,' ',0,'SR',1,2,2,27,0,0,0,0),(83,0,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',0,'R',0,1,11,27,0,0,0,0),(84,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(85,0,'Merc',1,3,3,0,0,3,3,4,3,1,1,0,' ',3,'R',0,1,8,27,0,0,0,0),(86,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0);
+INSERT INTO `followersByCharacter` VALUES (66,0,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',0,'R',0,1,11,27,0,0,0,0),(67,0,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',0,'R',0,1,11,27,0,0,0,0),(68,1,'Merc',1,3,3,0,0,3,3,4,3,1,1,0,' ',3,'R',0,1,8,27,0,0,0,0),(69,1,'Merc',1,3,3,0,0,3,3,4,3,1,1,0,' ',3,'R',0,1,8,27,0,0,0,0),(70,0,'Sonia La Rousse',1,5,5,0,0,3,3,3,3,1,1,0,' ',0,'SR',1,2,2,27,0,0,0,0),(71,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(72,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(73,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(74,0,'Priest',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,12,27,0,0,0,0),(75,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(76,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(77,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(78,1,'Thief',1,3,3,0,0,3,3,2,4,1,1,0,'',4,'R',0,1,10,27,0,10,0,0),(79,0,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',0,'R',0,1,11,27,0,0,0,0),(80,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(81,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(82,0,'Sonia La Rousse',1,5,5,0,0,3,3,3,3,1,1,0,' ',0,'SR',1,2,2,27,0,0,0,0),(83,0,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',0,'R',0,1,11,27,0,0,0,0),(84,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(85,1,'Merc',1,3,3,0,0,3,3,4,3,1,1,0,' ',3,'R',0,1,8,27,0,0,0,0),(86,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(87,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0),(88,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0),(89,0,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'R',0,1,6,27,10,0,0,0),(90,0,'Archer',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,7,27,10,0,0,0),(91,0,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'R',0,1,6,27,10,0,0,0),(92,0,'Paladin',2,5,5,0,0,3,3,4,4,1,1,0,' ',2,'SSR',1,3,5,27,100,0,100,0),(93,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0),(94,0,'Archer',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,7,27,10,0,0,0),(95,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0),(96,0,'Sherif',2,5,5,0,0,3,3,4,2,1,1,0,' ',1,'SR',1,2,4,27,50,0,0,0);
 /*!40000 ALTER TABLE `followersByCharacter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -404,13 +404,14 @@ DROP TABLE IF EXISTS `team`;
 CREATE TABLE `team` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `place` int(11) DEFAULT NULL,
+  `avalaible` int(11) DEFAULT NULL,
   `team_mate_id` int(11) DEFAULT NULL,
   `character_id` int(11) DEFAULT NULL,
   `follower_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `characterId_idx` (`character_id`),
   KEY `mateId_idx` (`team_mate_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -419,6 +420,7 @@ CREATE TABLE `team` (
 
 LOCK TABLES `team` WRITE;
 /*!40000 ALTER TABLE `team` DISABLE KEYS */;
+INSERT INTO `team` VALUES (33,1,0,68,27,8),(34,2,0,85,27,8),(35,3,1,69,27,8),(36,4,0,78,27,10);
 /*!40000 ALTER TABLE `team` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -464,4 +466,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-04 15:33:21
+-- Dump completed on 2018-04-06  9:30:38
