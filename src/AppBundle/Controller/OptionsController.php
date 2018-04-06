@@ -120,11 +120,24 @@ class OptionsController extends Controller
             'teamed' => 0,
         ]);
 
+        $team = $session->get('team');
+        $uniqueList = array();
+        foreach ($team as $mate){
+              if($mate['mate'] !== false) {
+                  if ($mate['mate']->getUniqueRate() == 1) {
+                      $uniqueList[] = $mate['mate']->getFollowerid()->getId();
+                  }
+              }
+        }
+
         $list = array();
         $x = 0;
         foreach ($followers as $follower){
             $list[$x]['mate'] = $follower;
             $list[$x]['avalaible'] = $this->goal($follower->getGoal());
+            if(in_array($follower->getFollowerid()->getId(), $uniqueList, true)){
+                $list[$x]['avalaible'] = false;
+            }
             $x++;
         }
 
