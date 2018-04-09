@@ -72,7 +72,7 @@ class PlayerController extends Controller
                     $goldMin += $follower[0]->getLevel() * $follower[0]->getFollowerid()->getLevelMin();
                     $session->set('goldMin', $goldMin);
                 }
-                $teamFinal[$place]['avalaible'] = OptionsController::goal($follower[0]->getGoal());
+                $teamFinal[$place]['avalaible'] = $this->goal($follower[0]->getGoal());
                 if($teamFinal[$place]['avalaible'] == false){
                     $mate->setAvalaible(1);
                 } else {
@@ -124,5 +124,51 @@ class PlayerController extends Controller
         return $this->render('default/stats.html.twig', [
             'stats' => $character,
         ]);
+    }
+
+    /**
+     *  Tester le but du follower pour voir la compatibilité avec le perso et la team
+     */
+    public function goal($goal){
+
+        $session = $this->get('session');
+
+        $balanceTeam = $session->get('balanceTeam');
+        $goodnessTeam = $session->get('goodnessTeam');
+        $balance = $session->get('balance');
+        $goodness = $session->get('goodness');
+        $gold = $session->get('gold');
+        $goldMin = $session->get('goldMin');
+
+        switch($goal){
+            case 1 : if($balanceTeam < 0 || $balance < 0){
+                        return false;
+                    } else {
+                        return true;
+                    }
+                    break;
+            case 2 : if($balanceTeam < 0 || $balance < 0 || $goodnessTeam < 0 || $goodness < 0){
+                        return false;
+                    } else {
+                        return true;
+                    }
+                    break;
+            case 3 : if($gold < $goldMin){
+                        return false;
+                    } else {
+                        return true;
+                    }
+                    break;
+            case 4 : if($balanceTeam > 0 || $balance > 0){
+                        return false;
+                    } else {
+                        return true;
+                    }
+                    break;
+            case 999: return false;
+            Default : $available = true;
+        }
+
+        return $available;
     }
 }
