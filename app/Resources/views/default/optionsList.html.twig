@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+	    <div class="row">
+	    	<h1>Options</h1>
+	    	<ul>
+	    		<li><a href="{{path('options_followers_list') }}">Bibilothèque de personnages</a></li>
+	    	</ul>
+	    </div>
+	    <div class="row">
+		    <a href="{{ path('player_homepage') }}" class="btn btn-primary">Retour</a>
+		</div>
+	</div>
+{% endblock %}

@@ -8,7 +8,6 @@
             <table class="table">
                 <tr>
                     <th>Nom du suivant</th>
-
                     {% for follower in followers %}
                 <tr>
 
@@ -18,12 +17,22 @@
                         {% else %}
                             <td><a href="{{ path('stats_follower', {'id' : follower.mate.id}) }}" style="color:red;">{{ follower.mate.followerId.name }}</a></td>
                         {% endif %}
+                        <td>{{ follower.mate.rateLabel }}</td>
+                        <td>{{ follower.mate.level }}</td>
                     {% endif %}
 
                 </tr>
                 {% endfor %}
 
             </table>
+        </div>
+        <div class="col-lg-2">
+            <h3>Tri</h3>
+            <ul>
+                <li><a href="{{ path('options_team_choice_order', {'order' : 'name'}) }}">Nom</a></li>
+                <li><a href="{{ path('options_team_choice_order', {'order' : 'rate'}) }}">Rareté</a></li>
+                <li><a href="{{ path('options_team_choice_order', {'order' : 'level'}) }}">Niveau</a></li>
+            </ul>
         </div>
     </div>
     <div class="row">
