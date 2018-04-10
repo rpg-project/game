@@ -3,21 +3,53 @@
 {% block body %}
 	<div class="container">
 	    <div class="row">
-	    	<h1>Liste des Suivants</h1>
-
+	    	<div class="col-lg-10">
+	    	<h1>Liste des Suivants 
+	    	{{ character.boxSize }} / {{ character.maxBoxSize }}
+	    	<a href="{{ path('player_homepage') }}" class="btn btn-primary">Retour</a>
+	    	</h1>
 	        <table class="table">
 	        	<tr>
 	        		<th>Nom du suivant</th>
+	        		<th>Niveau</th>
+	        		<th>Rareté</th>
 	        		<th>En équipe</th>
+	        		<th>Pré-Requis</th>
 	        	</tr>
 
 				{% for follower in followers %}
+					{% if follower.teamed == 1 %}
+					<tr style="background-color:red;">
+					{% else %}
 					<tr>
+					{% endif %}
 					<td><a href ="{{ path('stats_follower', {'id' : follower.id}) }}" > {{ follower.name }}</a></td>
+					<td>{{ follower.level }}</td>
+					<td>{{ follower.rateLabel }}
+						{% if follower.uniqueRate == 1 %}
+						Unique
+						{% endif %}
+					</td>
 					<td> {% if follower.teamed == 0 %} 
 							Non
 						{% else %}
 							Oui
+						{% endif %}
+					</td>
+					<td>{% if follower.goal == 1 %}
+						Loi
+						{% endif %}
+						{% if follower.goal == 2 %}
+						Loi et Bien
+						{% endif %}
+						{% if follower.goal == 3 %}
+						Or
+						{% endif %}
+						{% if follower.goal == 4 %}
+						Chaos
+						{% endif %}
+						{% if follower.goal == 5 %}
+						Mal
 						{% endif %}
 					</td>
 					</tr>
@@ -25,9 +57,16 @@
 				
 			</table>
 		</div>
-		<div class="row">
-			{{ character.boxSize }} / {{ character.maxBoxSize }}
-			<a href="javascript:history.go(-1)" class="btn btn-primary">Retour</a>
+		<div class="col-lg-2">
+			<h3>Tri</h3>
+			<ul>
+				<li><a href="{{ path('options_followers_order', {'order' : 'name'}) }}">Nom</a></li>
+				<li><a href="{{ path('options_followers_order', {'order' : 'rate'}) }}">Rareté</a></li>
+				<li><a href="{{ path('options_followers_order', {'order' : 'teamed'}) }}">En équipe</a></li>
+				<li><a href="{{ path('options_followers_order', {'order' : 'goal'}) }}">Pré-requis</a></li>
+				<li><a href="{{ path('options_followers_order', {'order' : 'level'}) }}">Niveau</a></li>
+			</ul>
+		</div>
 		</div>
 
 	</div>
