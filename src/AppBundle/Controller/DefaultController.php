@@ -32,13 +32,13 @@ class DefaultController extends Controller
             $session->set('character', $character[0]);
         }
 
-        /*$chemin = dirname(__FILE__).'/../../../web/Ressources/Description_Followers.txt';
+        $chemin = dirname(__FILE__).'/../../../web/Ressources/Description_Followers.txt';
 
         if(!file_exists($chemin)){
             $handle = fopen($chemin, "w");
             fputs($handle, "test2");
             fclose($handle);
-        }*/
+        }
        
 
         return $this->render('default/index.html.twig', [
