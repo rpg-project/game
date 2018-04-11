@@ -447,7 +447,6 @@ class OptionsController extends Controller
                 $list[] = $item;
             }
         }
-
         $listFinal = array();
         foreach ($list as $item){
             if($item->getContained() === 0){
@@ -483,8 +482,8 @@ class OptionsController extends Controller
 
         $listItem = array();
         foreach ($listIn as $item){
-            $i = $em->getRepository('AppBundle:Items')-> findOneBy([
-                'id' => $item->getItemsId(),
+            $i = $em->getRepository('AppBundle:Itemsbycharacter')-> findOneBy([
+                'itemid' => $item->getItemsId(),
             ]);
             $listItem[] = $i;
         }

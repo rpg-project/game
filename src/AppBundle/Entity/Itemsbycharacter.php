@@ -36,6 +36,104 @@ class Itemsbycharacter
     /**
      * @var integer
      *
+     * @ORM\Column(name="type", type="integer", nullable=true)
+     */
+    private $type;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=50, nullable=true)
+     */
+    private $name;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="bonus_move", type="integer", nullable=true)
+     */
+    private $bonusMove;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="bonus_quickness", type="integer", nullable=true)
+     */
+    private $bonusQuickness;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="bonus_attack", type="integer", nullable=true)
+     */
+    private $bonusAttack;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="bonus_defense", type="integer", nullable=true)
+     */
+    private $bonusDefense;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="bonus_health", type="integer", nullable=true)
+     */
+    private $bonusHealth;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="bonus_energy", type="integer", nullable=true)
+     */
+    private $bonusEnergy;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="capacity", type="integer", nullable=true)
+     */
+    private $capacity;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="price_buy", type="integer", nullable=true)
+     */
+    private $priceBuy;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="price_sell", type="integer", nullable=true)
+     */
+    private $priceSell;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image", type="string", length=50, nullable=true)
+     */
+    private $image;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="open", type="integer", nullable=true)
+     */
+    private $open;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="weigth", type="integer", nullable=true)
+     */
+    private $weigth;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="characterId", type="integer", nullable=true)
      */
     private $characterid;
@@ -110,6 +208,214 @@ class Itemsbycharacter
     /**
      * @return int
      */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param int $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBonusMove()
+    {
+        return $this->bonusMove;
+    }
+
+    /**
+     * @param int $bonusMove
+     */
+    public function setBonusMove($bonusMove)
+    {
+        $this->bonusMove = $bonusMove;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBonusQuickness()
+    {
+        return $this->bonusQuickness;
+    }
+
+    /**
+     * @param int $bonusQuickness
+     */
+    public function setBonusQuickness($bonusQuickness)
+    {
+        $this->bonusQuickness = $bonusQuickness;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBonusAttack()
+    {
+        return $this->bonusAttack;
+    }
+
+    /**
+     * @param int $bonusAttack
+     */
+    public function setBonusAttack($bonusAttack)
+    {
+        $this->bonusAttack = $bonusAttack;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBonusDefense()
+    {
+        return $this->bonusDefense;
+    }
+
+    /**
+     * @param int $bonusDefense
+     */
+    public function setBonusDefense($bonusDefense)
+    {
+        $this->bonusDefense = $bonusDefense;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBonusHealth()
+    {
+        return $this->bonusHealth;
+    }
+
+    /**
+     * @param int $bonusHealth
+     */
+    public function setBonusHealth($bonusHealth)
+    {
+        $this->bonusHealth = $bonusHealth;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBonusEnergy()
+    {
+        return $this->bonusEnergy;
+    }
+
+    /**
+     * @param int $bonusEnergy
+     */
+    public function setBonusEnergy($bonusEnergy)
+    {
+        $this->bonusEnergy = $bonusEnergy;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCapacity()
+    {
+        return $this->capacity;
+    }
+
+    /**
+     * @param int $capacity
+     */
+    public function setCapacity($capacity)
+    {
+        $this->capacity = $capacity;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriceBuy()
+    {
+        return $this->priceBuy;
+    }
+
+    /**
+     * @param int $priceBuy
+     */
+    public function setPriceBuy($priceBuy)
+    {
+        $this->priceBuy = $priceBuy;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriceSell()
+    {
+        return $this->priceSell;
+    }
+
+    /**
+     * @param int $priceSell
+     */
+    public function setPriceSell($priceSell)
+    {
+        $this->priceSell = $priceSell;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param string $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOpen()
+    {
+        return $this->open;
+    }
+
+    /**
+     * @param int $open
+     */
+    public function setOpen($open)
+    {
+        $this->open = $open;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWeigth()
+    {
+        return $this->weigth;
+    }
+
+    /**
+     * @param int $weigth
+     */
+    public function setWeigth($weigth)
+    {
+        $this->weigth = $weigth;
+    }
+
+    /**
+     * @return int
+     */
     public function getCharacterid()
     {
         return $this->characterid;
@@ -155,6 +461,21 @@ class Itemsbycharacter
         $this->itemid = $itemid;
     }
 
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
 
 }
 

@@ -22,7 +22,7 @@
                         {% if item.containerSpace > 0 %}
                             <li><a href="{{ path('options_inventory_see', {'id' : item.id}) }}">{{ item.itemId.name }}</a></li>
                         {% else %}
-                            <li><a href="#">{{ item.itemId.name }}</a></li>
+                            <li><a href="#">{{ item.name }}</a></li>
                         {% endif %}
                     {% endif %}
                 {% endfor %}

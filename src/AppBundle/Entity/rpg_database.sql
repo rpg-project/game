@@ -369,6 +369,20 @@ CREATE TABLE `itemsByCharacter` (
   `equiped` int(11) DEFAULT NULL,
   `contained` int(11) DEFAULT NULL,
   `container_space` int(11) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `bonus_move` int(11) DEFAULT NULL,
+  `bonus_quickness` int(11) DEFAULT NULL,
+  `bonus_attack` int(11) DEFAULT NULL,
+  `bonus_defense` int(11) DEFAULT NULL,
+  `bonus_health` int(11) DEFAULT NULL,
+  `bonus_energy` int(11) DEFAULT NULL,
+  `capacity` int(11) DEFAULT NULL,
+  `price_buy` int(11) DEFAULT NULL,
+  `price_sell` int(11) DEFAULT NULL,
+  `image` varchar(50) DEFAULT NULL,
+  `open` int(11) DEFAULT NULL,
+  `weigth` int(11) DEFAULT NULL,
   `characterId` int(11) DEFAULT NULL,
   `itemId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -384,7 +398,7 @@ CREATE TABLE `itemsByCharacter` (
 
 LOCK TABLES `itemsByCharacter` WRITE;
 /*!40000 ALTER TABLE `itemsByCharacter` DISABLE KEYS */;
-INSERT INTO `itemsByCharacter` VALUES (1,0,0,0,27,1),(2,0,0,10,27,2),(3,0,1,0,27,3),(4,0,1,0,27,4);
+INSERT INTO `itemsByCharacter` VALUES (1,0,0,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,27,1),(2,0,0,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,27,2),(3,0,1,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,27,3),(4,0,1,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,27,4);
 /*!40000 ALTER TABLE `itemsByCharacter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -566,4 +580,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-11 14:29:26
+-- Dump completed on 2018-04-11 16:17:09

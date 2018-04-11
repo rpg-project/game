@@ -23,6 +23,76 @@
         <option name="unsigned"/>
       </options>
     </field>
+    <field name="name" type="string" column="name" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="type" type="integer" column="type" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="bonusMove" type="integer" column="bonus_move" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="bonusQuickness" type="integer" column="bonus_quickness" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="bonusAttack" type="integer" column="bonus_attack" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="bonusDefense" type="integer" column="bonus_defense" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="bonusHealth" type="integer" column="bonus_health" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="bonusEnergy" type="integer" column="bonus_energy" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="capacity" type="integer" column="capacity" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="priceBuy" type="integer" column="price_buy" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="priceSell" type="integer" column="price_sell" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="image" type="string" column="image" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="open" type="integer" column="open" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="weigth" type="integer" column="weigth" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
     <field name="characterid" type="integer" column="characterId" nullable="true">
       <options>
         <option name="unsigned"/>
