@@ -20,9 +20,13 @@
                 {% for item in list %}
                     {% if item.contained == 0 %}
                         {% if item.containerSpace > 0 %}
-                            <li><a href="{{ path('options_inventory_see', {'id' : item.id}) }}">{{ item.itemId.name }}</a></li>
+                            <li><a href="#">{{ item.itemId.name }}</a>
+                                <a href="{{ path('options_inventory_see', {'id' : item.id}) }}" class="btn btn-primary">Ouvrir</a>
+                            </li>
                         {% else %}
-                            <li><a href="#">{{ item.name }}</a></li>
+                            <li><a href="#">{{ item.name }}</a>
+                                <a href="#" class="btn btn-primary">Equiper</a>
+                            </li>
                         {% endif %}
                     {% endif %}
                 {% endfor %}
