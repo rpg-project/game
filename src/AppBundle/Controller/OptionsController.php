@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Characters;
+use AppBundle\Entity\Followersbycharacter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -72,6 +74,7 @@ class OptionsController extends Controller
             'characterId' => $id,
         ]);
 
+        /** @var Characters $character */
         $balance = $character->getLaw()- $character->getChaos();
         $goodness = $character->getGood()- $character->getEvil();
         $balanceTeam = 0;
@@ -84,26 +87,29 @@ class OptionsController extends Controller
         }
         $goldMin = 0;
         if(!empty($team)){
+            /** @var Team $mate */
             foreach ($team as $mate){
                 $place = $mate->getPlace();
-                $follower = $em->getRepository('AppBundle:Followersbycharacter')->findBy([
+                $follower = $em->getRepository('AppBundle:Followersbycharacter')->findOneBy([
                     'id' => $mate->getTeamMateId(),
                 ]);
-                $teamFinal[$place]['mate'] = $follower[0];
-                if($follower[0]->getGoal() == 3){
-                    $goldMin += $follower[0]->getLevel() * $follower[0]->getFollowerid()->getLevelMin();
+
+                /** @var Followersbycharacter $follower  */
+                $teamFinal[$place]['mate'] = $follower;
+                if($follower->getGoal() === 3){
+                    $goldMin += $follower->getLevel() * $follower->getFollowerid()->getLevelMin();
                     $session->set('goldMin', $goldMin);
                 }
-                $teamFinal[$place]['avalaible'] = $this->goal($follower[0]->getGoal());
+                $teamFinal[$place]['avalaible'] = $this->goal($follower->getGoal());
                 if($teamFinal[$place]['avalaible'] == false){
                     $mate->setAvalaible(1);
                 } else {
                     $mate->setAvalaible(0);
                 }
-                $balance += $follower[0]->getLaw() - $follower[0]->getChaos();
-                $balanceTeam += $follower[0]->getLaw() - $follower[0]->getChaos();
-                $goodness += $follower[0]->getGood() - $follower[0]->getEvil();
-                $goodnessTeam += $follower[0]->getGood() - $follower[0]->getEvil();
+                $balance += $follower->getLaw() - $follower->getChaos();
+                $balanceTeam += $follower->getLaw() - $follower->getChaos();
+                $goodness += $follower->getGood() - $follower->getEvil();
+                $goodnessTeam += $follower->getGood() - $follower->getEvil();
             }
         }
 
@@ -417,6 +423,78 @@ class OptionsController extends Controller
         }
 
         return $list;
-    }    
+    }
+
+    /**
+     * @Route("/options/inventory/{id}", name="options_inventory")
+     */
+    public function inventoryAction($id){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $session = $this->get('session');
+
+        $inventory = $em->getRepository('AppBundle:Itemsbycharacter')-> findBy([
+            'characterid' => $id,
+        ]);
+
+        $listEquiped = array();
+        $list = array();
+        foreach ($inventory as $item){
+            if($item->getEquiped() === 1){
+                $listEquiped[] = $item;
+            } else {
+                $list[] = $item;
+            }
+        }
+
+        $listFinal = array();
+        foreach ($list as $item){
+            if($item->getContained() === 0){
+                $listFinal[$item->getId()] = $item;
+            }
+        }
+
+        $session->set('listInventory', $listFinal);
+        $session->set('listEquiped', $listEquiped);
+
+        return $this->render('default/inventory.html.twig', [
+            'list' => $listFinal,
+            'listEquiped' => $listEquiped,
+            'listIn' => null,
+        ]);
+    }
+
+    /**
+     * @Route("/options/inventory/see/{id}", name="options_inventory_see")
+     */
+    public function inventorySeeAction($id){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $session = $this->get('session');
+
+        $listFinal = $session->get('listInventory');
+        $listEquiped = $session->get('listEquiped');
+
+        $listIn = $em->getRepository('AppBundle:Containers')-> findBy([
+            'containerid' => $id,
+        ]);
+
+        $listItem = array();
+        foreach ($listIn as $item){
+            $i = $em->getRepository('AppBundle:Items')-> findOneBy([
+                'id' => $item->getItemsId(),
+            ]);
+            $listItem[] = $i;
+        }
+
+        return $this->render('default/inventory.html.twig', [
+            'list' => $listFinal,
+            'listEquiped' => $listEquiped,
+            'listIn' => $listItem,
+        ]);
+    }
+
 
 }

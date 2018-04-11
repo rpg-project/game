@@ -75,6 +75,22 @@ class Team
     /**
      * @return int
      */
+    public function getAvalaible()
+    {
+        return $this->avalaible;
+    }
+
+    /**
+     * @param int $avalaible
+     */
+    public function setAvalaible($avalaible)
+    {
+        $this->avalaible = $avalaible;
+    }
+
+    /**
+     * @return int
+     */
     public function getTeamMateId()
     {
         return $this->teamMateId;
@@ -136,21 +152,6 @@ class Team
         $this->id = $id;
     }
 
-    /**
-     * @return int
-     */
-    public function getAvalaible()
-    {
-        return $this->avalaible;
-    }
-
-    /**
-     * @param int $avalaible
-     */
-    public function setAvalaible($avalaible)
-    {
-        $this->avalaible = $avalaible;
-    }
 
 }
 

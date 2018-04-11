@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Inventaire</h1>
+        <div class="col-lg-4">
+            <h2>Equipé</h2>
+            <ul>
+                {% for item in listEquiped %}
+                    {% if item.contained == 0 %}
+                        <li>{{ item.itemId.name }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-lg-4">
+            <h2>Non Equipé</h2>
+            <ul>
+                {% for item in list %}
+                    {% if item.contained == 0 %}
+                        {% if item.containerSpace > 0 %}
+                            <li><a href="{{ path('options_inventory_see', {'id' : item.id}) }}">{{ item.itemId.name }}</a></li>
+                        {% else %}
+                            <li><a href="#">{{ item.itemId.name }}</a></li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% if listIn != null %}
+        <div class="col-lg-4">
+            <h2>Contenu</h2>
+            <ul>
+                {% for item in listIn %}
+                    <li>{{ item.name }}</li>
+                {% endfor %}
+            </ul>
+            <a href="javascript:history.go(-1)" class="btn btn-primary">Fermer</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

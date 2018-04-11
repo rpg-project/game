@@ -619,6 +619,5 @@ class Followersbycharacter
     }
 
 
-
 }
 

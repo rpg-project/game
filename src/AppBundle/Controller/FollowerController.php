@@ -17,8 +17,7 @@ class FollowerController extends Controller
      * @Route("/stats_follower/{id}", name="stats_follower")
      */
     public function statsAction($id){
-        echo 'ici';
-        die;
+
         $em = $this->getDoctrine()->getManager();
 
         $follower = $em->getRepository('AppBundle:Followersbycharacter')->find($id);
