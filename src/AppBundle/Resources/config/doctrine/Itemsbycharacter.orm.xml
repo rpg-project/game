@@ -23,6 +23,11 @@
         <option name="unsigned"/>
       </options>
     </field>
+    <field name="containerid" type="integer" column="containerId" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
     <field name="name" type="string" column="name" length="50" nullable="true">
       <options>
         <option name="fixed"/>

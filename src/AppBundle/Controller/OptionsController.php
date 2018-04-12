@@ -428,7 +428,7 @@ class OptionsController extends Controller
     /**
      * @Route("/options/inventory/{id}", name="options_inventory")
      */
-    public function inventoryAction($id){
+    public function inventoryAction($id, $containerId = null){
 
         $em = $this->getDoctrine()->getManager();
 
@@ -447,20 +447,32 @@ class OptionsController extends Controller
                 $list[] = $item;
             }
         }
-        $listFinal = array();
+        $listNotContained = array();
+        $ListContained = array();
         foreach ($list as $item){
             if($item->getContained() === 0){
-                $listFinal[$item->getId()] = $item;
+                $listNotContained[$item->getId()] = $item;
+            } else {
+                if(isset($listContained[$item->getContainerId()])){
+                    $listContained[$item->getContainerId()][] = $item;
+                } else {
+                    $listContained[$item->getContainerId()] = null;
+                    $listContained[$item->getContainerId()][] = $item;
+                }
+
             }
         }
 
-        $session->set('listInventory', $listFinal);
+        $listIn = null;
+
+        $session->set('listInventory', $listNotContained);
+        $session->set('listContained', $listContained);
         $session->set('listEquiped', $listEquiped);
 
         return $this->render('default/inventory.html.twig', [
-            'list' => $listFinal,
+            'list' => $listNotContained,
             'listEquiped' => $listEquiped,
-            'listIn' => null,
+            'listIn' => $listIn,
         ]);
     }
 
@@ -469,29 +481,16 @@ class OptionsController extends Controller
      */
     public function inventorySeeAction($id){
 
-        $em = $this->getDoctrine()->getManager();
-
         $session = $this->get('session');
 
-        $listFinal = $session->get('listInventory');
+        $listNotContained = $session->get('listInventory');
         $listEquiped = $session->get('listEquiped');
-
-        $listIn = $em->getRepository('AppBundle:Containers')-> findBy([
-            'containerid' => $id,
-        ]);
-
-        $listItem = array();
-        foreach ($listIn as $item){
-            $i = $em->getRepository('AppBundle:Itemsbycharacter')-> findOneBy([
-                'itemid' => $item->getItemsId(),
-            ]);
-            $listItem[] = $i;
-        }
+        $listContained = $session->get('listContained');
 
         return $this->render('default/inventory.html.twig', [
-            'list' => $listFinal,
+            'list' => $listNotContained,
             'listEquiped' => $listEquiped,
-            'listIn' => $listItem,
+            'listIn' => $listContained[$id],
         ]);
     }
 

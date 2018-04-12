@@ -36,9 +36,9 @@ class Itemsbycharacter
     /**
      * @var integer
      *
-     * @ORM\Column(name="type", type="integer", nullable=true)
+     * @ORM\Column(name="containerId", type="integer", nullable=true)
      */
-    private $type;
+    private $containerid;
 
     /**
      * @var string
@@ -46,6 +46,13 @@ class Itemsbycharacter
      * @ORM\Column(name="name", type="string", length=50, nullable=true)
      */
     private $name;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="type", type="integer", nullable=true)
+     */
+    private $type;
 
     /**
      * @var integer
@@ -203,6 +210,38 @@ class Itemsbycharacter
     public function setContainerSpace($containerSpace)
     {
         $this->containerSpace = $containerSpace;
+    }
+
+    /**
+     * @return int
+     */
+    public function getContainerid()
+    {
+        return $this->containerid;
+    }
+
+    /**
+     * @param int $containerid
+     */
+    public function setContainerid($containerid)
+    {
+        $this->containerid = $containerid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 
     /**
@@ -461,21 +500,6 @@ class Itemsbycharacter
         $this->itemid = $itemid;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
 
 }
 
