@@ -356,7 +356,7 @@ CREATE TABLE `items` (
 
 LOCK TABLES `items` WRITE;
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
-INSERT INTO `items` VALUES (1,'Bow',1,1,NULL,NULL,0,0,1,0,1,0,0,4,20,100,0,0,0,NULL,2),(2,'Bag',2,1,NULL,NULL,0,0,0,0,0,0,0,0,10,25,1,1,10,NULL,1),(3,'heal potion',3,1,NULL,NULL,0,0,0,0,0,10,0,0,10,50,0,0,0,NULL,1),(4,'key',4,0,NULL,NULL,0,0,0,0,0,0,0,0,0,0,0,0,0,NULL,1),(5,'key pocket',2,0,NULL,NULL,0,0,0,0,0,0,0,0,0,0,1,1,1000,NULL,0);
+INSERT INTO `items` VALUES (1,'Bow',1,1,1,'C',0,0,1,0,1,0,0,4,20,100,0,0,0,NULL,2),(2,'Bag',2,1,1,'C',0,0,0,0,0,0,0,0,10,25,1,1,10,NULL,1),(3,'heal potion',3,1,1,'C',0,0,0,0,0,10,0,0,10,50,0,0,0,NULL,1),(6,'dagger',1,1,1,'C',0,1,1,0,1,0,0,1,15,50,0,0,0,NULL,1);
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -405,8 +405,56 @@ CREATE TABLE `itemsByCharacter` (
 
 LOCK TABLES `itemsByCharacter` WRITE;
 /*!40000 ALTER TABLE `itemsByCharacter` DISABLE KEYS */;
-INSERT INTO `itemsByCharacter` VALUES (1,0,1,0,2,'Bow',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,27,1),(2,0,0,10,0,'Bag',2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,27,2),(3,0,1,0,2,'Heal potion',3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,27,3);
+INSERT INTO `itemsByCharacter` VALUES (1,0,1,0,2,'Bow',1,2,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,27,1),(2,0,0,10,0,'Bag',2,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,27,2),(3,0,1,0,2,'Heal potion',3,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,27,3);
 /*!40000 ALTER TABLE `itemsByCharacter` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `itemsByFollowers`
+--
+
+DROP TABLE IF EXISTS `itemsByFollowers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `itemsByFollowers` (
+  `id` int(11) NOT NULL,
+  `equiped` int(11) DEFAULT NULL,
+  `contained` int(11) DEFAULT NULL,
+  `container_space` int(11) DEFAULT NULL,
+  `containerId` int(11) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `level_min` int(11) DEFAULT NULL,
+  `level` int(11) DEFAULT NULL,
+  `quality` varchar(45) DEFAULT NULL,
+  `bonus_move` int(11) DEFAULT NULL,
+  `bonus_quickness` int(11) DEFAULT NULL,
+  `bonus_attack` int(11) DEFAULT NULL,
+  `bonus_defense` int(11) DEFAULT NULL,
+  `bonus_health` int(11) DEFAULT NULL,
+  `bonus_energy` int(11) DEFAULT NULL,
+  `capacity` int(11) DEFAULT NULL,
+  `price_buy` int(11) DEFAULT NULL,
+  `price_sell` int(11) DEFAULT NULL,
+  `image` varchar(50) DEFAULT NULL,
+  `open` int(11) DEFAULT NULL,
+  `weigth` int(11) DEFAULT NULL,
+  `itemId` int(11) DEFAULT NULL,
+  `followerId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `followerId_idx` (`followerId`),
+  CONSTRAINT `followerId` FOREIGN KEY (`followerId`) REFERENCES `followersByCharacter` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `itemsByFollowers`
+--
+
+LOCK TABLES `itemsByFollowers` WRITE;
+/*!40000 ALTER TABLE `itemsByFollowers` DISABLE KEYS */;
+INSERT INTO `itemsByFollowers` VALUES (1,0,0,10,0,'Bag',2,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,2,78),(2,0,1,0,1,'Dagger',1,1,1,'C',0,1,1,0,0,0,1,15,50,NULL,0,1,6,78);
+/*!40000 ALTER TABLE `itemsByFollowers` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -587,4 +635,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-13 15:25:49
+-- Dump completed on 2018-04-13 16:36:14

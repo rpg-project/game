@@ -436,6 +436,8 @@ class OptionsController extends Controller
 
         $character = $session->get('character');
 
+        $team = $session->get('team');
+
         $inventory = $em->getRepository('AppBundle:Itemsbycharacter')-> findBy([
             'characterid' => $id,
         ]);
@@ -450,7 +452,6 @@ class OptionsController extends Controller
             }
         }
         $listNotContained = array();
-        $ListContained = array();
         foreach ($list as $item){
             if($item->getContained() === 0){
                 $listNotContained[$item->getId()] = $item;
@@ -476,6 +477,7 @@ class OptionsController extends Controller
             'listEquiped' => $listEquiped,
             'listIn' => $listIn,
             'character' => $character,
+            'team' => $team,
         ]);
     }
 
@@ -484,14 +486,16 @@ class OptionsController extends Controller
      */
     public function inventorySeeAction($id){
 
+        $em = $this->getDoctrine()->getManager();
+
         $session = $this->get('session');
 
         $character = $session->get('character');
+        $team = $session->get('team');
         $listNotContained = $session->get('listInventory');
         $listEquiped = $session->get('listEquiped');
         $listContained = $session->get('listContained');
 
-        $listIn = array();
         if(isset($listContained[$id]))
         {
             $listIn = $listContained[$id];
@@ -499,13 +503,86 @@ class OptionsController extends Controller
             $listIn = null;
         }
 
+        $session->set('listIn', $listIn);
+
         return $this->render('default/inventory.html.twig', [
             'list' => $listNotContained,
             'listEquiped' => $listEquiped,
             'listIn' => $listIn,
             'character' => $character,
+            'team' => $team,
         ]);
     }
+
+    /**
+     * @Route("/options/inventory/follower/see/{id}", name="options_inventory_follower_see")
+     */
+    public function inventoryFollowerSeeAction($id){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $session = $this->get('session');
+
+        $character = $session->get('character');
+        $team = $session->get('team');
+        $listNotContained = $session->get('listInventory');
+        $listEquiped = $session->get('listEquiped');
+        $listContained = $session->get('listContained');
+        $listIn = $session->get('listIn');
+
+        $follower = $followerInventory = $em->getRepository('AppBundle:Followersbycharacter')-> findOneBy([
+            'id' => $id,
+        ]);
+
+        $followerInventory = $em->getRepository('AppBundle:Itemsbyfollowers')-> findBy([
+            'followerid' => $id,
+        ]);
+
+        $followerListEquiped = array();
+        $followerList = array();
+        foreach ($followerInventory as $item){
+            if($item->getEquiped() === 1){
+                $followerListEquiped[] = $item;
+            } else {
+                $followerList[] = $item;
+            }
+        }
+        $FollowerListNotContained = array();
+        foreach ($followerList as $item){
+            if($item->getContained() === 0){
+                $FollowerListNotContained[$id] = $item;
+            } else {
+                if(isset($FollowerListContained[$id])){
+                    $FollowerListContained[$id][] = $item;
+                } else {
+                    $FollowerListContained[$id] = null;
+                    $FollowerListContained[$id][] = $item;
+                }
+
+            }
+        }
+
+        $FollowerlistIn = null;
+        if(isset($FollowerListContained[$id]))
+        {
+            $FollowerlistIn = $FollowerListContained[$id];
+        } else {
+            $FollowerlistIn = null;
+        }
+
+        return $this->render('default/inventoryFollower.html.twig', [
+            'list' => $listNotContained,
+            'listEquiped' => $listEquiped,
+            'listIn' => $listIn,
+            'followerList' => $followerList,
+            'followerListEquiped' => $followerListEquiped,
+            'followerListIn' => $FollowerlistIn,
+            'character' => $character,
+            'team' => $team,
+            'follower' => $follower,
+        ]);
+    }
+
 
 
 }

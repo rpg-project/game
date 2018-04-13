@@ -617,5 +617,7 @@ class Followersbycharacter
     {
         $this->characterid = $characterid;
     }
+
+
 }
 
