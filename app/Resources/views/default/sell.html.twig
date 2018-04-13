@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Vente</h1>
+        <h3>Or disponible : {{ character.gold }}</h3>
+        <table class="table">
+            <tr>
+                <th>Objet</th>
+                <th>Prix</th>
+                <th></th>
+            </tr>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.priceSell  }}</td>
+                {% if item.priceSell <= character.gold %}
+                    <td><a href="#" class="btn btn-primary">Acheter</a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="row">
+        <a href="javascript:history.go(-1)" class="btn btn-primary">Retour</a>
+    </div>
+</div>
+{% endblock %}

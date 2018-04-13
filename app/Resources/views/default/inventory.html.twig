@@ -15,7 +15,7 @@
             </ul>
         </div>
         <div class="col-lg-4">
-            <h2>Non Equipé</h2>
+            <h2>Sacs</h2>
             <ul>
                 {% for item in list %}
                     {% if item.contained == 0 %}
@@ -37,12 +37,30 @@
             <h2>Contenu</h2>
             <ul>
                 {% for item in listIn %}
-                    <li>{{ item.name }}</li>
+                    <li><a href="#">{{ item.name }}</a>
+                        {% if item.type == 1 %}
+                            {% if character.level >= item.levelMin %}
+                                <a href="#" class="btn btn-primary">Equiper</a>
+                            {% else %}
+                                Niveau Requis : {{ item.levelMin }}
+                            {% endif %}
+                        {% endif %}
+                        {% if item.type == 3 %}
+                            {% if character.level >= item.levelMin %}
+                                <a href="#" class="btn btn-primary">Utiliser</a>
+                            {% else %}
+                                Niveau Requis : {{ item.levelMin }}
+                            {% endif %}
+                        {% endif %}
+                    </li>
                 {% endfor %}
             </ul>
             <a href="javascript:history.go(-1)" class="btn btn-primary">Fermer</a>
         </div>
         {% endif %}
+    </div>
+    <div class="row">
+        <a href="javascript:history.go(-1)" class="btn btn-primary">Retour</a>
     </div>
 </div>
 {% endblock %}

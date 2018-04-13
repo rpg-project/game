@@ -154,7 +154,7 @@ CREATE TABLE `characters` (
 
 LOCK TABLES `characters` WRITE;
 /*!40000 ALTER TABLE `characters` DISABLE KEYS */;
-INSERT INTO `characters` VALUES (24,'hhh',0,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,310,0,0,0,0,0,0,0,0,0,10,NULL,1,1),(27,'ddddddddd',2,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,280,0,0,0,0,0,5,0,0,41,10,NULL,2,1);
+INSERT INTO `characters` VALUES (24,'hhh',0,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,310,0,0,0,0,0,0,0,0,0,10,NULL,1,1),(27,'ddddddddd',75,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,280,0,0,0,0,0,5,0,0,41,10,NULL,2,1);
 /*!40000 ALTER TABLE `characters` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -231,7 +231,7 @@ CREATE TABLE `followers` (
 
 LOCK TABLES `followers` WRITE;
 /*!40000 ALTER TABLE `followers` DISABLE KEYS */;
-INSERT INTO `followers` VALUES (1,'Conan',1,5,5,0,0,3,3,4,2,1,1,0,' ',1,'SR',10,2,0,1,0,0,0,0),(2,'Sonia La Rousse',1,5,5,0,0,3,3,3,3,1,1,0,' ',1,'SR',10,2,0,1,0,0,0,0),(3,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',50,1,1,0,10,0,0,0),(4,'Sherif',2,5,5,0,0,3,3,4,2,1,1,0,' ',1,'SR',10,2,1,1,50,0,0,0),(5,'Paladin',2,5,5,0,0,3,3,4,4,1,1,0,' ',1,'SSR',5,3,2,1,100,0,100,0),(6,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'R',30,1,1,0,10,0,0,0),(7,'Archer',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',25,1,1,0,10,0,0,0),(8,'Merc',1,3,3,0,0,3,3,4,3,1,1,0,' ',1,'R',30,1,3,0,0,0,0,0),(9,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',1,'R',50,1,0,0,0,0,0,0),(10,'Thief',1,3,3,0,0,3,3,2,4,1,1,0,'',1,'R',20,1,4,0,0,10,0,0),(11,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',1,'R',15,1,0,0,0,0,0,0),(12,'Priest',1,3,3,0,0,3,3,3,3,1,1,0,' ',1,'R',15,1,0,0,0,0,0,0);
+INSERT INTO `followers` VALUES (1,'Conan',1,5,5,0,0,3,3,4,2,1,1,0,' ',1,'SR',10,2,0,1,0,0,0,0),(2,'Sonia La Rousse',1,5,5,0,0,3,3,3,3,1,1,0,' ',1,'SR',10,2,0,1,0,0,0,0),(3,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'C',50,1,1,0,10,0,0,0),(4,'Sherif',2,5,5,0,0,3,3,4,2,1,1,0,' ',1,'SR',10,2,1,1,50,0,0,0),(5,'Paladin',2,5,5,0,0,3,3,4,4,1,1,0,' ',1,'SSR',5,3,2,1,100,0,100,0),(6,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'C',30,1,1,0,10,0,0,0),(7,'Archer',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'C',25,1,1,0,10,0,0,0),(8,'Merc',1,3,3,0,0,3,3,4,3,1,1,0,' ',1,'R',30,1,3,0,0,0,0,0),(9,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',1,'R',50,1,0,0,0,0,0,0),(10,'Thief',1,3,3,0,0,3,3,2,4,1,1,0,'',1,'R',20,1,4,0,0,10,0,0),(11,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',1,'R',15,1,0,0,0,0,0,0),(12,'Priest',1,3,3,0,0,3,3,3,3,1,1,0,' ',1,'R',15,1,0,0,0,0,0,0);
 /*!40000 ALTER TABLE `followers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -313,7 +313,7 @@ CREATE TABLE `functionsByPlace` (
 
 LOCK TABLES `functionsByPlace` WRITE;
 /*!40000 ALTER TABLE `functionsByPlace` DISABLE KEYS */;
-INSERT INTO `functionsByPlace` VALUES (1,1,1,'Recrutement'),(2,1,8,'Rumeurs'),(3,1,2,'Embauches'),(4,2,1,'Enrôlement'),(5,2,8,'Informations'),(6,2,2,'Enquêtes'),(7,1,7,'Salle de Repos'),(8,2,3,'Salle d\'entraînement');
+INSERT INTO `functionsByPlace` VALUES (1,1,1,'Recrutement'),(2,1,8,'Rumeurs'),(3,1,2,'Embauches'),(4,2,1,'Enrôlement'),(5,2,8,'Informations'),(6,2,2,'Enquêtes'),(7,1,7,'Salle de Repos'),(8,2,3,'Salle d\'entraînement'),(9,3,5,'Vente'),(10,3,6,'Récupération'),(11,3,8,'Informations');
 /*!40000 ALTER TABLE `functionsByPlace` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -328,6 +328,9 @@ CREATE TABLE `items` (
   `id` int(11) NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `type` int(11) DEFAULT NULL,
+  `level` int(11) DEFAULT NULL,
+  `level_min` int(11) DEFAULT NULL,
+  `quality` varchar(45) DEFAULT NULL,
   `bonus_move` int(11) DEFAULT NULL,
   `bonus_quickness` int(11) DEFAULT NULL,
   `bonus_attack` int(11) DEFAULT NULL,
@@ -353,7 +356,7 @@ CREATE TABLE `items` (
 
 LOCK TABLES `items` WRITE;
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
-INSERT INTO `items` VALUES (1,'Bow',1,0,0,1,0,1,0,0,4,20,100,0,0,0,NULL,2),(2,'Bag',2,0,0,0,0,0,0,0,0,10,25,1,1,10,NULL,1),(3,'heal potion',3,0,0,0,0,0,10,0,0,10,50,0,0,0,NULL,1),(4,'key',4,0,0,0,0,0,0,0,0,0,0,0,0,0,NULL,1);
+INSERT INTO `items` VALUES (1,'Bow',1,1,NULL,NULL,0,0,1,0,1,0,0,4,20,100,0,0,0,NULL,2),(2,'Bag',2,1,NULL,NULL,0,0,0,0,0,0,0,0,10,25,1,1,10,NULL,1),(3,'heal potion',3,1,NULL,NULL,0,0,0,0,0,10,0,0,10,50,0,0,0,NULL,1),(4,'key',4,0,NULL,NULL,0,0,0,0,0,0,0,0,0,0,0,0,0,NULL,1),(5,'key pocket',2,0,NULL,NULL,0,0,0,0,0,0,0,0,0,0,1,1,1000,NULL,0);
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -372,6 +375,9 @@ CREATE TABLE `itemsByCharacter` (
   `containerId` int(11) DEFAULT NULL,
   `name` varchar(50) DEFAULT NULL,
   `type` int(11) DEFAULT NULL,
+  `level_min` int(11) DEFAULT NULL,
+  `level` int(11) DEFAULT NULL,
+  `quality` varchar(45) DEFAULT NULL,
   `bonus_move` int(11) DEFAULT NULL,
   `bonus_quickness` int(11) DEFAULT NULL,
   `bonus_attack` int(11) DEFAULT NULL,
@@ -399,7 +405,7 @@ CREATE TABLE `itemsByCharacter` (
 
 LOCK TABLES `itemsByCharacter` WRITE;
 /*!40000 ALTER TABLE `itemsByCharacter` DISABLE KEYS */;
-INSERT INTO `itemsByCharacter` VALUES (1,0,0,0,NULL,'Bow',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,27,1),(2,0,0,10,NULL,'Bag',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,27,2),(3,0,1,0,2,'Heal potion',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,27,3),(4,0,1,0,2,'Key',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,27,4);
+INSERT INTO `itemsByCharacter` VALUES (1,0,1,0,2,'Bow',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,27,1),(2,0,0,10,0,'Bag',2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,27,2),(3,0,1,0,2,'Heal potion',3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,27,3);
 /*!40000 ALTER TABLE `itemsByCharacter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -453,7 +459,7 @@ CREATE TABLE `places` (
 
 LOCK TABLES `places` WRITE;
 /*!40000 ALTER TABLE `places` DISABLE KEYS */;
-INSERT INTO `places` VALUES (1,'Taverne',1,1),(2,'Poste de garde',2,1);
+INSERT INTO `places` VALUES (1,'Taverne',1,1),(2,'Poste de garde',2,1),(3,'Quincaillerie',3,1);
 /*!40000 ALTER TABLE `places` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -480,7 +486,7 @@ CREATE TABLE `placesByMap` (
 
 LOCK TABLES `placesByMap` WRITE;
 /*!40000 ALTER TABLE `placesByMap` DISABLE KEYS */;
-INSERT INTO `placesByMap` VALUES (1,1,1),(2,1,2);
+INSERT INTO `placesByMap` VALUES (1,1,1),(2,1,2),(3,1,3);
 /*!40000 ALTER TABLE `placesByMap` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -581,4 +587,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-12 13:43:29
+-- Dump completed on 2018-04-13 15:25:49

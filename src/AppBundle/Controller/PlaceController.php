@@ -203,10 +203,24 @@ class PlaceController extends Controller
     /**
      * @Route("/sell/{placeId}", name="sell")
      */
-    public function sellAction($level){
+    public function sellAction($placeId){
 
-        echo 'ventes';
-        die;
+        $em = $this->getDoctrine()->getManager();
+
+        $session = $this->get('session');
+
+        $character = $session->get('character');
+
+        $place = $em->getRepository("AppBundle:Places")->find($placeId);
+
+        $items = $em->getRepository('AppBundle:Items')->findBy([
+            'level' => $place->getLevel(),
+        ]);
+
+        return $this->render('default/sell.html.twig', [
+            'items' => $items,
+            'character' => $character,
+        ]);
     }
 
     /**

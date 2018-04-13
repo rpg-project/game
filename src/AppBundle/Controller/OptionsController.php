@@ -434,6 +434,8 @@ class OptionsController extends Controller
 
         $session = $this->get('session');
 
+        $character = $session->get('character');
+
         $inventory = $em->getRepository('AppBundle:Itemsbycharacter')-> findBy([
             'characterid' => $id,
         ]);
@@ -473,6 +475,7 @@ class OptionsController extends Controller
             'list' => $listNotContained,
             'listEquiped' => $listEquiped,
             'listIn' => $listIn,
+            'character' => $character,
         ]);
     }
 
@@ -483,14 +486,24 @@ class OptionsController extends Controller
 
         $session = $this->get('session');
 
+        $character = $session->get('character');
         $listNotContained = $session->get('listInventory');
         $listEquiped = $session->get('listEquiped');
         $listContained = $session->get('listContained');
 
+        $listIn = array();
+        if(isset($listContained[$id]))
+        {
+            $listIn = $listContained[$id];
+        } else {
+            $listIn = null;
+        }
+
         return $this->render('default/inventory.html.twig', [
             'list' => $listNotContained,
             'listEquiped' => $listEquiped,
-            'listIn' => $listContained[$id],
+            'listIn' => $listIn,
+            'character' => $character,
         ]);
     }
 

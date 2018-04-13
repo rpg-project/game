@@ -14,6 +14,21 @@
         <option name="unsigned"/>
       </options>
     </field>
+    <field name="level" type="integer" column="level" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="levelMin" type="integer" column="level_min" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="quality" type="string" column="quality" length="45" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
     <field name="bonusMove" type="integer" column="bonus_move" nullable="true">
       <options>
         <option name="unsigned"/>

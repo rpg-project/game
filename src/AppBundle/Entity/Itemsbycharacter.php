@@ -57,6 +57,27 @@ class Itemsbycharacter
     /**
      * @var integer
      *
+     * @ORM\Column(name="level_min", type="integer", nullable=true)
+     */
+    private $levelMin;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="level", type="integer", nullable=true)
+     */
+    private $level;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="quality", type="string", length=45, nullable=true)
+     */
+    private $quality;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="bonus_move", type="integer", nullable=true)
      */
     private $bonusMove;
@@ -258,6 +279,54 @@ class Itemsbycharacter
     public function setType($type)
     {
         $this->type = $type;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLevelMin()
+    {
+        return $this->levelMin;
+    }
+
+    /**
+     * @param int $levelMin
+     */
+    public function setLevelMin($levelMin)
+    {
+        $this->levelMin = $levelMin;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    /**
+     * @param int $level
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
+    }
+
+    /**
+     * @return string
+     */
+    public function getQuality()
+    {
+        return $this->quality;
+    }
+
+    /**
+     * @param string $quality
+     */
+    public function setQuality($quality)
+    {
+        $this->quality = $quality;
     }
 
     /**
