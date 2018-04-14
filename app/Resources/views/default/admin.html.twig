@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+	    <div class="row">
+	    	<h1>Page Administrateur</h1>
+	    	<h4>Zone</h4>
+	    	<a href="#" class="btn btn-primary">Nouvelle zone</a>
+	    	<a href="#" class="btn btn-primary">Nouveau lieu</a>
+	    	<a href="#" class="btn btn-primary">Nouvelle Fonction de Lieu</a>
+	    	
+	    	<h4>Tables</h4>
+	    	<a href="#" class="btn btn-primary">Nouvelle Capacité</a>
+	    	<a href="#" class="btn btn-primary">Nouveau Item</a>
+
+	    	<h4>Suivants</h4>
+	    	<a href="{{ path('admin_new_follower')}}" class="btn btn-primary">Nouveau suivant</a>
+	    	<a href="#" class="btn btn-primary">Nouvelle Capacité par Suivant Item</a>
+	    </div>
+</div>
+{% endblock %}
