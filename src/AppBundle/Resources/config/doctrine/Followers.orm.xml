@@ -127,5 +127,10 @@
         <option name="unsigned"/>
       </options>
     </field>
+    <field name="maxCapacityBag" type="integer" column="max_capacity_bag" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
   </entity>
 </doctrine-mapping>

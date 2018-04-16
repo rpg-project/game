@@ -12,43 +12,37 @@
             {% endfor %}
         </ul>
     </div>
-    <div class="col-lg-2">
-        <h4>Sacs</h4>
-        <ul>
-            {% for item in followerList %}
-                {% if item.contained == 0 %}
-                    {% if item.containerSpace > 0 %}
-                        <li><a href="#">{{ item.name }}</a>
-                        </li>
+    <div class="col-lg-8">
+        <h4>Contenu du Sac ( {{ countFollower }} / {{ follower.maxCapacityBag }} )</h4>
+        <table style="text-align:center;"><tr>
+                {% for item in followerListIn %}
+
+                    {% if item != false %}
+
+                        <td style="border:2px solid rosybrown;width:40px;height: 40px;">
+                        <img src="{{ asset(item.image) }}" width="40" title="{{ item.name }}">
+                        <a href="" title="Voir les détails"><img src="{{ asset('images/loupe.jpg') }}" width="10"></a>
+                        {% if item.type == 1 %}
+                            {% if character.level >= item.levelMin %}
+                                <a href="#" title="Equiper"><img src="{{ asset('images/casque.jpg') }}" width="15"></a></td>
+                            {% else %}
+                                <a href="#" title ="Niveau Requis : {{ item.levelMin }}"><img src="{{ asset('images/exclamation.png') }}" width="10"></a></td>
+                            {% endif %}
+                        {% endif %}
+                        {% if item.type == 3 %}
+                            {% if character.level >= item.levelMin %}
+                                <a href="#" title="Utiliser"><img src="{{ asset('images/main.png') }}" width="10"></a></td>
+                            {% else %}
+                                <a href="#" title ="Niveau Requis : {{ item.levelMin }}"><img src="{{ asset('images/exclamation.png') }}" width="10"></a></td>
+                            {% endif %}
+                        {% endif %}
                     {% else %}
-                        <li><a href="#">{{ item.name }}</a>
-                            <a href="#" class="btn btn-primary">Equiper</a>
-                        </li>
+                        <td style="border:2px solid rosybrown;width:40px;height: 40px;"></td>
                     {% endif %}
-                {% endif %}
-            {% endfor %}
-        </ul>
+
+                {% endfor %}
+            </tr>
+        </table>
     </div>
-    <div class="col-lg-6">
-        <h4>Contenu</h4>
-        <ul>
-            {% for item in followerListIn %}
-                <li><a href="#">{{ item.name }}</a>
-                    {% if item.type == 1 %}
-                        {% if character.level >= item.levelMin %}
-                            <a href="#" class="btn btn-primary">Equiper</a>
-                        {% else %}
-                            Niveau Requis : {{ item.levelMin }}
-                        {% endif %}
-                    {% endif %}
-                    {% if item.type == 3 %}
-                        {% if character.level >= item.levelMin %}
-                            <a href="#" class="btn btn-primary">Utiliser</a>
-                        {% else %}
-                            Niveau Requis : {{ item.levelMin }}
-                        {% endif %}
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
+
 {% endblock %}

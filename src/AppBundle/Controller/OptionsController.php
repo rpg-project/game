@@ -451,66 +451,27 @@ class OptionsController extends Controller
                 $list[] = $item;
             }
         }
-        $listNotContained = array();
-        foreach ($list as $item){
-            if($item->getContained() === 0){
-                $listNotContained[$item->getId()] = $item;
-            } else {
-                if(isset($listContained[$item->getContainerId()])){
-                    $listContained[$item->getContainerId()][] = $item;
-                } else {
-                    $listContained[$item->getContainerId()] = null;
-                    $listContained[$item->getContainerId()][] = $item;
-                }
 
+        $listIn = array();
+        $count = 0;
+        for($i=0;$i<$character->getMaxBagCapacity();$i++){
+            if(isset($list[$i])){
+                $listIn[$i] = $list[$i];
+                $count++;
+            } else {
+                $listIn[$i] = false;
             }
         }
-
-        $listIn = null;
-
-        $session->set('listInventory', $listNotContained);
-        $session->set('listContained', $listContained);
         $session->set('listEquiped', $listEquiped);
+        $session->set('list', $listIn);
+        $session->set('count', $count);
 
         return $this->render('default/inventory.html.twig', [
-            'list' => $listNotContained,
             'listEquiped' => $listEquiped,
             'listIn' => $listIn,
             'character' => $character,
             'team' => $team,
-        ]);
-    }
-
-    /**
-     * @Route("/options/inventory/see/{id}", name="options_inventory_see")
-     */
-    public function inventorySeeAction($id){
-
-        $em = $this->getDoctrine()->getManager();
-
-        $session = $this->get('session');
-
-        $character = $session->get('character');
-        $team = $session->get('team');
-        $listNotContained = $session->get('listInventory');
-        $listEquiped = $session->get('listEquiped');
-        $listContained = $session->get('listContained');
-
-        if(isset($listContained[$id]))
-        {
-            $listIn = $listContained[$id];
-        } else {
-            $listIn = null;
-        }
-
-        $session->set('listIn', $listIn);
-
-        return $this->render('default/inventory.html.twig', [
-            'list' => $listNotContained,
-            'listEquiped' => $listEquiped,
-            'listIn' => $listIn,
-            'character' => $character,
-            'team' => $team,
+            'count'=>$count,
         ]);
     }
 
@@ -525,10 +486,9 @@ class OptionsController extends Controller
 
         $character = $session->get('character');
         $team = $session->get('team');
-        $listNotContained = $session->get('listInventory');
         $listEquiped = $session->get('listEquiped');
-        $listContained = $session->get('listContained');
-        $listIn = $session->get('listIn');
+        $listIn = $session->get('list');
+        $count = $session->get('count');
 
         $follower = $followerInventory = $em->getRepository('AppBundle:Followersbycharacter')-> findOneBy([
             'id' => $id,
@@ -547,38 +507,28 @@ class OptionsController extends Controller
                 $followerList[] = $item;
             }
         }
-        $FollowerListNotContained = array();
-        foreach ($followerList as $item){
-            if($item->getContained() === 0){
-                $FollowerListNotContained[$id] = $item;
-            } else {
-                if(isset($FollowerListContained[$id])){
-                    $FollowerListContained[$id][] = $item;
-                } else {
-                    $FollowerListContained[$id] = null;
-                    $FollowerListContained[$id][] = $item;
-                }
 
+        $followerListIn = array();
+        $countFollower = 0;
+        for($i=0;$i<$follower->getMaxCapacityBag();$i++){
+            if(isset($followerList[$i])){
+                $followerListIn[$i] = $followerList[$i];
+                $countFollower++;
+            } else {
+                $followerListIn[$i] = false;
             }
         }
 
-        $FollowerlistIn = null;
-        if(isset($FollowerListContained[$id]))
-        {
-            $FollowerlistIn = $FollowerListContained[$id];
-        } else {
-            $FollowerlistIn = null;
-        }
 
         return $this->render('default/inventoryFollower.html.twig', [
-            'list' => $listNotContained,
             'listEquiped' => $listEquiped,
             'listIn' => $listIn,
-            'followerList' => $followerList,
-            'followerListEquiped' => $followerListEquiped,
-            'followerListIn' => $FollowerlistIn,
             'character' => $character,
             'team' => $team,
+            'count'=>$count,
+            'countFollower'=>$countFollower,
+            'followerListEquiped' => $followerListEquiped,
+            'followerListIn' => $followerListIn,
             'follower' => $follower,
         ]);
     }

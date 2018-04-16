@@ -183,6 +183,13 @@ class Followers
     /**
      * @var integer
      *
+     * @ORM\Column(name="max_capacity_bag", type="integer", nullable=true)
+     */
+    private $maxCapacityBag;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -571,6 +578,22 @@ class Followers
     public function setEvil($evil)
     {
         $this->evil = $evil;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxCapacityBag()
+    {
+        return $this->maxCapacityBag;
+    }
+
+    /**
+     * @param int $maxCapacityBag
+     */
+    public function setMaxCapacityBag($maxCapacityBag)
+    {
+        $this->maxCapacityBag = $maxCapacityBag;
     }
 
     /**

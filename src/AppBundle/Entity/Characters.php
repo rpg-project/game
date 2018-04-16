@@ -232,6 +232,13 @@ class Characters
     /**
      * @var integer
      *
+     * @ORM\Column(name="max_bag_capacity", type="integer", nullable=true)
+     */
+    private $maxBagCapacity;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -742,6 +749,22 @@ class Characters
     public function setTitle($title)
     {
         $this->title = $title;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxBagCapacity()
+    {
+        return $this->maxBagCapacity;
+    }
+
+    /**
+     * @param int $maxBagCapacity
+     */
+    public function setMaxBagCapacity($maxBagCapacity)
+    {
+        $this->maxBagCapacity = $maxBagCapacity;
     }
 
     /**

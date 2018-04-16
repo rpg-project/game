@@ -57,6 +57,7 @@ class CharacterController extends Controller
         $character->setChaos(0);
         $character->setGood(0);
         $character->setEvil(0);
+        $character->setMaxBagCapacity(10);
 
 
         $form = $this->createFormBuilder($character)

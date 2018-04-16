@@ -123,6 +123,11 @@
         <option name="unsigned"/>
       </options>
     </field>
+    <field name="maxCapacityBag" type="integer" column="max_capacity_bag" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
     <many-to-one field="followerid" target-entity="Followers" fetch="LAZY">
       <join-columns>
         <join-column name="followerId" referenced-column-name="id"/>

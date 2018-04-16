@@ -16,6 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `FollowersItems`
+--
+
+DROP TABLE IF EXISTS `FollowersItems`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `FollowersItems` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ItemId` int(11) DEFAULT NULL,
+  `FollowersId` int(11) DEFAULT NULL,
+  `Equiped` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `followerId_idx` (`FollowersId`),
+  KEY `itemId_idx` (`ItemId`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `FollowersItems`
+--
+
+LOCK TABLES `FollowersItems` WRITE;
+/*!40000 ALTER TABLE `FollowersItems` DISABLE KEYS */;
+INSERT INTO `FollowersItems` VALUES (1,2,15,0);
+/*!40000 ALTER TABLE `FollowersItems` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `capacities`
 --
 
@@ -23,7 +51,7 @@ DROP TABLE IF EXISTS `capacities`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `capacities` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `description` varchar(45) DEFAULT NULL,
   `type` int(11) DEFAULT NULL,
   `range` int(11) DEFAULT NULL,
@@ -34,7 +62,7 @@ CREATE TABLE `capacities` (
   `health` int(11) DEFAULT NULL,
   `energy` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -55,13 +83,13 @@ DROP TABLE IF EXISTS `capacitiesByCharacter`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `capacitiesByCharacter` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `characterId` int(11) DEFAULT NULL,
   `capacityId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `characterId_idx` (`characterId`),
   CONSTRAINT `characterId` FOREIGN KEY (`characterId`) REFERENCES `characters` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -82,13 +110,13 @@ DROP TABLE IF EXISTS `capacitiesByFollower`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `capacitiesByFollower` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `followerId` int(11) DEFAULT NULL,
   `capacityId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `followerId_idx` (`followerId`),
   KEY `capacityId_idx` (`capacityId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -142,6 +170,7 @@ CREATE TABLE `characters` (
   `last_login` datetime DEFAULT NULL,
   `userId` int(11) DEFAULT NULL,
   `title` int(11) DEFAULT NULL,
+  `max_bag_capacity` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `userId_idx` (`userId`),
   CONSTRAINT `FK_3A29410E64B64DCC` FOREIGN KEY (`userId`) REFERENCES `users` (`id`)
@@ -154,7 +183,7 @@ CREATE TABLE `characters` (
 
 LOCK TABLES `characters` WRITE;
 /*!40000 ALTER TABLE `characters` DISABLE KEYS */;
-INSERT INTO `characters` VALUES (24,'hhh',0,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,310,0,0,0,0,0,0,0,0,0,10,NULL,1,1),(27,'ddddddddd',75,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,280,0,0,0,0,0,5,0,0,41,10,NULL,2,1);
+INSERT INTO `characters` VALUES (24,'hhh',0,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,310,0,0,0,0,0,0,0,0,0,10,NULL,1,1,NULL),(27,'ddddddddd',75,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,280,0,0,0,0,0,5,0,0,41,10,NULL,2,1,NULL);
 /*!40000 ALTER TABLE `characters` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -220,9 +249,10 @@ CREATE TABLE `followers` (
   `chaos` int(11) DEFAULT NULL,
   `good` int(11) DEFAULT NULL,
   `evil` int(11) DEFAULT NULL,
+  `max_capacity_bag` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -231,7 +261,7 @@ CREATE TABLE `followers` (
 
 LOCK TABLES `followers` WRITE;
 /*!40000 ALTER TABLE `followers` DISABLE KEYS */;
-INSERT INTO `followers` VALUES (1,'Conan',1,5,5,0,0,3,3,4,2,1,1,0,' ',1,'SR',10,2,0,1,0,0,0,0),(2,'Sonia La Rousse',1,5,5,0,0,3,3,3,3,1,1,0,' ',1,'SR',10,2,0,1,0,0,0,0),(3,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'C',50,1,1,0,10,0,0,0),(4,'Sherif',2,5,5,0,0,3,3,4,2,1,1,0,' ',1,'SR',10,2,1,1,50,0,0,0),(5,'Paladin',2,5,5,0,0,3,3,4,4,1,1,0,' ',1,'SSR',5,3,2,1,100,0,100,0),(6,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'C',30,1,1,0,10,0,0,0),(7,'Archer',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'C',25,1,1,0,10,0,0,0),(8,'Merc',1,3,3,0,0,3,3,4,3,1,1,0,' ',1,'R',30,1,3,0,0,0,0,0),(9,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',1,'R',50,1,0,0,0,0,0,0),(10,'Thief',1,3,3,0,0,3,3,2,4,1,1,0,'',1,'R',20,1,4,0,0,10,0,0),(11,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',1,'R',15,1,0,0,0,0,0,0),(12,'Priest',1,3,3,0,0,3,3,3,3,1,1,0,' ',1,'R',15,1,0,0,0,0,0,0);
+INSERT INTO `followers` VALUES (1,'Conan',1,5,5,0,0,3,3,4,2,1,1,0,' ',1,'SR',10,2,0,1,0,0,0,0,NULL),(2,'Sonia La Rousse',1,5,5,0,0,3,3,3,3,1,1,0,' ',1,'SR',10,2,0,1,0,0,0,0,NULL),(3,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'C',50,1,1,0,10,0,0,0,NULL),(4,'Sherif',2,5,5,0,0,3,3,4,2,1,1,0,' ',1,'SR',10,2,1,1,50,0,0,0,NULL),(5,'Paladin',2,5,5,0,0,3,3,4,4,1,1,0,' ',1,'SSR',5,3,2,1,100,0,100,0,NULL),(6,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'C',30,1,1,0,10,0,0,0,NULL),(7,'Archer',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'C',25,1,1,0,10,0,0,0,NULL),(8,'Merc',1,3,3,0,0,3,3,4,3,1,1,0,' ',1,'R',30,1,3,0,0,0,0,0,NULL),(9,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',1,'R',50,1,0,0,0,0,0,0,NULL),(10,'Thief',1,3,3,0,0,3,3,2,4,1,1,0,'',1,'R',20,1,4,0,0,10,0,0,NULL),(11,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',1,'R',15,1,0,0,0,0,0,0,NULL),(12,'Priest',1,3,3,0,0,3,3,3,3,1,1,0,' ',1,'R',15,1,0,0,0,0,0,0,NULL),(13,'test',1,5,5,5,5,5,5,5,5,5,1,0,'5',1,'SR',10,4,0,1,0,0,0,0,NULL),(14,'test2',1,5,5,5,5,5,5,5,5,5,1,0,'5555',1,'SSR',5,5,0,1,0,0,0,0,NULL),(15,'rezrzer',1,5,5,5,5,5,5,5,5,5,1,0,'00000',1,'SSR',5,5,0,1,0,0,0,0,NULL);
 /*!40000 ALTER TABLE `followers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -269,6 +299,7 @@ CREATE TABLE `followersByCharacter` (
   `chaos` int(11) DEFAULT NULL,
   `good` int(11) DEFAULT NULL,
   `evil` int(11) DEFAULT NULL,
+  `max_capacity_bag` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `characterId_idx` (`characterId`),
   KEY `followerId_idx` (`followerId`),
@@ -283,7 +314,7 @@ CREATE TABLE `followersByCharacter` (
 
 LOCK TABLES `followersByCharacter` WRITE;
 /*!40000 ALTER TABLE `followersByCharacter` DISABLE KEYS */;
-INSERT INTO `followersByCharacter` VALUES (66,1,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',0,'R',0,1,11,27,0,0,0,0),(67,0,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',0,'R',0,1,11,27,0,0,0,0),(68,0,'Merc',1,3,3,0,0,3,3,4,3,1,1,0,' ',3,'R',0,1,8,27,0,0,0,0),(69,0,'Merc',1,3,3,0,0,3,3,4,3,1,1,0,' ',3,'R',0,1,8,27,0,0,0,0),(70,0,'Sonia La Rousse',1,5,5,0,0,3,3,3,3,1,1,0,' ',0,'SR',1,2,2,27,0,0,0,0),(71,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(72,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(73,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(74,0,'Priest',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,12,27,0,0,0,0),(75,1,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(76,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(77,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(78,1,'Thief',1,3,3,0,0,3,3,2,4,1,1,0,'',4,'R',0,1,10,27,0,10,0,0),(79,0,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',0,'R',0,1,11,27,0,0,0,0),(80,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(81,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(82,1,'Sonia La Rousse',1,5,5,0,0,3,3,3,3,1,1,0,' ',0,'SR',1,2,2,27,0,0,0,0),(83,0,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',0,'R',0,1,11,27,0,0,0,0),(84,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(85,0,'Merc',1,3,3,0,0,3,3,4,3,1,1,0,' ',3,'R',0,1,8,27,0,0,0,0),(86,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0),(87,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0),(88,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0),(89,0,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'R',0,1,6,27,10,0,0,0),(90,0,'Archer',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,7,27,10,0,0,0),(91,0,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'R',0,1,6,27,10,0,0,0),(92,0,'Paladin',2,5,5,0,0,3,3,4,4,1,1,0,' ',2,'SSR',1,3,5,27,100,0,100,0),(93,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0),(94,0,'Archer',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,7,27,10,0,0,0),(95,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0),(96,0,'Sherif',2,5,5,0,0,3,3,4,2,1,1,0,' ',1,'SR',1,2,4,27,50,0,0,0),(97,0,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'R',0,1,6,27,10,0,0,0),(98,0,'Archer',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,7,27,10,0,0,0),(99,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0),(100,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0),(101,0,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'R',0,1,6,27,10,0,0,0),(102,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0),(103,0,'Sherif',2,5,5,0,0,3,3,4,2,1,1,0,' ',1,'SR',1,2,4,27,50,0,0,0),(104,0,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'R',0,1,6,27,10,0,0,0),(105,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0),(106,0,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'R',0,1,6,27,10,0,0,0);
+INSERT INTO `followersByCharacter` VALUES (66,1,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',0,'R',0,1,11,27,0,0,0,0,NULL),(67,0,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',0,'R',0,1,11,27,0,0,0,0,NULL),(68,0,'Merc',1,3,3,0,0,3,3,4,3,1,1,0,' ',3,'R',0,1,8,27,0,0,0,0,NULL),(69,0,'Merc',1,3,3,0,0,3,3,4,3,1,1,0,' ',3,'R',0,1,8,27,0,0,0,0,NULL),(70,0,'Sonia La Rousse',1,5,5,0,0,3,3,3,3,1,1,0,' ',0,'SR',1,2,2,27,0,0,0,0,NULL),(71,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0,NULL),(72,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0,NULL),(73,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0,NULL),(74,0,'Priest',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,12,27,0,0,0,0,NULL),(75,1,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0,NULL),(76,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0,NULL),(77,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0,NULL),(78,1,'Thief',1,3,3,0,0,3,3,2,4,1,1,0,'',4,'R',0,1,10,27,0,10,0,0,NULL),(79,0,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',0,'R',0,1,11,27,0,0,0,0,NULL),(80,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0,NULL),(81,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0,NULL),(82,1,'Sonia La Rousse',1,5,5,0,0,3,3,3,3,1,1,0,' ',0,'SR',1,2,2,27,0,0,0,0,NULL),(83,0,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',0,'R',0,1,11,27,0,0,0,0,NULL),(84,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0,NULL),(85,0,'Merc',1,3,3,0,0,3,3,4,3,1,1,0,' ',3,'R',0,1,8,27,0,0,0,0,NULL),(86,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0,NULL),(87,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0,NULL),(88,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0,NULL),(89,0,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'R',0,1,6,27,10,0,0,0,NULL),(90,0,'Archer',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,7,27,10,0,0,0,NULL),(91,0,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'R',0,1,6,27,10,0,0,0,NULL),(92,0,'Paladin',2,5,5,0,0,3,3,4,4,1,1,0,' ',2,'SSR',1,3,5,27,100,0,100,0,NULL),(93,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0,NULL),(94,0,'Archer',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,7,27,10,0,0,0,NULL),(95,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0,NULL),(96,0,'Sherif',2,5,5,0,0,3,3,4,2,1,1,0,' ',1,'SR',1,2,4,27,50,0,0,0,NULL),(97,0,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'R',0,1,6,27,10,0,0,0,NULL),(98,0,'Archer',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,7,27,10,0,0,0,NULL),(99,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0,NULL),(100,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0,NULL),(101,0,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'R',0,1,6,27,10,0,0,0,NULL),(102,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0,NULL),(103,0,'Sherif',2,5,5,0,0,3,3,4,2,1,1,0,' ',1,'SR',1,2,4,27,50,0,0,0,NULL),(104,0,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'R',0,1,6,27,10,0,0,0,NULL),(105,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0,NULL),(106,0,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'R',0,1,6,27,10,0,0,0,NULL);
 /*!40000 ALTER TABLE `followersByCharacter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -295,7 +326,7 @@ DROP TABLE IF EXISTS `functionsByPlace`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `functionsByPlace` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `placeId` int(11) DEFAULT NULL,
   `functionId` int(11) DEFAULT NULL,
   `name` varchar(45) DEFAULT NULL,
@@ -304,7 +335,7 @@ CREATE TABLE `functionsByPlace` (
   KEY `functionId_idx` (`functionId`),
   CONSTRAINT `functionId` FOREIGN KEY (`functionId`) REFERENCES `placesFunction` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `placeId` FOREIGN KEY (`placeId`) REFERENCES `places` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -368,7 +399,7 @@ DROP TABLE IF EXISTS `itemsByCharacter`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `itemsByCharacter` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `equiped` int(11) DEFAULT NULL,
   `contained` int(11) DEFAULT NULL,
   `container_space` int(11) DEFAULT NULL,
@@ -396,7 +427,7 @@ CREATE TABLE `itemsByCharacter` (
   KEY `characterId_idx` (`characterId`),
   KEY `itemId_idx` (`itemId`),
   CONSTRAINT `itemId` FOREIGN KEY (`itemId`) REFERENCES `items` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -417,7 +448,7 @@ DROP TABLE IF EXISTS `itemsByFollowers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `itemsByFollowers` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `equiped` int(11) DEFAULT NULL,
   `contained` int(11) DEFAULT NULL,
   `container_space` int(11) DEFAULT NULL,
@@ -444,7 +475,7 @@ CREATE TABLE `itemsByFollowers` (
   PRIMARY KEY (`id`),
   KEY `followerId_idx` (`followerId`),
   CONSTRAINT `followerId` FOREIGN KEY (`followerId`) REFERENCES `followersByCharacter` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -453,7 +484,7 @@ CREATE TABLE `itemsByFollowers` (
 
 LOCK TABLES `itemsByFollowers` WRITE;
 /*!40000 ALTER TABLE `itemsByFollowers` DISABLE KEYS */;
-INSERT INTO `itemsByFollowers` VALUES (1,0,0,10,0,'Bag',2,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,2,78),(2,0,1,0,1,'Dagger',1,1,1,'C',0,1,1,0,0,0,1,15,50,NULL,0,1,6,78);
+INSERT INTO `itemsByFollowers` VALUES (1,0,0,10,0,'Bag',2,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,2,78),(2,1,0,0,1,'Dagger',1,1,1,'C',0,1,1,0,0,0,1,15,50,NULL,0,1,6,78);
 /*!40000 ALTER TABLE `itemsByFollowers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -564,6 +595,32 @@ INSERT INTO `placesFunction` VALUES (1,'summon',1),(2,'quest',2),(3,'training',3
 UNLOCK TABLES;
 
 --
+-- Table structure for table `rate`
+--
+
+DROP TABLE IF EXISTS `rate`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rate` (
+  `id` int(11) NOT NULL,
+  `rate_label` varchar(45) DEFAULT NULL,
+  `pop_rate` int(11) DEFAULT NULL,
+  `price_back` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rate`
+--
+
+LOCK TABLES `rate` WRITE;
+/*!40000 ALTER TABLE `rate` DISABLE KEYS */;
+INSERT INTO `rate` VALUES (1,'SSR',5,5),(2,'SR',10,4),(3,'R',25,3),(4,'N',35,2),(5,'C',50,1),(6,'XR',3,10);
+/*!40000 ALTER TABLE `rate` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `team`
 --
 
@@ -635,4 +692,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-13 16:36:14
+-- Dump completed on 2018-04-16 10:38:12

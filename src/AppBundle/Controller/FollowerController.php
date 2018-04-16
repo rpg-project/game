@@ -10,6 +10,7 @@ use AppBundle\Entity\Users;
 use AppBundle\Entity\Players;
 use AppBundle\Entity\Characterlocation;
 use AppBundle\Entity\Followers;
+use AppBundle\Entity\Followersitems;
 
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -56,7 +57,26 @@ class FollowerController extends Controller
      */
     public function createAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
         $entity = new Followers();
+
+        $zone = $em->getRepository('AppBundle:Map')->findAll();
+        $maps = array();
+        foreach ($zone as $map){
+            $maps[$map->getMapName()] = $map->getId();
+        }
+
+        $rates = $em->getRepository('AppBundle:Rate')->findAll();
+
+        $rateLabel = array();
+        $popRate = array();
+        $priceBack = array();
+        foreach ($rates as $rate){
+            $rateLabel[$rate->getRateLabel()] = $rate->getRateLabel();
+            $popRate[$rate->getRateLabel()] = $rate->getPopRate();
+            $priceBack[$rate->getRateLabel()] = $rate->getPriceBack();
+        }
 
         $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $entity);
         
@@ -76,35 +96,19 @@ class FollowerController extends Controller
         ->add('critical', TextType::class)
         ->add('level', TextType::class)
         ->add('level_min', ChoiceType::class, array(
-                'choices' => array(
-                    'Starting Ground' => 1,
-                    )))
+                'choices' => $maps,
+                    ))
         ->add('xp', TextType::class)
         ->add('image', TextType::class)
         ->add('rate_label', ChoiceType::class, array(
-                'choices' => array(
-                    'SSR' => "SSR",
-                    'SR' => "SR",
-                    'R' => "R",
-                    'N' => "N",
-                    'C' => "C",
-                    )))
+                'choices' => $rateLabel,
+                    ))
         ->add('pop_rate', ChoiceType::class, array(
-                'choices' => array(
-                    'SSR' => 5,
-                    'SR' => 10,
-                    'R' => 25,
-                    'N' => 35,
-                    'C' => 50,
-                    )))
+                'choices' => $popRate,
+                    ))
         ->add('price_back', ChoiceType::class, array(
-                'choices' => array(
-                    'SSR' => 5,
-                    'SR' => 4,
-                    'R' => 3,
-                    'N' => 2,
-                    'C' => 1,
-                    )))
+                'choices' => $priceBack
+                    ))
         ->add('goal', ChoiceType::class, array(
                 'choices' => array(
                     'Gloire' => 0,
@@ -129,7 +133,6 @@ class FollowerController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
@@ -148,8 +151,20 @@ class FollowerController extends Controller
      *
      */
     public function followerShow($id){
+
            $em = $this->getDoctrine()->getManager();
+
            $follower = $em->getRepository('AppBundle:Followers')->find($id);
+
+           $mode = "create";
+
+           $item = new FollowersItems();
+
+           $item->setFollowersid($id);
+           $item->setItemid(2);//c'est le sac
+           $item->setEquiped(0);
+           $em->persist($item);
+           $em->flush();
 
            return $this->render('default/stats.html.twig', array(
             'stats' => $follower,

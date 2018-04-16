@@ -158,6 +158,11 @@
         <option name="unsigned"/>
       </options>
     </field>
+    <field name="maxBagCapacity" type="integer" column="max_bag_capacity" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
     <many-to-one field="userid" target-entity="Users" fetch="LAZY">
       <join-columns>
         <join-column name="userId" referenced-column-name="id"/>
