@@ -39,8 +39,38 @@
             </table>
 
         </div>
+        {% if admin == false %}
         <div class="row">
             <a href="javascript:history.go(-1)" class="btn btn-primary">Retour</a>
         </div>
+        {% else %}
+        <div class="row">
+            <div class="col-lg-6">
+                <h1>Liste des Objets</h1>
+                <ul>
+                    {% for key, item in items %}
+                        <li>{{ item.name }}
+
+                                <a href="{{ path('admin_follower_add_item', {'id' : key}) }}" class="btn btn-primary">Ajouter</a>
+
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-lg-6">
+                <h1>Liste des Objets du personnage</h1>
+                <ul>
+                    {% for item in chosen %}
+                        {{ item.name }}
+                        <a href="{{ path('admin_follower_del_item', {'id' : item.id}) }}" class="btn btn-primary">Retirer</a>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+            <div class="row">
+                <a href="{{ path('admin_follower_list') }}" class="btn btn-primary">Liste des Suivants</a>
+            </div>
+        {% endif %}
+
     </div>
 {% endblock %}

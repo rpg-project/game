@@ -436,7 +436,12 @@ class OptionsController extends Controller
 
         $character = $session->get('character');
 
-        $team = $session->get('team');
+        $team = $em->getRepository('AppBundle:Followersbycharacter')->findBy([
+            'characterid' => $id,
+            'teamed' => 1,
+        ]);
+
+        $session->set('team', $team);
 
         $inventory = $em->getRepository('AppBundle:Itemsbycharacter')-> findBy([
             'characterid' => $id,

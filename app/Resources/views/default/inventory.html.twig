@@ -51,8 +51,8 @@
             <h4>Inventaire Suivants</h4>
             {% for mate in team %}
                 <ul>
-                    {% if mate.mate != false %}
-                        <li><a href="{{ path('options_inventory_follower_see', {'id' : mate.mate.id}) }}">Inventaire {{ mate.mate.name }}</a></li>
+                    {% if mate != false %}
+                        <li><a href="{{ path('options_inventory_follower_see', {'id' : mate.id}) }}">Inventaire {{ mate.name }}</a></li>
                     {% endif %}
                 </ul>
             {% endfor %}
@@ -63,7 +63,7 @@
         {% endblock %}
     </div>
     <div class="row">
-        <a href="javascript:history.go(-1)" class="btn btn-primary">Retour</a>
+        <a href="{{ path('player_homepage') }}" class="btn btn-primary">Retour</a>
     </div>
 </div>
 {% endblock %}

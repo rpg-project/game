@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Liste des suivants</h1>
+        <table class="table text-center">
+            <tr>
+                <th class="text-center">Nom</th>
+                <th class="text-center">Nombre de drop</th>
+                <th class="text-center">Nombre d'objets</th>
+                <th class="text-center">Zone de pop</th>
+                <th colspan="2" class="text-center">Action</th>
+            </tr>
+        {% for follower in list %}
+            <tr>
+                <td><a href="{{ path('admin_follower_show', {'id':follower.follower.id}) }}">{{ follower.follower.name }}</a></td>
+                <td class="text-center">{{ follower.count }}</td>
+                <td class="text-center">{{ follower.countObject }}</td>
+                <td class="text-center">{{ follower.follower.levelMin }}</td>
+                <td><a href="#" class="btn btn-warning">Modifier</a></td>
+                {% if follower.count == 0 and follower.countObject == 0 %}
+                    <td> <a href="{{ path('admin_follower_del', {'id': follower.follower.id}) }}" class="btn btn-warning">Supprimer</a></td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+    <div class="row">
+        <a href="{{ path('admin') }}" class="btn btn-primary">Retour</a>
+    </div>
+</div>
+{% endblock %}

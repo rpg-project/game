@@ -33,6 +33,7 @@ class FollowerController extends Controller
 
         return $this->render('default/stats.html.twig', [
             'stats' => $follower,
+            'admin' => false,
         ]);
     }
 
@@ -47,6 +48,7 @@ class FollowerController extends Controller
 
         return $this->render('default/stats.html.twig', [
             'stats' => $follower,
+            'admin' => false,
         ]);
     }
 
@@ -152,23 +154,156 @@ class FollowerController extends Controller
      */
     public function followerShow($id){
 
-           $em = $this->getDoctrine()->getManager();
+       $em = $this->getDoctrine()->getManager();
 
-           $follower = $em->getRepository('AppBundle:Followers')->find($id);
+       $session = $this->get('session');
 
-           $mode = "create";
+       $follower = $em->getRepository('AppBundle:Followers')->find($id);
 
-           $item = new FollowersItems();
+       $items = $em->getRepository('AppBundle:Items')->findAll();
 
-           $item->setFollowersid($id);
-           $item->setItemid(2);//c'est le sac
-           $item->setEquiped(0);
-           $em->persist($item);
-           $em->flush();
+       $session->set('adminFollower', $follower);
+       $session->set('adminItems', $items);
+
+        $chosenListItem = $em->getRepository('AppBundle:Followersitems')->findBy([
+            'followersid'=> $follower->getId(),
+        ]);
+
+        $chosenList = array();
+        foreach ($chosenListItem as $item){
+            $chosenList[] = $em->getRepository('AppBundle:Items')->findOneBy([
+                'id' => $item->getItemid(),
+            ]);
+        }
 
            return $this->render('default/stats.html.twig', array(
             'stats' => $follower,
+            'admin' => true,
+            'items' => $items,
+            'chosen' => $chosenList,
         ));
+
+    }
+
+    /**
+     * @Route("/admin/follower/add/{id}", name="admin_follower_add_item")
+     *
+     */
+    public function followerAddItem($id){
+
+        $session = $this->get('session');
+
+        $follower = $session->get('adminFollower');
+        $items = $session->get('adminItems');
+
+        $chosenItem = new Followersitems();
+        $chosenItem->setItemid($items[$id]->getId());
+        $chosenItem->setEquiped(0);
+        $chosenItem->setFollowersid($follower->getId());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($chosenItem);
+        $em->flush();
+
+        $chosenListItem = $em->getRepository('AppBundle:FollowersItems')->findBy([
+            'followersid'=> $follower->getId(),
+        ]);
+
+        $chosenList = array();
+        foreach ($chosenListItem as $item){
+            $chosenList[] = $em->getRepository('AppBundle:Items')->findOneBy([
+                'id' => $item->getItemid(),
+            ]);
+        }
+
+        return $this->render('default/stats.html.twig', array(
+            'stats' => $follower,
+            'admin' => true,
+            'items' => $items,
+            'chosen' => $chosenList,
+        ));
+
+    }
+
+    /**
+     * @Route("/admin/follower/delitem/{id}", name="admin_follower_del_item")
+     *
+     */
+    public function followerDelItem($id){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $session = $this->get('session');
+
+        $follower = $session->get('adminFollower');
+        $items = $session->get('adminItems');
+
+        $item =  $chosenListItem = $em->getRepository('AppBundle:FollowersItems')->findOneBy([
+            'itemid'=> $id,
+        ]);
+
+        $em->remove($item);
+        $em->flush();
+
+        $chosenListItem = $em->getRepository('AppBundle:FollowersItems')->findBy([
+            'followersid'=> $follower->getId(),
+        ]);
+
+        $chosenList = array();
+        foreach ($chosenListItem as $item){
+            $chosenList[] = $em->getRepository('AppBundle:Items')->findOneBy([
+                'id' => $item->getItemid(),
+            ]);
+        }
+
+        return $this->render('default/stats.html.twig', array(
+            'stats' => $follower,
+            'admin' => true,
+            'items' => $items,
+            'chosen' => $chosenList,
+        ));
+    }
+
+    /**
+     * @Route("/admin/follower/list", name="admin_follower_list")
+     *
+     */
+    public function followerList(){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $followers = $em->getRepository('AppBundle:Followers')->findAll();
+
+        $list = array();
+        foreach($followers as $follower){
+            $list[$follower->getId()]['follower'] = $follower;
+            $list[$follower->getId()]['count'] = count($em->getRepository('AppBundle:Followersbycharacter')->findBy(['followerid'=>$follower->getId()]));
+            $list[$follower->getId()]['countObject'] = count($em->getRepository('AppBundle:Followersitems')->findBy(['followersid'=>$follower->getId()]));
+        }
+
+//        var_dump($list);
+
+        return $this->render('default/followersList.html.twig', array(
+            'list' => $list,
+        ));
+    }
+
+    /**
+     * @Route("/admin/follower/del/{id}", name="admin_follower_del")
+     *
+     */
+    public function followerDel($id){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $follower = $em->getRepository('AppBundle:Followers')->findOneBy([
+            'id' => $id,
+        ]);
+
+        $em->remove($follower);
+        $em->flush();
+
+        return $this->redirectToRoute('admin_follower_list');
 
     }
 
