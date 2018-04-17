@@ -7,18 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Placesbymap
  *
- * @ORM\Table(name="placesByMap", indexes={@ORM\Index(name="mapId_idx", columns={"mapId"})})
+ * @ORM\Table(name="placesByMap", indexes={@ORM\Index(name="mapId_idx", columns={"mapId"}), @ORM\Index(name="place_idx", columns={"placeId"})})
  * @ORM\Entity
  */
 class Placesbymap
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="placeId", type="integer", nullable=true)
-     */
-    private $placeid;
-
     /**
      * @var integer
      *
@@ -29,6 +22,16 @@ class Placesbymap
     private $id;
 
     /**
+     * @var \AppBundle\Entity\Places
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Places")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="placeId", referencedColumnName="id")
+     * })
+     */
+    private $placeid;
+
+    /**
      * @var \AppBundle\Entity\Map
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Map")
@@ -37,22 +40,6 @@ class Placesbymap
      * })
      */
     private $mapid;
-
-    /**
-     * @return int
-     */
-    public function getPlaceid()
-    {
-        return $this->placeid;
-    }
-
-    /**
-     * @param int $placeid
-     */
-    public function setPlaceid($placeid)
-    {
-        $this->placeid = $placeid;
-    }
 
     /**
      * @return int
@@ -68,6 +55,22 @@ class Placesbymap
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return Places
+     */
+    public function getPlaceid()
+    {
+        return $this->placeid;
+    }
+
+    /**
+     * @param Places $placeid
+     */
+    public function setPlaceid($placeid)
+    {
+        $this->placeid = $placeid;
     }
 
     /**

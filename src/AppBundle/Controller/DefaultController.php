@@ -22,23 +22,23 @@ class DefaultController extends Controller
 
         $session->set('user', $user);
 
-        $character = $entityManager->getRepository('AppBundle:Characters')->findBy([
+        $character = $entityManager->getRepository('AppBundle:Characters')->findOneBy([
             'userid' => $user->getId(),
         ]);
 
         $nbCharacter = count($character);
 
         if($nbCharacter !== 0){
-            $session->set('character', $character[0]);
+            $session->set('character', $character);
         }
 
-        $chemin = dirname(__FILE__).'/../../../web/Ressources/Description_Followers.txt';
-
-        if(!file_exists($chemin)){
-            $handle = fopen($chemin, "w");
-            fputs($handle, "test2");
-            fclose($handle);
-        }
+//        $chemin = dirname(__FILE__).'/../../../web/Ressources/Description_Followers.txt';
+//
+//        if(!file_exists($chemin)){
+//            $handle = fopen($chemin, "w");
+//            fputs($handle, "test2");
+//            fclose($handle);
+//        }
        
 
         return $this->render('default/index.html.twig', [

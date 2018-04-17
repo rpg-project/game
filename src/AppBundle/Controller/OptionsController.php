@@ -71,7 +71,7 @@ class OptionsController extends Controller
         ]);
 
         $team = $em->getRepository('AppBundle:Team')->findBy([
-            'characterId' => $id,
+            'character' => $character,
         ]);
 
         /** @var Characters $character */
@@ -91,7 +91,7 @@ class OptionsController extends Controller
             foreach ($team as $mate){
                 $place = $mate->getPlace();
                 $follower = $em->getRepository('AppBundle:Followersbycharacter')->findOneBy([
-                    'id' => $mate->getTeamMateId(),
+                    'id' => $mate->getTeamMate()->getId(),
                 ]);
 
                 /** @var Followersbycharacter $follower  */
@@ -209,12 +209,20 @@ class OptionsController extends Controller
 
         $character = $session->get('character');
 
+//        var_dump($character);die;
+
+        $character = $em->getRepository('AppBundle:Characters')-> find($character->getId());
+
+        $teamMate = $em->getRepository('AppBundle:Followersbycharacter')-> findOneBy([
+            'id'=>$teamMateId,
+        ]);
+
         $team = new Team();
 
         $team->setPlace($place);
-        $team->setTeamMateId($teamMateId);
-        $team->setCharacterId($character->getId());
-        $team->setFollowerId($followerId);
+        $team->setTeamMate($teamMate);
+        $team->setCharacter($character);
+
 
         $em->persist($team);
         $em->flush();
@@ -241,12 +249,12 @@ class OptionsController extends Controller
 
         $character = $session->get('character');
 
-        $teamMate = $em->getRepository("AppBundle:Team")->findBy([
+        $teamMate = $em->getRepository("AppBundle:Team")->findOneBy([
             'place' => $place,
-            'characterId' => $character->getId(),
+            'character' => $character,
         ]);
 
-        $em->remove($teamMate[0]);
+        $em->remove($teamMate);
         $em->flush();
 
         $follower = $em->getRepository('AppBundle:Followersbycharacter')->find($teamMateId);
@@ -314,6 +322,71 @@ class OptionsController extends Controller
     public function optionsListAction(){
 
         return $this->render('default/optionsList.html.twig');
+
+    }
+
+    /**
+    * @Route("/options/delete/count", name="options_delete_count")
+    */
+    public function deleteCount(){
+        $em = $this->getDoctrine()->getManager();
+
+        $session = $this->get('session');
+
+        $character = $session->get('character');
+
+        $capacities = $em->getRepository('AppBundle:Capacitiesbycharacter')->findOneBy([
+            'characterid' => $character
+        ]);
+
+        if($capacities !== null){
+            foreach ($capacities as $capacity){
+                $em->remove($capacity);
+                $em->flush();
+            }
+        }
+
+        $team = $em->getRepository('AppBundle:Team')->findBy([
+            'character' => $character
+        ]);
+
+        if($team !== null){
+            foreach ($team as $mate){
+                $em->remove($mate);
+                $em->flush();
+            }
+        }
+
+        $followers = $em->getRepository('AppBundle:Followersbycharacter')->findBy([
+            'characterid' => $character
+        ]);
+
+        if($followers !== null){
+            foreach ($followers as $follower){
+                $em->remove($follower);
+                $em->flush();
+            }
+        }
+
+        $items = $em->getRepository('AppBundle:Itemsbycharacter')->findBy([
+            'characterid' => $character
+        ]);
+
+        if($items !== null){
+            foreach ($items as $item){
+                $em->remove($item);
+                $em->flush();
+            }
+        }
+
+        $character = $em->getRepository('AppBundle:Characters')->findOneBy([
+            'id'=> $character->getId(),
+            ]);
+
+        $em->remove($character);
+        $em->flush();
+
+        return $this->redirectToRoute('homepage');
 
     }
 

@@ -8,20 +8,20 @@
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="itemid" type="integer" column="ItemId" nullable="true">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
-    <field name="followersid" type="integer" column="FollowersId" nullable="true">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
     <field name="equiped" type="integer" column="Equiped" nullable="true">
       <options>
         <option name="unsigned"/>
       </options>
     </field>
+    <many-to-one field="itemid" target-entity="Items" fetch="LAZY">
+      <join-columns>
+        <join-column name="ItemId" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="followersid" target-entity="Followers" fetch="LAZY">
+      <join-columns>
+        <join-column name="FollowersId" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
   </entity>
 </doctrine-mapping>

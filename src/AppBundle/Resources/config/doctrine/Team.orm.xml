@@ -3,7 +3,7 @@
   <entity name="AppBundle\Entity\Team" table="team">
     <indexes>
       <index name="characterId_idx" columns="character_id"/>
-      <index name="mateId_idx" columns="team_mate_id"/>
+      <index name="mate_idx" columns="team_mate_id"/>
     </indexes>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
@@ -18,20 +18,15 @@
         <option name="unsigned"/>
       </options>
     </field>
-    <field name="teamMateId" type="integer" column="team_mate_id" nullable="true">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
-    <field name="characterId" type="integer" column="character_id" nullable="true">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
-    <field name="followerId" type="integer" column="follower_id" nullable="true">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
+    <many-to-one field="teamMate" target-entity="Followersbycharacter" fetch="LAZY">
+      <join-columns>
+        <join-column name="team_mate_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="character" target-entity="Characters" fetch="LAZY">
+      <join-columns>
+        <join-column name="character_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
   </entity>
 </doctrine-mapping>

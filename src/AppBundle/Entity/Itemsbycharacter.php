@@ -162,13 +162,6 @@ class Itemsbycharacter
     /**
      * @var integer
      *
-     * @ORM\Column(name="characterId", type="integer", nullable=true)
-     */
-    private $characterid;
-
-    /**
-     * @var integer
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -184,6 +177,16 @@ class Itemsbycharacter
      * })
      */
     private $itemid;
+
+    /**
+     * @var \AppBundle\Entity\Characters
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Characters")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="characterId", referencedColumnName="id")
+     * })
+     */
+    private $characterid;
 
     /**
      * @return int
@@ -524,22 +527,6 @@ class Itemsbycharacter
     /**
      * @return int
      */
-    public function getCharacterid()
-    {
-        return $this->characterid;
-    }
-
-    /**
-     * @param int $characterid
-     */
-    public function setCharacterid($characterid)
-    {
-        $this->characterid = $characterid;
-    }
-
-    /**
-     * @return int
-     */
     public function getId()
     {
         return $this->id;
@@ -567,6 +554,22 @@ class Itemsbycharacter
     public function setItemid($itemid)
     {
         $this->itemid = $itemid;
+    }
+
+    /**
+     * @return Characters
+     */
+    public function getCharacterid()
+    {
+        return $this->characterid;
+    }
+
+    /**
+     * @param Characters $characterid
+     */
+    public function setCharacterid($characterid)
+    {
+        $this->characterid = $characterid;
     }
 
 

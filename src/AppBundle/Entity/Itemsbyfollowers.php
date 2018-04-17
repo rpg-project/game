@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Itemsbyfollowers
  *
- * @ORM\Table(name="itemsByFollowers", indexes={@ORM\Index(name="followerId_idx", columns={"followerId"})})
+ * @ORM\Table(name="itemsByFollowers", indexes={@ORM\Index(name="followerId_idx", columns={"followerId"}), @ORM\Index(name="itemId_idx", columns={"itemId"})})
  * @ORM\Entity
  */
 class Itemsbyfollowers
@@ -162,18 +162,21 @@ class Itemsbyfollowers
     /**
      * @var integer
      *
-     * @ORM\Column(name="itemId", type="integer", nullable=true)
-     */
-    private $itemid;
-
-    /**
-     * @var integer
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+
+    /**
+     * @var \AppBundle\Entity\Items
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Items")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="itemId", referencedColumnName="id")
+     * })
+     */
+    private $itemid;
 
     /**
      * @var \AppBundle\Entity\Followersbycharacter
@@ -524,22 +527,6 @@ class Itemsbyfollowers
     /**
      * @return int
      */
-    public function getItemid()
-    {
-        return $this->itemid;
-    }
-
-    /**
-     * @param int $itemid
-     */
-    public function setItemid($itemid)
-    {
-        $this->itemid = $itemid;
-    }
-
-    /**
-     * @return int
-     */
     public function getId()
     {
         return $this->id;
@@ -551,6 +538,22 @@ class Itemsbyfollowers
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return Items
+     */
+    public function getItemid()
+    {
+        return $this->itemid;
+    }
+
+    /**
+     * @param Items $itemid
+     */
+    public function setItemid($itemid)
+    {
+        $this->itemid = $itemid;
     }
 
     /**

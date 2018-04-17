@@ -15,20 +15,6 @@ class Capacitiesbyfollower
     /**
      * @var integer
      *
-     * @ORM\Column(name="followerId", type="integer", nullable=true)
-     */
-    private $followerid;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="capacityId", type="integer", nullable=true)
-     */
-    private $capacityid;
-
-    /**
-     * @var integer
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -36,36 +22,24 @@ class Capacitiesbyfollower
     private $id;
 
     /**
-     * @return int
+     * @var \AppBundle\Entity\Followers
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Followers")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="followerId", referencedColumnName="id")
+     * })
      */
-    public function getFollowerid()
-    {
-        return $this->followerid;
-    }
+    private $followerid;
 
     /**
-     * @param int $followerid
+     * @var \AppBundle\Entity\Capacities
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Capacities")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="capacityId", referencedColumnName="id")
+     * })
      */
-    public function setFollowerid($followerid)
-    {
-        $this->followerid = $followerid;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCapacityid()
-    {
-        return $this->capacityid;
-    }
-
-    /**
-     * @param int $capacityid
-     */
-    public function setCapacityid($capacityid)
-    {
-        $this->capacityid = $capacityid;
-    }
+    private $capacityid;
 
     /**
      * @return int
@@ -81,6 +55,38 @@ class Capacitiesbyfollower
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return Followers
+     */
+    public function getFollowerid()
+    {
+        return $this->followerid;
+    }
+
+    /**
+     * @param Followers $followerid
+     */
+    public function setFollowerid($followerid)
+    {
+        $this->followerid = $followerid;
+    }
+
+    /**
+     * @return Capacities
+     */
+    public function getCapacityid()
+    {
+        return $this->capacityid;
+    }
+
+    /**
+     * @param Capacities $capacityid
+     */
+    public function setCapacityid($capacityid)
+    {
+        $this->capacityid = $capacityid;
     }
 
 

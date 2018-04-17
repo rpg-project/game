@@ -113,14 +113,14 @@
         <option name="unsigned"/>
       </options>
     </field>
-    <field name="characterid" type="integer" column="characterId" nullable="true">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
     <many-to-one field="itemid" target-entity="Items" fetch="LAZY">
       <join-columns>
         <join-column name="itemId" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="characterid" target-entity="Characters" fetch="LAZY">
+      <join-columns>
+        <join-column name="characterId" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
   </entity>

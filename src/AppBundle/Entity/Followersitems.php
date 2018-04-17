@@ -15,20 +15,6 @@ class Followersitems
     /**
      * @var integer
      *
-     * @ORM\Column(name="ItemId", type="integer", nullable=true)
-     */
-    private $itemid;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="FollowersId", type="integer", nullable=true)
-     */
-    private $followersid;
-
-    /**
-     * @var integer
-     *
      * @ORM\Column(name="Equiped", type="integer", nullable=true)
      */
     private $equiped;
@@ -43,36 +29,24 @@ class Followersitems
     private $id;
 
     /**
-     * @return int
+     * @var \AppBundle\Entity\Items
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Items")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="ItemId", referencedColumnName="id")
+     * })
      */
-    public function getItemid()
-    {
-        return $this->itemid;
-    }
+    private $itemid;
 
     /**
-     * @param int $itemid
+     * @var \AppBundle\Entity\Followers
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Followers")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="FollowersId", referencedColumnName="id")
+     * })
      */
-    public function setItemid($itemid)
-    {
-        $this->itemid = $itemid;
-    }
-
-    /**
-     * @return int
-     */
-    public function getFollowersid()
-    {
-        return $this->followersid;
-    }
-
-    /**
-     * @param int $followersid
-     */
-    public function setFollowersid($followersid)
-    {
-        $this->followersid = $followersid;
-    }
+    private $followersid;
 
     /**
      * @return int
@@ -104,6 +78,38 @@ class Followersitems
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return Items
+     */
+    public function getItemid()
+    {
+        return $this->itemid;
+    }
+
+    /**
+     * @param Items $itemid
+     */
+    public function setItemid($itemid)
+    {
+        $this->itemid = $itemid;
+    }
+
+    /**
+     * @return Followers
+     */
+    public function getFollowersid()
+    {
+        return $this->followersid;
+    }
+
+    /**
+     * @param Followers $followersid
+     */
+    public function setFollowersid($followersid)
+    {
+        $this->followersid = $followersid;
     }
 
 

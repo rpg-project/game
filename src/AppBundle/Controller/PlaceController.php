@@ -92,7 +92,7 @@ class PlaceController extends Controller
 
         $costSummon = 10 * $summonType;
 
-        if ($amountMoney <= $costSummon) {
+        if ($amountMoney < $costSummon) {
 
             $noMoney = "pas assez de Gloire";
             $summonResult = null;
@@ -143,6 +143,7 @@ class PlaceController extends Controller
                 $newFollower->setChaos($summonTable[$i]->getChaos());
                 $newFollower->setGood($summonTable[$i]->getGood());
                 $newFollower->setEvil($summonTable[$i]->getEvil());
+                $newFollower->setMaxCapacityBag($summonTable[$i]->getMaxCapacityBag());
                 $newFollower->setCharacterid($character);
                 $newFollower->setFollowerid($summonTable[$i]);
 

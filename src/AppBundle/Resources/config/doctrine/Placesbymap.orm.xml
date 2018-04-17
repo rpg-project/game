@@ -3,15 +3,16 @@
   <entity name="AppBundle\Entity\Placesbymap" table="placesByMap">
     <indexes>
       <index name="mapId_idx" columns="mapId"/>
+      <index name="place_idx" columns="placeId"/>
     </indexes>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="placeid" type="integer" column="placeId" nullable="true">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
+    <many-to-one field="placeid" target-entity="Places" fetch="LAZY">
+      <join-columns>
+        <join-column name="placeId" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
     <many-to-one field="mapid" target-entity="Map" fetch="LAZY">
       <join-columns>
         <join-column name="mapId" referenced-column-name="id"/>

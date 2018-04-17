@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Team
  *
- * @ORM\Table(name="team", indexes={@ORM\Index(name="characterId_idx", columns={"character_id"}), @ORM\Index(name="mateId_idx", columns={"team_mate_id"})})
+ * @ORM\Table(name="team", indexes={@ORM\Index(name="characterId_idx", columns={"character_id"}), @ORM\Index(name="mate_idx", columns={"team_mate_id"})})
  * @ORM\Entity
  */
 class Team
@@ -29,32 +29,31 @@ class Team
     /**
      * @var integer
      *
-     * @ORM\Column(name="team_mate_id", type="integer", nullable=true)
-     */
-    private $teamMateId;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="character_id", type="integer", nullable=true)
-     */
-    private $characterId;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="follower_id", type="integer", nullable=true)
-     */
-    private $followerId;
-
-    /**
-     * @var integer
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+
+    /**
+     * @var \AppBundle\Entity\Followersbycharacter
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Followersbycharacter")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="team_mate_id", referencedColumnName="id")
+     * })
+     */
+    private $teamMate;
+
+    /**
+     * @var \AppBundle\Entity\Characters
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Characters")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="character_id", referencedColumnName="id")
+     * })
+     */
+    private $character;
 
     /**
      * @return int
@@ -91,54 +90,6 @@ class Team
     /**
      * @return int
      */
-    public function getTeamMateId()
-    {
-        return $this->teamMateId;
-    }
-
-    /**
-     * @param int $teamMateId
-     */
-    public function setTeamMateId($teamMateId)
-    {
-        $this->teamMateId = $teamMateId;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCharacterId()
-    {
-        return $this->characterId;
-    }
-
-    /**
-     * @param int $characterId
-     */
-    public function setCharacterId($characterId)
-    {
-        $this->characterId = $characterId;
-    }
-
-    /**
-     * @return int
-     */
-    public function getFollowerId()
-    {
-        return $this->followerId;
-    }
-
-    /**
-     * @param int $followerId
-     */
-    public function setFollowerId($followerId)
-    {
-        $this->followerId = $followerId;
-    }
-
-    /**
-     * @return int
-     */
     public function getId()
     {
         return $this->id;
@@ -150,6 +101,38 @@ class Team
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return Followersbycharacter
+     */
+    public function getTeamMate()
+    {
+        return $this->teamMate;
+    }
+
+    /**
+     * @param Followersbycharacter $teamMate
+     */
+    public function setTeamMate($teamMate)
+    {
+        $this->teamMate = $teamMate;
+    }
+
+    /**
+     * @return Characters
+     */
+    public function getCharacter()
+    {
+        return $this->character;
+    }
+
+    /**
+     * @param Characters $character
+     */
+    public function setCharacter($character)
+    {
+        $this->character = $character;
     }
 
 

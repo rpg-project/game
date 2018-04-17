@@ -24,14 +24,11 @@ class PlayerController extends Controller
 
         $user = $session->get('user');
 
-        $character = $em->getRepository('AppBundle:Characters')->findBy([
+        $character = $em->getRepository('AppBundle:Characters')->findOneBy([
             'userid' => $user->getId(),
         ]);
 
-        $session->set('character', $character[0]);
-
-
-        $character = $session->get('character');
+        $session->set('character', $character);
 
         $capacities = $em->getRepository('AppBundle:Capacitiesbycharacter')->findBy([
             'characterid' => $character->getId(),
@@ -47,8 +44,18 @@ class PlayerController extends Controller
         }
 
         $team = $em->getRepository('AppBundle:Team')->findBy([
-            'characterId' => $character->getId(),
+            'character' => $character,
         ]);
+
+        $balanceTeam = 0;
+        $goodnessTeam = 0;
+        foreach($team as $mate){
+            $balanceTeam += $mate->getTeamMate()->getLaw() - $mate->getTeamMate()->getChaos();
+            $goodnessTeam += $mate->getTeamMate()->getGood() - $mate->getTeamMate()->getEvil();
+        }
+
+        $session->set('balanceTeam', $balanceTeam);
+        $session->set('goodnessTeam', $goodnessTeam);
 
         $balance = $character->getLaw() - $character->getChaos();
         $session->set('balance', $balance);
@@ -64,15 +71,15 @@ class PlayerController extends Controller
         if(!empty($team)){
             foreach ($team as $mate){
                 $place = $mate->getPlace();
-                $follower = $em->getRepository('AppBundle:Followersbycharacter')->findBy([
-                    'id' => $mate->getTeamMateId(),
+                $follower = $em->getRepository('AppBundle:Followersbycharacter')->findOneBy([
+                    'id' => $mate->getTeamMate(),
                 ]);
-                $teamFinal[$place]['mate'] = $follower[0];
-                if($follower[0]->getGoal() == 3){
-                    $goldMin += $follower[0]->getLevel() * $follower[0]->getFollowerid()->getLevelMin();
+                $teamFinal[$place]['mate'] = $follower;
+                if($follower->getGoal() == 3){
+                    $goldMin += $follower->getLevel() * $follower->getFollowerid()->getLevelMin();
                     $session->set('goldMin', $goldMin);
                 }
-                $teamFinal[$place]['avalaible'] = $this->goal($follower[0]->getGoal());
+                $teamFinal[$place]['avalaible'] = $this->goal($follower->getGoal());
                 if($teamFinal[$place]['avalaible'] == false){
                     $mate->setAvalaible(1);
                 } else {
@@ -80,8 +87,8 @@ class PlayerController extends Controller
                 }
                 $em->persist($mate);
                 $em->flush();
-                $balance += $follower[0]->getLaw() - $follower[0]->getChaos();
-                $goodness += $follower[0]->getGood() - $follower[0]->getEvil();
+                $balance += $follower->getLaw() - $follower->getChaos();
+                $goodness += $follower->getGood() - $follower->getEvil();
             }
         }
 
@@ -108,6 +115,7 @@ class PlayerController extends Controller
             'team' => $teamFinal,
             'balance' => $balance,
             'goodness' => $goodness,
+            'test'=> $team,
         ]);
     }
 

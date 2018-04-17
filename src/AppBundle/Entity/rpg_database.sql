@@ -29,8 +29,10 @@ CREATE TABLE `FollowersItems` (
   `Equiped` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `followerId_idx` (`FollowersId`),
-  KEY `itemId_idx` (`ItemId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  KEY `itemId_idx` (`ItemId`),
+  CONSTRAINT `followers` FOREIGN KEY (`FollowersId`) REFERENCES `followers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `items` FOREIGN KEY (`ItemId`) REFERENCES `items` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +41,6 @@ CREATE TABLE `FollowersItems` (
 
 LOCK TABLES `FollowersItems` WRITE;
 /*!40000 ALTER TABLE `FollowersItems` DISABLE KEYS */;
-INSERT INTO `FollowersItems` VALUES (1,2,15,0);
 /*!40000 ALTER TABLE `FollowersItems` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -98,7 +99,7 @@ CREATE TABLE `capacitiesByCharacter` (
 
 LOCK TABLES `capacitiesByCharacter` WRITE;
 /*!40000 ALTER TABLE `capacitiesByCharacter` DISABLE KEYS */;
-INSERT INTO `capacitiesByCharacter` VALUES (1,24,1),(2,24,3),(3,24,2);
+INSERT INTO `capacitiesByCharacter` VALUES (1,27,1);
 /*!40000 ALTER TABLE `capacitiesByCharacter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,7 +116,9 @@ CREATE TABLE `capacitiesByFollower` (
   `capacityId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `followerId_idx` (`followerId`),
-  KEY `capacityId_idx` (`capacityId`)
+  KEY `capacityId_idx` (`capacityId`),
+  CONSTRAINT `capacity` FOREIGN KEY (`capacityId`) REFERENCES `capacities` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `follower` FOREIGN KEY (`followerId`) REFERENCES `followers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -125,7 +128,6 @@ CREATE TABLE `capacitiesByFollower` (
 
 LOCK TABLES `capacitiesByFollower` WRITE;
 /*!40000 ALTER TABLE `capacitiesByFollower` DISABLE KEYS */;
-INSERT INTO `capacitiesByFollower` VALUES (1,1,1),(2,1,3);
 /*!40000 ALTER TABLE `capacitiesByFollower` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -174,7 +176,7 @@ CREATE TABLE `characters` (
   PRIMARY KEY (`id`),
   KEY `userId_idx` (`userId`),
   CONSTRAINT `FK_3A29410E64B64DCC` FOREIGN KEY (`userId`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -183,7 +185,7 @@ CREATE TABLE `characters` (
 
 LOCK TABLES `characters` WRITE;
 /*!40000 ALTER TABLE `characters` DISABLE KEYS */;
-INSERT INTO `characters` VALUES (24,'hhh',0,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,310,0,0,0,0,0,0,0,0,0,10,NULL,1,1,NULL),(27,'ddddddddd',75,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,280,0,0,0,0,0,5,0,0,41,10,NULL,2,1,NULL);
+INSERT INTO `characters` VALUES (24,'hhh',0,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,310,0,0,0,0,0,0,0,0,0,10,NULL,1,1,10),(27,'ddddddddd',75,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,60,0,0,0,0,0,5,0,0,22,10,NULL,2,1,20);
 /*!40000 ALTER TABLE `characters` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -212,7 +214,6 @@ CREATE TABLE `containers` (
 
 LOCK TABLES `containers` WRITE;
 /*!40000 ALTER TABLE `containers` DISABLE KEYS */;
-INSERT INTO `containers` VALUES (1,1,3,2,27),(2,1,4,2,27);
 /*!40000 ALTER TABLE `containers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -252,7 +253,7 @@ CREATE TABLE `followers` (
   `max_capacity_bag` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -261,7 +262,7 @@ CREATE TABLE `followers` (
 
 LOCK TABLES `followers` WRITE;
 /*!40000 ALTER TABLE `followers` DISABLE KEYS */;
-INSERT INTO `followers` VALUES (1,'Conan',1,5,5,0,0,3,3,4,2,1,1,0,' ',1,'SR',10,2,0,1,0,0,0,0,NULL),(2,'Sonia La Rousse',1,5,5,0,0,3,3,3,3,1,1,0,' ',1,'SR',10,2,0,1,0,0,0,0,NULL),(3,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'C',50,1,1,0,10,0,0,0,NULL),(4,'Sherif',2,5,5,0,0,3,3,4,2,1,1,0,' ',1,'SR',10,2,1,1,50,0,0,0,NULL),(5,'Paladin',2,5,5,0,0,3,3,4,4,1,1,0,' ',1,'SSR',5,3,2,1,100,0,100,0,NULL),(6,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'C',30,1,1,0,10,0,0,0,NULL),(7,'Archer',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'C',25,1,1,0,10,0,0,0,NULL),(8,'Merc',1,3,3,0,0,3,3,4,3,1,1,0,' ',1,'R',30,1,3,0,0,0,0,0,NULL),(9,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',1,'R',50,1,0,0,0,0,0,0,NULL),(10,'Thief',1,3,3,0,0,3,3,2,4,1,1,0,'',1,'R',20,1,4,0,0,10,0,0,NULL),(11,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',1,'R',15,1,0,0,0,0,0,0,NULL),(12,'Priest',1,3,3,0,0,3,3,3,3,1,1,0,' ',1,'R',15,1,0,0,0,0,0,0,NULL),(13,'test',1,5,5,5,5,5,5,5,5,5,1,0,'5',1,'SR',10,4,0,1,0,0,0,0,NULL),(14,'test2',1,5,5,5,5,5,5,5,5,5,1,0,'5555',1,'SSR',5,5,0,1,0,0,0,0,NULL),(15,'rezrzer',1,5,5,5,5,5,5,5,5,5,1,0,'00000',1,'SSR',5,5,0,1,0,0,0,0,NULL);
+INSERT INTO `followers` VALUES (1,'Conan',1,5,5,5,5,3,3,4,2,0,1,0,' ',1,'SR',10,4,0,1,0,0,0,0,10),(2,'Sonia La Rousse',1,5,5,5,5,3,3,3,3,0,1,0,' ',1,'SR',10,4,0,1,0,0,0,0,10),(3,'Guard',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',50,1,1,0,10,0,0,0,10),(4,'Sherif',2,5,5,5,5,3,3,4,2,0,1,0,' ',1,'SR',10,4,1,1,50,0,0,0,10),(5,'Paladin',2,5,5,5,5,3,3,4,4,0,1,0,' ',1,'SSR',5,5,2,1,100,0,100,0,10),(6,'Picker',2,3,3,3,3,3,3,3,1,0,1,0,' ',1,'C',30,1,1,0,10,0,0,0,10),(7,'Archer',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',25,1,1,0,10,0,0,0,10),(8,'Merc',1,3,3,3,3,3,3,4,3,0,1,0,' ',1,'R',30,3,3,0,0,0,0,0,10),(9,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',1,'R',50,3,0,0,0,0,0,0,10),(10,'Thief',1,3,3,3,3,3,3,2,4,0,1,0,'',1,'R',20,3,4,0,0,10,0,0,10),(11,'Mage',1,3,3,3,3,3,3,4,2,0,1,0,'',1,'R',15,3,0,0,0,0,0,0,10),(12,'Priest',1,3,3,3,3,3,3,3,3,0,1,0,' ',1,'R',15,3,0,0,0,0,0,0,10);
 /*!40000 ALTER TABLE `followers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -305,7 +306,7 @@ CREATE TABLE `followersByCharacter` (
   KEY `followerId_idx` (`followerId`),
   CONSTRAINT `FK_492018735AF690F3` FOREIGN KEY (`characterId`) REFERENCES `characters` (`id`),
   CONSTRAINT `FK_49201873F542AA03` FOREIGN KEY (`followerId`) REFERENCES `followers` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=150 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -314,7 +315,7 @@ CREATE TABLE `followersByCharacter` (
 
 LOCK TABLES `followersByCharacter` WRITE;
 /*!40000 ALTER TABLE `followersByCharacter` DISABLE KEYS */;
-INSERT INTO `followersByCharacter` VALUES (66,1,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',0,'R',0,1,11,27,0,0,0,0,NULL),(67,0,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',0,'R',0,1,11,27,0,0,0,0,NULL),(68,0,'Merc',1,3,3,0,0,3,3,4,3,1,1,0,' ',3,'R',0,1,8,27,0,0,0,0,NULL),(69,0,'Merc',1,3,3,0,0,3,3,4,3,1,1,0,' ',3,'R',0,1,8,27,0,0,0,0,NULL),(70,0,'Sonia La Rousse',1,5,5,0,0,3,3,3,3,1,1,0,' ',0,'SR',1,2,2,27,0,0,0,0,NULL),(71,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0,NULL),(72,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0,NULL),(73,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0,NULL),(74,0,'Priest',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,12,27,0,0,0,0,NULL),(75,1,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0,NULL),(76,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0,NULL),(77,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0,NULL),(78,1,'Thief',1,3,3,0,0,3,3,2,4,1,1,0,'',4,'R',0,1,10,27,0,10,0,0,NULL),(79,0,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',0,'R',0,1,11,27,0,0,0,0,NULL),(80,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0,NULL),(81,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0,NULL),(82,1,'Sonia La Rousse',1,5,5,0,0,3,3,3,3,1,1,0,' ',0,'SR',1,2,2,27,0,0,0,0,NULL),(83,0,'Mage',1,3,3,0,0,3,3,4,2,1,1,0,'',0,'R',0,1,11,27,0,0,0,0,NULL),(84,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0,NULL),(85,0,'Merc',1,3,3,0,0,3,3,4,3,1,1,0,' ',3,'R',0,1,8,27,0,0,0,0,NULL),(86,0,'Aventurer',1,3,3,0,0,3,3,3,3,1,1,0,' ',0,'R',0,1,9,27,0,0,0,0,NULL),(87,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0,NULL),(88,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0,NULL),(89,0,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'R',0,1,6,27,10,0,0,0,NULL),(90,0,'Archer',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,7,27,10,0,0,0,NULL),(91,0,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'R',0,1,6,27,10,0,0,0,NULL),(92,0,'Paladin',2,5,5,0,0,3,3,4,4,1,1,0,' ',2,'SSR',1,3,5,27,100,0,100,0,NULL),(93,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0,NULL),(94,0,'Archer',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,7,27,10,0,0,0,NULL),(95,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0,NULL),(96,0,'Sherif',2,5,5,0,0,3,3,4,2,1,1,0,' ',1,'SR',1,2,4,27,50,0,0,0,NULL),(97,0,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'R',0,1,6,27,10,0,0,0,NULL),(98,0,'Archer',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,7,27,10,0,0,0,NULL),(99,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0,NULL),(100,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0,NULL),(101,0,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'R',0,1,6,27,10,0,0,0,NULL),(102,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0,NULL),(103,0,'Sherif',2,5,5,0,0,3,3,4,2,1,1,0,' ',1,'SR',1,2,4,27,50,0,0,0,NULL),(104,0,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'R',0,1,6,27,10,0,0,0,NULL),(105,0,'Guard',2,3,3,0,0,3,3,2,2,1,1,0,' ',1,'R',0,1,3,27,10,0,0,0,NULL),(106,0,'Picker',2,3,3,0,0,3,3,3,1,1,1,0,' ',1,'R',0,1,6,27,10,0,0,0,NULL);
+INSERT INTO `followersByCharacter` VALUES (107,0,'Merc',1,3,3,3,3,3,3,4,3,0,1,0,' ',3,'R',0,3,8,27,0,0,0,0,10),(108,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(109,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(110,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(111,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(112,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(113,0,'Mage',1,3,3,3,3,3,3,4,2,0,1,0,'',0,'R',0,3,11,27,0,0,0,0,10),(114,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(115,0,'Mage',1,3,3,3,3,3,3,4,2,0,1,0,'',0,'R',0,3,11,27,0,0,0,0,10),(116,0,'Merc',1,3,3,3,3,3,3,4,3,0,1,0,' ',3,'R',0,3,8,27,0,0,0,0,10),(117,1,'Thief',1,3,3,3,3,3,3,2,4,0,1,0,'',4,'R',0,3,10,27,0,10,0,0,10),(118,0,'Merc',1,3,3,3,3,3,3,4,3,0,1,0,' ',3,'R',0,3,8,27,0,0,0,0,10),(119,0,'Guard',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',0,1,3,27,10,0,0,0,10),(120,0,'Picker',2,3,3,3,3,3,3,3,1,0,1,0,' ',1,'C',0,1,6,27,10,0,0,0,10),(121,0,'Guard',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',0,1,3,27,10,0,0,0,10),(122,0,'Archer',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',0,1,7,27,10,0,0,0,10),(123,0,'Guard',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',0,1,3,27,10,0,0,0,10),(124,0,'Picker',2,3,3,3,3,3,3,3,1,0,1,0,' ',1,'C',0,1,6,27,10,0,0,0,10),(125,0,'Guard',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',0,1,3,27,10,0,0,0,10),(126,0,'Guard',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',0,1,3,27,10,0,0,0,10),(127,0,'Picker',2,3,3,3,3,3,3,3,1,0,1,0,' ',1,'C',0,1,6,27,10,0,0,0,10),(128,0,'Guard',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',0,1,3,27,10,0,0,0,10);
 /*!40000 ALTER TABLE `followersByCharacter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -387,7 +388,7 @@ CREATE TABLE `items` (
 
 LOCK TABLES `items` WRITE;
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
-INSERT INTO `items` VALUES (1,'Bow',1,1,1,'C',0,0,1,0,1,0,0,4,20,100,0,0,0,NULL,2),(2,'Bag',2,1,1,'C',0,0,0,0,0,0,0,0,10,25,1,1,10,NULL,1),(3,'heal potion',3,1,1,'C',0,0,0,0,0,10,0,0,10,50,0,0,0,NULL,1),(6,'dagger',1,1,1,'C',0,1,1,0,1,0,0,1,15,50,0,0,0,NULL,1);
+INSERT INTO `items` VALUES (1,'Bow',1,1,1,'C',0,0,1,0,1,0,0,4,20,100,0,0,0,NULL,2),(3,'heal potion',3,1,1,'C',0,0,0,0,0,10,0,0,10,50,0,0,0,NULL,1),(6,'dagger',1,1,1,'C',0,1,1,0,1,0,0,1,15,50,0,0,0,NULL,1);
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -426,6 +427,7 @@ CREATE TABLE `itemsByCharacter` (
   PRIMARY KEY (`id`),
   KEY `characterId_idx` (`characterId`),
   KEY `itemId_idx` (`itemId`),
+  CONSTRAINT `char` FOREIGN KEY (`characterId`) REFERENCES `characters` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `itemId` FOREIGN KEY (`itemId`) REFERENCES `items` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -436,7 +438,6 @@ CREATE TABLE `itemsByCharacter` (
 
 LOCK TABLES `itemsByCharacter` WRITE;
 /*!40000 ALTER TABLE `itemsByCharacter` DISABLE KEYS */;
-INSERT INTO `itemsByCharacter` VALUES (1,0,1,0,2,'Bow',1,2,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,27,1),(2,0,0,10,0,'Bag',2,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,27,2),(3,0,1,0,2,'Heal potion',3,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,27,3);
 /*!40000 ALTER TABLE `itemsByCharacter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -474,7 +475,9 @@ CREATE TABLE `itemsByFollowers` (
   `followerId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `followerId_idx` (`followerId`),
-  CONSTRAINT `followerId` FOREIGN KEY (`followerId`) REFERENCES `followersByCharacter` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `itemId_idx` (`itemId`),
+  CONSTRAINT `followerId` FOREIGN KEY (`followerId`) REFERENCES `followersByCharacter` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `item` FOREIGN KEY (`itemId`) REFERENCES `items` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -484,7 +487,6 @@ CREATE TABLE `itemsByFollowers` (
 
 LOCK TABLES `itemsByFollowers` WRITE;
 /*!40000 ALTER TABLE `itemsByFollowers` DISABLE KEYS */;
-INSERT INTO `itemsByFollowers` VALUES (1,0,0,10,0,'Bag',2,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,2,78),(2,1,0,0,1,'Dagger',1,1,1,'C',0,1,1,0,0,0,1,15,50,NULL,0,1,6,78);
 /*!40000 ALTER TABLE `itemsByFollowers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -555,7 +557,9 @@ CREATE TABLE `placesByMap` (
   `placeId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `mapId_idx` (`mapId`),
-  CONSTRAINT `mapId` FOREIGN KEY (`mapId`) REFERENCES `map` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `place_idx` (`placeId`),
+  CONSTRAINT `mapId` FOREIGN KEY (`mapId`) REFERENCES `map` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `place` FOREIGN KEY (`placeId`) REFERENCES `places` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -633,11 +637,12 @@ CREATE TABLE `team` (
   `avalaible` int(11) DEFAULT NULL,
   `team_mate_id` int(11) DEFAULT NULL,
   `character_id` int(11) DEFAULT NULL,
-  `follower_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `characterId_idx` (`character_id`),
-  KEY `mateId_idx` (`team_mate_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
+  KEY `mate_idx` (`team_mate_id`),
+  CONSTRAINT `charactr` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `mate` FOREIGN KEY (`team_mate_id`) REFERENCES `followersByCharacter` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -646,7 +651,7 @@ CREATE TABLE `team` (
 
 LOCK TABLES `team` WRITE;
 /*!40000 ALTER TABLE `team` DISABLE KEYS */;
-INSERT INTO `team` VALUES (37,4,0,82,27,2),(44,1,0,78,27,10),(45,5,0,75,27,9),(46,3,0,66,27,11);
+INSERT INTO `team` VALUES (66,4,0,117,27);
 /*!40000 ALTER TABLE `team` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -662,7 +667,7 @@ CREATE TABLE `users` (
   `username` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -671,7 +676,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Roland'),(2,'Rodolphe');
+INSERT INTO `users` VALUES (1,'Roland'),(2,'Rodolphe'),(3,'toto');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -692,4 +697,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-16 10:38:12
+-- Dump completed on 2018-04-17 16:55:10

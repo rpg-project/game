@@ -3,6 +3,7 @@
   <entity name="AppBundle\Entity\Itemsbyfollowers" table="itemsByFollowers">
     <indexes>
       <index name="followerId_idx" columns="followerId"/>
+      <index name="itemId_idx" columns="itemId"/>
     </indexes>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
@@ -112,11 +113,11 @@
         <option name="unsigned"/>
       </options>
     </field>
-    <field name="itemid" type="integer" column="itemId" nullable="true">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
+    <many-to-one field="itemid" target-entity="Items" fetch="LAZY">
+      <join-columns>
+        <join-column name="itemId" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
     <many-to-one field="followerid" target-entity="Followersbycharacter" fetch="LAZY">
       <join-columns>
         <join-column name="followerId" referenced-column-name="id"/>
