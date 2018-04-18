@@ -6,8 +6,8 @@
             <div class="col-lg-6">
                 <h1>Equipe</h1>
                 <table class="table">
-                    {% for key,follower in team %}
-                        {% if follower.mate == false %}
+                    {% for key,mate in team %}
+                        {% if mate == false %}
                             <tr>
                                 <th>Position {{ key }}</th>
                                 <td><a href="{{ path("options_team_choice", {'place' : key}) }}" class="btn btn-primary">Ajout Equipier {{ key }}</a></td>
@@ -16,12 +16,12 @@
 
                                 <tr>
                                     <th>Position {{ key }}</th>
-                                    {% if follower.avalaible == true %}
-                                    <td>{{ follower.mate.name }}</td>
-                                    <td><a href="{{ path("options_team_del", {'place' : key, 'teamMateId' : follower.mate.id}) }}" class="btn btn-primary">Retirer</a></td>
+                                    {% if mate.avalaible == 0 %}
+                                    <td>{{ mate.teammate.name }}</td>
+                                    <td><a href="{{ path("options_team_del", {'place' : key, 'teamMateId' : mate.teammate.id}) }}" class="btn btn-primary">Retirer</a></td>
                                     {% else %}
-                                        <td style="color:red;">{{ follower.mate.name }}</td>
-                                        <td><a href="{{ path("options_team_del", {'place' : key, 'teamMateId' : follower.mate.id}) }}" class="btn btn-primary">Retirer</a></td>
+                                        <td style="color:red;">{{ mate.teammate.name }}</td>
+                                        <td><a href="{{ path("options_team_del", {'place' : key, 'teamMateId' : mate.teammate.id}) }}" class="btn btn-primary">Retirer</a></td>
                                     {% endif %}
                                 </tr>
 

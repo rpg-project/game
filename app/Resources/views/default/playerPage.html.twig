@@ -25,58 +25,27 @@
                         <td><img src="{{ capacity.description }}" width=40 heigh="40"></td>
                     {% endfor %}
                 </tr>
-                {#{% for key, place in team %}#}
-                    {#{% for mate in place %}#}
-                        {#{% if mate != false %}#}
-                            {#<td>{{ key }}</td>#}
-                        {#{% else %}#}
-                                {#<td>{{ key }}</td>#}
-                        {#{% endif %}#}
-                        {#{% if mate == false %}#}
-                            {#<tr>#}
-                                {#<td>vide</td>#}
-                            {#</tr>#}
-                        {#{% else  %}#}
-                            {#<tr>#}
-                                {#<td colspan="2"><img src="{{ mate.teammate.image }}" width=50 height="50"></td>#}
-                            {#</tr>#}
-                            {#<tr>#}
-                                {#{% if mate.avalaible == true %}#}
-                                    {#<td><a href="{{ path("stats_follower", {'id' : mate.teammate.id}) }}">{{ mate.teammate..name }}</a></td>#}
-                                {#{% else %}#}
-                                    {#<td><a href="{{ path("stats_follower", {'id' : mate.teammate.id}) }}" style="color:red;">{{ mate.teammate.name }}</a></td>#}
-                                {#{% endif %}#}
-                            {#</tr>#}
-                            {#<tr>#}
-                                {#<th class="health"></th>#}
-                                {#<td>{{ mate.teammate.health }} / {{ mate.teammate.maxHealth }}</td>#}
-                            {#</tr>#}
-                            {#{% endif %}#}
-                        {#{% endfor %}#}
-                {#{% endfor %}#}
-
-
-                {% for key,follower in team %}
-                    {% if follower.mate == false %}
-                                <tr>
-                                    <td>vide</td>
-                                </tr>
-                            {% else  %}
-                                <tr>
-                                    <td colspan="2"><img src="{{ follower.mate.image }}" width=50 height="50"></td>
-                                </tr>
-                                <tr>
-                                    {% if follower.avalaible == true %}
-                                    <td><a href="{{ path("stats_follower", {'id' : follower.mate.id}) }}">{{ follower.mate.name }}</a></td>
-                                    {% else %}
-                                        <td><a href="{{ path("stats_follower", {'id' : follower.mate.id}) }}" style="color:red;">{{ follower.mate.name }}</a></td>
-                                    {% endif %}
-                                </tr>
-                                <tr>
-                                    <th class="health"></th>
-                                    <td>{{ follower.mate.health }} / {{ follower.mate.maxHealth }}</td>
-                                </tr>
+                {% for mate in team %}
+                    {% if mate == false %}
+                        <tr>
+                            <td>vide</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="2"><img src="{{ mate.teammate.image }}" width=50 height="50"></td>
+                        </tr>
+                        <tr>
+                            {% if mate.avalaible == 0 %}
+                                <td><a href="{{ path("stats_follower", {'id' : mate.teammate.id}) }}">{{ mate.teammate.name }}</a></td>
+                            {% else %}
+                                <td><a href="{{ path("stats_follower", {'id' : mate.teammate.id}) }}" style="color:red;">{{ mate.teammate.name }}</a></td>
                             {% endif %}
+                        </tr>
+                        <tr>
+                            <th class="health"></th>
+                            <td>{{ mate.teammate.health }} / {{ mate.teammate.maxHealth }}</td>
+                        </tr>
+                    {% endif %}
                 {% endfor %}
             </table>
         </div>
@@ -99,9 +68,6 @@
                 </tr>
             </table>
         </div>
-        {% for key, mate in test %}
-            {{ mate.teammate.name }}<br/>
-        {% endfor %}
     </div>
     <div class="row text-center">
        <table class="table">

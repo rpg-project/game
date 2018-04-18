@@ -83,7 +83,7 @@ class OptionsController extends Controller
 
         $teamFinal = array();
         for($i=1; $i <=5; $i++){
-            $teamFinal[$i]['mate'] = false;
+            $teamFinal[$i] = false;
         }
         $goldMin = 0;
         if(!empty($team)){
@@ -95,17 +95,17 @@ class OptionsController extends Controller
                 ]);
 
                 /** @var Followersbycharacter $follower  */
-                $teamFinal[$place]['mate'] = $follower;
                 if($follower->getGoal() === 3){
                     $goldMin += $follower->getLevel() * $follower->getFollowerid()->getLevelMin();
                     $session->set('goldMin', $goldMin);
                 }
-                $teamFinal[$place]['avalaible'] = $this->goal($follower->getGoal());
-                if($teamFinal[$place]['avalaible'] == false){
+                $avalaible = $this->goal($follower->getGoal());
+                if($avalaible == false){
                     $mate->setAvalaible(1);
                 } else {
                     $mate->setAvalaible(0);
                 }
+                $teamFinal[$place] = $mate;
                 $balance += $follower->getLaw() - $follower->getChaos();
                 $balanceTeam += $follower->getLaw() - $follower->getChaos();
                 $goodness += $follower->getGood() - $follower->getEvil();
@@ -335,50 +335,6 @@ class OptionsController extends Controller
 
         $character = $session->get('character');
 
-        $capacities = $em->getRepository('AppBundle:Capacitiesbycharacter')->findOneBy([
-            'characterid' => $character
-        ]);
-
-        if($capacities !== null){
-            foreach ($capacities as $capacity){
-                $em->remove($capacity);
-                $em->flush();
-            }
-        }
-
-        $team = $em->getRepository('AppBundle:Team')->findBy([
-            'character' => $character
-        ]);
-
-        if($team !== null){
-            foreach ($team as $mate){
-                $em->remove($mate);
-                $em->flush();
-            }
-        }
-
-        $followers = $em->getRepository('AppBundle:Followersbycharacter')->findBy([
-            'characterid' => $character
-        ]);
-
-        if($followers !== null){
-            foreach ($followers as $follower){
-                $em->remove($follower);
-                $em->flush();
-            }
-        }
-
-        $items = $em->getRepository('AppBundle:Itemsbycharacter')->findBy([
-            'characterid' => $character
-        ]);
-
-        if($items !== null){
-            foreach ($items as $item){
-                $em->remove($item);
-                $em->flush();
-            }
-        }
-
         $character = $em->getRepository('AppBundle:Characters')->findOneBy([
             'id'=> $character->getId(),
             ]);
@@ -469,9 +425,9 @@ class OptionsController extends Controller
     public function uniqueFollower($team){
         $uniqueList = array();
         foreach ($team as $mate){
-              if($mate['mate'] !== false) {
-                  if ($mate['mate']->getUniqueRate() == 1) {
-                      $uniqueList[] = $mate['mate']->getFollowerid()->getId();
+              if($mate !== false) {
+                  if ($mate->getTeamMate()->getUniqueRate() == 1) {
+                      $uniqueList[] = $mate->getFollowerid()->getId();
                   }
               }
         }
