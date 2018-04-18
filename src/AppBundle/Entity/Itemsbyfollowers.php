@@ -106,6 +106,13 @@ class Itemsbyfollowers
     /**
      * @var integer
      *
+     * @ORM\Column(name="bonus_critical", type="integer", nullable=true)
+     */
+    private $bonusCritical;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="bonus_health", type="integer", nullable=true)
      */
     private $bonusHealth;
@@ -394,6 +401,22 @@ class Itemsbyfollowers
     public function setBonusDefense($bonusDefense)
     {
         $this->bonusDefense = $bonusDefense;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBonusCritical()
+    {
+        return $this->bonusCritical;
+    }
+
+    /**
+     * @param int $bonusCritical
+     */
+    public function setBonusCritical($bonusCritical)
+    {
+        $this->bonusCritical = $bonusCritical;
     }
 
     /**

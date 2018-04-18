@@ -73,6 +73,11 @@
         <option name="unsigned"/>
       </options>
     </field>
+    <field name="bonusCritical" type="integer" column="bonus_critical" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
     <field name="bonusHealth" type="integer" column="bonus_health" nullable="true">
       <options>
         <option name="unsigned"/>

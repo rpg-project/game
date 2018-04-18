@@ -30,9 +30,9 @@ CREATE TABLE `FollowersItems` (
   PRIMARY KEY (`id`),
   KEY `followerId_idx` (`FollowersId`),
   KEY `itemId_idx` (`ItemId`),
-  CONSTRAINT `followers` FOREIGN KEY (`FollowersId`) REFERENCES `followers` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `items` FOREIGN KEY (`ItemId`) REFERENCES `items` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `followers` FOREIGN KEY (`FollowersId`) REFERENCES `followers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `items` FOREIGN KEY (`ItemId`) REFERENCES `items` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +41,7 @@ CREATE TABLE `FollowersItems` (
 
 LOCK TABLES `FollowersItems` WRITE;
 /*!40000 ALTER TABLE `FollowersItems` DISABLE KEYS */;
+INSERT INTO `FollowersItems` VALUES (1,1,1,0),(2,6,2,0),(3,1,3,0),(4,6,4,0),(5,6,5,0),(6,3,6,0),(7,1,7,0),(8,6,8,0),(9,6,9,0),(10,6,10,0),(11,6,11,0),(12,6,12,0);
 /*!40000 ALTER TABLE `FollowersItems` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -185,7 +186,7 @@ CREATE TABLE `characters` (
 
 LOCK TABLES `characters` WRITE;
 /*!40000 ALTER TABLE `characters` DISABLE KEYS */;
-INSERT INTO `characters` VALUES (24,'hhh',0,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,310,0,0,0,0,0,0,0,0,0,10,NULL,1,1,10),(27,'ddddddddd',75,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,60,0,0,0,0,0,5,0,0,22,10,NULL,2,1,20);
+INSERT INTO `characters` VALUES (24,'hhh',0,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,310,0,0,0,0,0,0,0,0,0,10,NULL,1,1,10),(27,'ddddddddd',75,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,40,0,0,0,0,0,5,0,0,24,10,NULL,2,1,20);
 /*!40000 ALTER TABLE `characters` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -306,7 +307,7 @@ CREATE TABLE `followersByCharacter` (
   KEY `followerId_idx` (`followerId`),
   CONSTRAINT `FK_492018735AF690F3` FOREIGN KEY (`characterId`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_49201873F542AA03` FOREIGN KEY (`followerId`) REFERENCES `followers` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=147 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -315,7 +316,7 @@ CREATE TABLE `followersByCharacter` (
 
 LOCK TABLES `followersByCharacter` WRITE;
 /*!40000 ALTER TABLE `followersByCharacter` DISABLE KEYS */;
-INSERT INTO `followersByCharacter` VALUES (107,0,'Merc',1,3,3,3,3,3,3,4,3,0,1,0,' ',3,'R',0,3,8,27,0,0,0,0,10),(108,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(109,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(110,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(111,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(112,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(113,0,'Mage',1,3,3,3,3,3,3,4,2,0,1,0,'',0,'R',0,3,11,27,0,0,0,0,10),(114,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(115,0,'Mage',1,3,3,3,3,3,3,4,2,0,1,0,'',0,'R',0,3,11,27,0,0,0,0,10),(116,0,'Merc',1,3,3,3,3,3,3,4,3,0,1,0,' ',3,'R',0,3,8,27,0,0,0,0,10),(117,1,'Thief',1,3,3,3,3,3,3,2,4,0,1,0,'',4,'R',0,3,10,27,0,10,0,0,10),(118,0,'Merc',1,3,3,3,3,3,3,4,3,0,1,0,' ',3,'R',0,3,8,27,0,0,0,0,10),(119,0,'Guard',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',0,1,3,27,10,0,0,0,10),(120,0,'Picker',2,3,3,3,3,3,3,3,1,0,1,0,' ',1,'C',0,1,6,27,10,0,0,0,10),(121,0,'Guard',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',0,1,3,27,10,0,0,0,10),(122,0,'Archer',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',0,1,7,27,10,0,0,0,10),(123,0,'Guard',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',0,1,3,27,10,0,0,0,10),(124,0,'Picker',2,3,3,3,3,3,3,3,1,0,1,0,' ',1,'C',0,1,6,27,10,0,0,0,10),(125,0,'Guard',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',0,1,3,27,10,0,0,0,10),(126,0,'Guard',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',0,1,3,27,10,0,0,0,10),(127,0,'Picker',2,3,3,3,3,3,3,3,1,0,1,0,' ',1,'C',0,1,6,27,10,0,0,0,10),(128,0,'Guard',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',0,1,3,27,10,0,0,0,10);
+INSERT INTO `followersByCharacter` VALUES (107,0,'Merc',1,3,3,3,3,3,3,4,3,0,1,0,' ',3,'R',0,3,8,27,0,0,0,0,10),(108,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(109,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(110,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(111,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(112,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(113,0,'Mage',1,3,3,3,3,3,3,4,2,0,1,0,'',0,'R',0,3,11,27,0,0,0,0,10),(114,1,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(115,0,'Mage',1,3,3,3,3,3,3,4,2,0,1,0,'',0,'R',0,3,11,27,0,0,0,0,10),(116,0,'Merc',1,3,3,3,3,3,3,4,3,0,1,0,' ',3,'R',0,3,8,27,0,0,0,0,10),(117,0,'Thief',1,3,3,3,3,3,3,2,4,0,1,0,'',4,'R',0,3,10,27,0,10,0,0,10),(118,0,'Merc',1,3,3,3,3,3,3,4,3,0,1,0,' ',3,'R',0,3,8,27,0,0,0,0,10),(119,0,'Guard',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',0,1,3,27,10,0,0,0,10),(120,0,'Picker',2,3,3,3,3,3,3,3,1,0,1,0,' ',1,'C',0,1,6,27,10,0,0,0,10),(121,0,'Guard',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',0,1,3,27,10,0,0,0,10),(122,0,'Archer',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',0,1,7,27,10,0,0,0,10),(123,0,'Guard',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',0,1,3,27,10,0,0,0,10),(124,0,'Picker',2,3,3,3,3,3,3,3,1,0,1,0,' ',1,'C',0,1,6,27,10,0,0,0,10),(125,0,'Guard',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',0,1,3,27,10,0,0,0,10),(126,1,'Guard',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',0,1,3,27,10,0,0,0,10),(127,0,'Picker',2,3,3,3,3,3,3,3,1,0,1,0,' ',1,'C',0,1,6,27,10,0,0,0,10),(128,0,'Guard',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',0,1,3,27,10,0,0,0,10),(139,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(140,0,'Merc',1,3,3,3,3,3,3,4,3,0,1,0,' ',3,'R',0,3,8,27,0,0,0,0,10),(141,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(142,0,'Conan',1,5,5,5,5,3,3,4,2,0,1,0,' ',0,'SR',1,4,1,27,0,0,0,0,10),(143,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(144,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(145,0,'Conan',1,5,5,5,5,3,3,4,2,0,1,0,' ',0,'SR',1,4,1,27,0,0,0,0,10),(146,1,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10);
 /*!40000 ALTER TABLE `followersByCharacter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -388,7 +389,7 @@ CREATE TABLE `items` (
 
 LOCK TABLES `items` WRITE;
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
-INSERT INTO `items` VALUES (1,'Bow',1,1,1,'C',0,0,1,0,1,0,0,4,20,100,0,0,0,NULL,2),(3,'heal potion',3,1,1,'C',0,0,0,0,0,10,0,0,10,50,0,0,0,NULL,1),(6,'dagger',1,1,1,'C',0,1,1,0,1,0,0,1,15,50,0,0,0,NULL,1);
+INSERT INTO `items` VALUES (1,'Bow',1,1,1,'C',0,0,1,0,1,0,0,4,20,100,0,0,0,'/images/bow.jpg',2),(3,'heal potion',3,1,1,'C',0,0,0,0,0,10,0,0,10,50,0,0,0,'/images/heal_potion.png',1),(6,'dagger',1,1,1,'C',0,1,1,0,1,0,0,1,15,50,0,0,0,'/images/dague.jpg',1);
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -414,6 +415,7 @@ CREATE TABLE `itemsByCharacter` (
   `bonus_quickness` int(11) DEFAULT NULL,
   `bonus_attack` int(11) DEFAULT NULL,
   `bonus_defense` int(11) DEFAULT NULL,
+  `bonus_critical` int(11) DEFAULT NULL,
   `bonus_health` int(11) DEFAULT NULL,
   `bonus_energy` int(11) DEFAULT NULL,
   `capacity` int(11) DEFAULT NULL,
@@ -426,9 +428,9 @@ CREATE TABLE `itemsByCharacter` (
   `itemId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `characterId_idx` (`characterId`),
-  KEY `itemId_idx` (`itemId`),
+  KEY `item_idx` (`itemId`),
   CONSTRAINT `char` FOREIGN KEY (`characterId`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `itemId` FOREIGN KEY (`itemId`) REFERENCES `items` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `itemid` FOREIGN KEY (`itemId`) REFERENCES `items` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -463,6 +465,7 @@ CREATE TABLE `itemsByFollowers` (
   `bonus_quickness` int(11) DEFAULT NULL,
   `bonus_attack` int(11) DEFAULT NULL,
   `bonus_defense` int(11) DEFAULT NULL,
+  `bonus_critical` int(11) DEFAULT NULL,
   `bonus_health` int(11) DEFAULT NULL,
   `bonus_energy` int(11) DEFAULT NULL,
   `capacity` int(11) DEFAULT NULL,
@@ -478,7 +481,7 @@ CREATE TABLE `itemsByFollowers` (
   KEY `itemId_idx` (`itemId`),
   CONSTRAINT `followerId` FOREIGN KEY (`followerId`) REFERENCES `followersByCharacter` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `item` FOREIGN KEY (`itemId`) REFERENCES `items` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -487,6 +490,7 @@ CREATE TABLE `itemsByFollowers` (
 
 LOCK TABLES `itemsByFollowers` WRITE;
 /*!40000 ALTER TABLE `itemsByFollowers` DISABLE KEYS */;
+INSERT INTO `itemsByFollowers` VALUES (1,0,1,0,0,'dagger',1,1,NULL,'C',0,1,1,0,0,0,0,1,0,50,'/images/dague.jpg',0,1,6,146);
 /*!40000 ALTER TABLE `itemsByFollowers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -642,7 +646,7 @@ CREATE TABLE `team` (
   KEY `mate_idx` (`team_mate_id`),
   CONSTRAINT `charactr` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `mate` FOREIGN KEY (`team_mate_id`) REFERENCES `followersByCharacter` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -651,7 +655,7 @@ CREATE TABLE `team` (
 
 LOCK TABLES `team` WRITE;
 /*!40000 ALTER TABLE `team` DISABLE KEYS */;
-INSERT INTO `team` VALUES (73,1,0,117,27);
+INSERT INTO `team` VALUES (74,1,0,114,27),(75,2,0,126,27),(76,3,0,146,27);
 /*!40000 ALTER TABLE `team` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -697,4 +701,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-18  9:51:23
+-- Dump completed on 2018-04-18 15:49:03

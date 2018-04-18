@@ -3,7 +3,7 @@
   <entity name="AppBundle\Entity\Itemsbycharacter" table="itemsByCharacter">
     <indexes>
       <index name="characterId_idx" columns="characterId"/>
-      <index name="itemId_idx" columns="itemId"/>
+      <index name="item_idx" columns="itemId"/>
     </indexes>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
@@ -69,6 +69,11 @@
       </options>
     </field>
     <field name="bonusDefense" type="integer" column="bonus_defense" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="bonusCritical" type="integer" column="bonus_critical" nullable="true">
       <options>
         <option name="unsigned"/>
       </options>

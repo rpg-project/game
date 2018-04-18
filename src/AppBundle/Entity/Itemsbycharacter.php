@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Itemsbycharacter
  *
- * @ORM\Table(name="itemsByCharacter", indexes={@ORM\Index(name="characterId_idx", columns={"characterId"}), @ORM\Index(name="itemId_idx", columns={"itemId"})})
+ * @ORM\Table(name="itemsByCharacter", indexes={@ORM\Index(name="characterId_idx", columns={"characterId"}), @ORM\Index(name="item_idx", columns={"itemId"})})
  * @ORM\Entity
  */
 class Itemsbycharacter
@@ -102,6 +102,13 @@ class Itemsbycharacter
      * @ORM\Column(name="bonus_defense", type="integer", nullable=true)
      */
     private $bonusDefense;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="bonus_critical", type="integer", nullable=true)
+     */
+    private $bonusCritical;
 
     /**
      * @var integer
@@ -394,6 +401,22 @@ class Itemsbycharacter
     public function setBonusDefense($bonusDefense)
     {
         $this->bonusDefense = $bonusDefense;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBonusCritical()
+    {
+        return $this->bonusCritical;
+    }
+
+    /**
+     * @param int $bonusCritical
+     */
+    public function setBonusCritical($bonusCritical)
+    {
+        $this->bonusCritical = $bonusCritical;
     }
 
     /**

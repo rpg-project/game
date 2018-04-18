@@ -473,7 +473,7 @@ class OptionsController extends Controller
         $session->set('team', $team);
 
         $inventory = $em->getRepository('AppBundle:Itemsbycharacter')-> findBy([
-            'characterid' => $id,
+            'characterid' => $character,
         ]);
 
         $listEquiped = array();

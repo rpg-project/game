@@ -10,6 +10,7 @@ use AppBundle\Entity\Users;
 use AppBundle\Entity\Places;
 use AppBundle\Entity\Characterlocation;
 use AppBundle\Entity\Followersbycharacter;
+use AppBundle\Entity\Itemsbyfollowers;
 
 
 class PlaceController extends Controller
@@ -149,7 +150,46 @@ class PlaceController extends Controller
 
                 $em->persist($newFollower);
                 $em->flush();
+
+                $items = $em->getRepository('AppBundle:Followersitems')->findBy([
+                    'followersid' => $summonTable[$i],
+                ]);
+
+                foreach ($items as $item){
+                    $newItem = new Itemsbyfollowers();
+                    $newItem->setEquiped(0);
+                    $newItem->setContained(1);
+                    $newItem->setContainerid($item->getItemid()->getContainer());
+                    $newItem->setContainerSpace($item->getItemid()->getContainerSpace());
+                    $newItem->setImage($item->getItemid()->getImage());
+                    $newItem->setName($item->getItemid()->getName());
+                    $newItem->setType($item->getItemid()->getType());
+                    $newItem->setLevel($item->getItemid()->getLevel());
+                    $newItem->setLevelMin($item->getItemid()->getLevelMin());
+                    $newItem->setQuality($item->getItemid()->getQuality());
+                    $newItem->setBonusMove($item->getItemid()->getBonusMove());
+                    $newItem->setBonusQuickness($item->getItemid()->getBonusQuickness());
+                    $newItem->setBonusAttack($item->getItemid()->getBonusAttack());
+                    $newItem->setBonusDefense($item->getItemid()->getBonusDefense());
+                    $newItem->setBonusCritical($item->getItemid()->getBonusCritical());
+                    $newItem->setBonusHealth($item->getItemid()->getBonusHealth());
+                    $newItem->setBonusEnergy($item->getItemid()->getBonusEnergy());
+                    $newItem->setCapacity($item->getItemid()->getCapacity());
+                    $newItem->setPriceBuy(0);
+                    $newItem->setPriceSell($item->getItemid()->getPriceSell());
+                    $newItem->setImage($item->getItemid()->getImage());
+                    $newItem->setOpen($item->getItemid()->getOpen());
+                    $newItem->setWeigth($item->getItemid()->getWeigth());
+                    $newItem->setItemid($item->getItemid());
+                    $newItem->setFollowerid($newFollower);
+
+                    $em->persist($newItem);
+                    $em->flush();
+
+                }
             }  
+
+
 
             $amountMoney = $amountMoney - $costSummon;
 

@@ -191,15 +191,25 @@ class FollowerController extends Controller
      */
     public function followerAddItem($id){
 
+        $em = $this->getDoctrine()->getManager();
+
         $session = $this->get('session');
 
         $follower = $session->get('adminFollower');
         $items = $session->get('adminItems');
 
+        $item = $em->getRepository('AppBundle:Items')->findOneBy([
+            'id'=> $items[$id]->getId(),
+        ]);
+
+        $follower = $em->getRepository('AppBundle:Followers')->findOneBy([
+            'id'=> $follower->getId(),
+        ]);
+
         $chosenItem = new Followersitems();
-        $chosenItem->setItemid($items[$id]->getId());
+        $chosenItem->setItemid($item);
         $chosenItem->setEquiped(0);
-        $chosenItem->setFollowersid($follower->getId());
+        $chosenItem->setFollowersid($follower);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($chosenItem);
