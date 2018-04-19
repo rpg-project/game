@@ -352,10 +352,24 @@ class PlaceController extends Controller
     /**
      * @Route("/buy/{placeId}", name="buy")
      */
-    public function buyAction($level){
+    public function buyAction($placeId){
 
-        echo 'achats';
-        die;
+        $em = $this->getDoctrine()->getManager();
+
+        $session = $this->get('session');
+
+        $character = $session->get('character');
+
+        $items = $em->getRepository('AppBundle:Itemsbycharacter')->findBy([
+            'characterid' => $character,
+        ]);
+
+        return $this->render('default/buy.html.twig', [
+            'items' => $items,
+            'character' => $character,
+        ]);
+
+
     }
 
     /**

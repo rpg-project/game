@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <h1>Récupération</h1>
+            <h3>Or : {{ character.gold }}</h3>
+            <h3>{% block buy %}{% endblock %}</h3>
+            <table class="table">
+                <tr>
+                    <th>Objet</th>
+                    <th>Prix</th>
+                    <th></th>
+                </tr>
+                {% for item in items %}
+                    <tr>
+                        <td><img src="{{ item.image }}" title="{{ item.name }}" width="40"></td>
+                        <td>{{ item.priceBuy  }}</td>
+                        {% if item.priceBuy > 0 %}
+                            <td><a href="#" class="btn btn-warning">Vendre</a></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="row">
+            <a href="{{ path('player_homepage') }}" class="btn btn-warning">Retour</a>
+        </div>
+    </div>
+{% endblock %}
