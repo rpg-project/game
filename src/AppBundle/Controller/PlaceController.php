@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Itemsbycharacter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -258,10 +259,94 @@ class PlaceController extends Controller
             'level' => $place->getLevel(),
         ]);
 
+        $session->set('items', $items);
+
         return $this->render('default/sell.html.twig', [
             'items' => $items,
             'character' => $character,
         ]);
+    }
+
+    /**
+     * @Route("/sell/item/{id}", name="sell_item")
+     */
+    public function sellItemAction($id){
+        $em = $this->getDoctrine()->getManager();
+
+        $session = $this->get('session');
+
+        $character = $session->get('character');
+
+        $items = $session->get('items');
+
+        $character = $em->getRepository('AppBundle:Characters')->findOneBy([
+            'id'=>$character->getId(),
+        ]);
+
+        $item = $em->getRepository('AppBundle:Items')->findOneBy([
+            'id'=> $id
+        ]);
+
+        /// gestion place et gestion or
+        $gold = $character->getGold();
+        if ($gold >= $item->getPriceSell()){
+            $weigthLimit = $character->getMaxBagCapacity();
+            $itemsCharacter = $em->getRepository('AppBundle:Itemsbycharacter')->findBy([
+                'characterid' => $character,
+            ]);
+            $weigth = 0;
+            foreach ($itemsCharacter as $itemCharacter){
+                $weigth += $itemCharacter->getWeigth();
+            }
+            if(($weigth + $itemCharacter->getWeigth()) <= $weigthLimit){
+                $newItemCharacter = new Itemsbycharacter();
+                $newItemCharacter->setEquiped(0);
+                $newItemCharacter->setContained(1);
+                $newItemCharacter->setContainerSpace($item->getContainerSpace());
+                $newItemCharacter->setContainerId($item->getContainer());
+                $newItemCharacter->setName($item->getName());
+                $newItemCharacter->setType($item->getType());
+                $newItemCharacter->setLevelMin($item->getLevelMin());
+                $newItemCharacter->setLevel($item->getLevel());
+                $newItemCharacter->setQuality($item->getQuality());
+                $newItemCharacter->setBonusMove($item->getBonusMove());
+                $newItemCharacter->setBonusQuickness($item->getBonusQuickness());
+                $newItemCharacter->setBonusAttack($item->getBonusAttack());
+                $newItemCharacter->setBonusDefense($item->getBonusDefense());
+                $newItemCharacter->setBonusCritical($item->getBonusCritical());
+                $newItemCharacter->setBonusHealth($item->getBonusHealth());
+                $newItemCharacter->setBonusEnergy($item->getBonusEnergy());
+                $newItemCharacter->setCapacity($item->getCapacity());
+                $newItemCharacter->setPriceBuy($item->getPriceBuy());
+                $newItemCharacter->setPriceSell($item->getPriceSell());
+                $newItemCharacter->setImage($item->getImage());
+                $newItemCharacter->setOpen($item->getOpen());
+                $newItemCharacter->setWeigth($item->getWeigth());
+                $newItemCharacter->setItemid($item);
+                $newItemCharacter->setCharacterid($character);
+
+                $em->persist($newItemCharacter);
+                $em->flush();
+
+                $character->setGold($gold - $item->getPriceSell());
+                $em->persist($character);
+                $em->flush();
+
+                $message = $item->getName(). " acheté. Félicitations";
+            } else {
+                $message = "Pas assez de place dans votre inventaire.";
+            }
+
+        } else {
+            $message = "Pas assez d'or";
+        }
+
+        return $this->render('default/sellItem.html.twig', [
+            'items' => $items,
+            'character' => $character,
+            'message' => $message,
+        ]);
+
     }
 
     /**

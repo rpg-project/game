@@ -104,5 +104,15 @@
         <option name="unsigned"/>
       </options>
     </field>
+    <field name="popRate" type="integer" column="pop_rate" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="popZone" type="integer" column="pop_zone" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
   </entity>
 </doctrine-mapping>

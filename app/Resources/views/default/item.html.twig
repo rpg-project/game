@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>{{ item.name }}</h1>
+        <img src="{{ item.image }}" width="40">
+    </div>
+    <a href="javascript:history.go(-1)" class="btn btn-primary">Retour</a>
+</div>
+{% endblock %}

@@ -248,15 +248,20 @@ class FollowerController extends Controller
         $follower = $session->get('adminFollower');
         $items = $session->get('adminItems');
 
-        $item =  $chosenListItem = $em->getRepository('AppBundle:FollowersItems')->findOneBy([
-            'itemid'=> $id,
+        $item = $em->getRepository('AppBundle:Items')->findOneBy([
+            'id' => $id,
         ]);
 
-        $em->remove($item);
+        $itemFollower =  $em->getRepository('AppBundle:FollowersItems')->findOneBy([
+            'itemid'=> $item,
+            'followersid' => $follower,
+        ]);
+
+        $em->remove($itemFollower);
         $em->flush();
 
         $chosenListItem = $em->getRepository('AppBundle:FollowersItems')->findBy([
-            'followersid'=> $follower->getId(),
+            'followersid'=> $follower,
         ]);
 
         $chosenList = array();

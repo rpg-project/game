@@ -155,6 +155,20 @@ class Items
     /**
      * @var integer
      *
+     * @ORM\Column(name="pop_rate", type="integer", nullable=true)
+     */
+    private $popRate;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="pop_zone", type="integer", nullable=true)
+     */
+    private $popZone;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -479,6 +493,38 @@ class Items
     public function setWeigth($weigth)
     {
         $this->weigth = $weigth;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPopRate()
+    {
+        return $this->popRate;
+    }
+
+    /**
+     * @param int $popRate
+     */
+    public function setPopRate($popRate)
+    {
+        $this->popRate = $popRate;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPopZone()
+    {
+        return $this->popZone;
+    }
+
+    /**
+     * @param int $popZone
+     */
+    public function setPopZone($popZone)
+    {
+        $this->popZone = $popZone;
     }
 
     /**

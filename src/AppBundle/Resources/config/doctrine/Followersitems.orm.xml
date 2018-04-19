@@ -3,7 +3,7 @@
   <entity name="AppBundle\Entity\Followersitems" table="FollowersItems">
     <indexes>
       <index name="followerId_idx" columns="FollowersId"/>
-      <index name="itemId_idx" columns="ItemId"/>
+      <index name="items_idx" columns="ItemId"/>
     </indexes>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>

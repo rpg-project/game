@@ -427,7 +427,7 @@ class OptionsController extends Controller
         foreach ($team as $mate){
               if($mate !== false) {
                   if ($mate->getTeamMate()->getUniqueRate() == 1) {
-                      $uniqueList[] = $mate->getFollowerid()->getId();
+                      $uniqueList[] = $mate;
                   }
               }
         }
@@ -491,7 +491,7 @@ class OptionsController extends Controller
         for($i=0;$i<$character->getMaxBagCapacity();$i++){
             if(isset($list[$i])){
                 $listIn[$i] = $list[$i];
-                $count++;
+                $count += $list[$i]->getWeigth();
             } else {
                 $listIn[$i] = false;
             }
@@ -547,7 +547,7 @@ class OptionsController extends Controller
         for($i=0;$i<$follower->getMaxCapacityBag();$i++){
             if(isset($followerList[$i])){
                 $followerListIn[$i] = $followerList[$i];
-                $countFollower++;
+                $countFollower += $followerList[$i]->getWeigth();
             } else {
                 $followerListIn[$i] = false;
             }
