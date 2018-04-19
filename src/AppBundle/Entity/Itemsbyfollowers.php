@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Itemsbyfollowers
  *
- * @ORM\Table(name="itemsByFollowers", indexes={@ORM\Index(name="followerId_idx", columns={"followerId"}), @ORM\Index(name="itemFollower_idx", columns={"itemId"})})
+ * @ORM\Table(name="itemsByFollowers", indexes={@ORM\Index(name="followerId_idx", columns={"followerId"}), @ORM\Index(name="itemFollower_idx", columns={"itemId"}), @ORM\Index(name="charac_idx", columns={"characterId"})})
  * @ORM\Entity
  */
 class Itemsbyfollowers
@@ -194,6 +194,16 @@ class Itemsbyfollowers
      * })
      */
     private $followerid;
+
+    /**
+     * @var \AppBundle\Entity\Characters
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Characters")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="characterId", referencedColumnName="id")
+     * })
+     */
+    private $characterid;
 
     /**
      * @return int
@@ -593,6 +603,22 @@ class Itemsbyfollowers
     public function setFollowerid($followerid)
     {
         $this->followerid = $followerid;
+    }
+
+    /**
+     * @return Characters
+     */
+    public function getCharacterid()
+    {
+        return $this->characterid;
+    }
+
+    /**
+     * @param Characters $characterid
+     */
+    public function setCharacterid($characterid)
+    {
+        $this->characterid = $characterid;
     }
 
 

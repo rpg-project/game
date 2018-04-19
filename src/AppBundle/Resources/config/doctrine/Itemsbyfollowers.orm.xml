@@ -4,6 +4,7 @@
     <indexes>
       <index name="followerId_idx" columns="followerId"/>
       <index name="itemFollower_idx" columns="itemId"/>
+      <index name="charac_idx" columns="characterId"/>
     </indexes>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
@@ -126,6 +127,11 @@
     <many-to-one field="followerid" target-entity="Followersbycharacter" fetch="LAZY">
       <join-columns>
         <join-column name="followerId" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="characterid" target-entity="Characters" fetch="LAZY">
+      <join-columns>
+        <join-column name="characterId" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
   </entity>

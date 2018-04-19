@@ -183,6 +183,7 @@ class PlaceController extends Controller
                     $newItem->setWeigth($item->getItemid()->getWeigth());
                     $newItem->setItemid($item->getItemid());
                     $newItem->setFollowerid($newFollower);
+                    $newItem->setCharacterid($character);
 
                     $em->persist($newItem);
                     $em->flush();

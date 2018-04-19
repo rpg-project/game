@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Capacitiesbyfollower
  *
- * @ORM\Table(name="capacitiesByFollower", indexes={@ORM\Index(name="followerId_idx", columns={"followerId"}), @ORM\Index(name="capacityId_idx", columns={"capacityId"})})
+ * @ORM\Table(name="capacitiesByFollower", indexes={@ORM\Index(name="followerId_idx", columns={"followerId"}), @ORM\Index(name="capacityId_idx", columns={"capacityId"}), @ORM\Index(name="caracterId_idx", columns={"characterId"})})
  * @ORM\Entity
  */
 class Capacitiesbyfollower
@@ -30,6 +30,16 @@ class Capacitiesbyfollower
      * })
      */
     private $followerid;
+
+    /**
+     * @var \AppBundle\Entity\Characters
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Characters")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="characterId", referencedColumnName="id")
+     * })
+     */
+    private $characterid;
 
     /**
      * @var \AppBundle\Entity\Capacities
@@ -71,6 +81,22 @@ class Capacitiesbyfollower
     public function setFollowerid($followerid)
     {
         $this->followerid = $followerid;
+    }
+
+    /**
+     * @return Characters
+     */
+    public function getCharacterid()
+    {
+        return $this->characterid;
+    }
+
+    /**
+     * @param Characters $characterid
+     */
+    public function setCharacterid($characterid)
+    {
+        $this->characterid = $characterid;
     }
 
     /**
