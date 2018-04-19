@@ -367,10 +367,51 @@ class PlaceController extends Controller
         return $this->render('default/buy.html.twig', [
             'items' => $items,
             'character' => $character,
+            'message' => null,
+        ]);
+    }
+
+    /**
+     * @Route("/buy/item/{id}", name="buy_item")
+     */
+    public function buyItemAction($id){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $session = $this->get('session');
+
+        $character = $session->get('character');
+
+        $character = $em->getRepository('AppBundle:Characters')->findOneBy([
+            'id'=>$character->getId(),
         ]);
 
+        $item = $em->getRepository('AppBundle:Itemsbycharacter')->findOneBy([
+            'id'=> $id
+        ]);
+
+        $message = $item->getName(). " vendu. Félicitations";
+
+        $em->remove($item);
+        $em->flush();
+
+        $character->setGold($character->getGold()+$item->getPriceBuy());
+        $em->persist($character);
+        $em->flush();
+
+        $items = $em->getRepository('AppBundle:Itemsbycharacter')->findBy([
+            'characterid' => $character,
+        ]);
+
+        return $this->render('default/buy.html.twig', [
+            'items' => $items,
+            'character' => $character,
+            'message' => $message,
+        ]);
 
     }
+
+
 
     /**
      * @Route("/healing/{placeId}", name="healing")
