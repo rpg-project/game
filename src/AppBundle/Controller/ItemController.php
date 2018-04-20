@@ -117,4 +117,20 @@ class ItemController extends Controller
         ));
 
     }
+
+    /**
+     * @Route("/admin/item/list", name="admin_item_list")
+     */
+    public function itemListAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $items = $em->getRepository('AppBundle:Items')->findAll();
+
+        return $this->render('default/itemList.html.twig', array(
+            'items' => $items,
+        ));
+
+
+    }
 }

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <h1>Liste des Objets</h1>
+            <table class="table">
+                <tr>
+                    <th>Description</th>
+                </tr>
+                {% for item in items %}
+                    <tr>
+                        <td><a href="{{ path('admin_item_show', {'id': item.id}) }}">{{ item.name }}</a></td>
+                        <td><a href="#" class="btn btn-warning">Modifier</a></td>
+                        <td><a href="#" class="btn btn-warning">Supprimer</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <a href="{{ path('admin') }}" class="btn btn-primary">Retour</a>
+    </div>
+{% endblock %}
