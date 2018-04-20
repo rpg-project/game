@@ -6,6 +6,10 @@
             <h1>{{ info.title }}</h1>
             <p>{{ info.infos }}</p>
         </div>
+    {% if placeId  %}
         <a href="{{ path('info', {'placeId' : placeId}) }}" class="btn btn-primary">Retour</a>
+    {% else %}
+        <a href="javascript:history.go(-1)" class="btn btn-primary">Retour</a>
+    {% endif %}
 </div>
 {% endblock %}

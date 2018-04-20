@@ -434,7 +434,7 @@ class PlaceController extends Controller
     }
 
     /**
-     * @Route("/info/{placeId}", name="info")
+     * @Route("/place/info/{placeId}", name="info")
      */
     public function infoAction($placeId){
 
@@ -481,7 +481,7 @@ class PlaceController extends Controller
     }
 
     /**
-     * @Route("/info/read/{id}/{placeId}", name="info_read")
+     * @Route("/place/info/read/{id}/{placeId}", name="info_read")
      */
     public function infoReadAction($id, $placeId){
 
@@ -588,6 +588,7 @@ class PlaceController extends Controller
 
         return $this->render('default/showInformation.html.twig', array(
             'info' => $info,
+            'placeId' => null,
         ));
     }
 }

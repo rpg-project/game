@@ -60,7 +60,7 @@ CREATE TABLE `Infos` (
   `place_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +69,7 @@ CREATE TABLE `Infos` (
 
 LOCK TABLES `Infos` WRITE;
 /*!40000 ALTER TABLE `Infos` DISABLE KEYS */;
-INSERT INTO `Infos` VALUES (4,1,'Un mal couve','Depuis plusieurs mois.',1),(5,1,'dezdz','dddqsqdq',1);
+INSERT INTO `Infos` VALUES (4,1,'Un mal couve','Depuis plusieurs mois.',1),(5,1,'dezdz','dddqsqdq',1),(6,2,'tuto','tuto',1),(7,1,'fdsdqs','dsqdqd',1);
 /*!40000 ALTER TABLE `Infos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -398,7 +398,7 @@ CREATE TABLE `infosByCharacter` (
   KEY `infoId_idx` (`infoId`),
   CONSTRAINT `characId` FOREIGN KEY (`characterId`) REFERENCES `characters` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `infoId` FOREIGN KEY (`infoId`) REFERENCES `Infos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -407,7 +407,7 @@ CREATE TABLE `infosByCharacter` (
 
 LOCK TABLES `infosByCharacter` WRITE;
 /*!40000 ALTER TABLE `infosByCharacter` DISABLE KEYS */;
-INSERT INTO `infosByCharacter` VALUES (1,27,4),(2,27,5);
+INSERT INTO `infosByCharacter` VALUES (1,27,4),(3,27,5),(4,27,6),(5,27,7);
 /*!40000 ALTER TABLE `infosByCharacter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -768,4 +768,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-20  9:26:07
+-- Dump completed on 2018-04-20 14:09:21
