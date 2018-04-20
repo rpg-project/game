@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <h1>{{ function.name }}</h1>
+        <ul>
+            {% if infos != null %}
+                {% for info in infos %}
+                    <li><a href="{{ path('info_read', {'id': info.id, 'placeId' : function.placeid.id}) }}">{{ info.title }}</a></li>
+                {% endfor %}
+            {% else %}
+                <p>Pas de nouvelles {{ function.name }}</p>
+            {% endif %}
+        </ul>
+        {% if infosRead != null %}
+            <h4>{{ function.name }} lu(e)s</h4>
+            <ul>
+                {% for info in infosRead %}
+                    <li><a href="{{ path('info_read', {'id': info.id, 'placeId' : function.placeid.id}) }}">{{ info.title }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+    <div class="row">
+        <a href="{{ path('places', {'id': function.placeid.id}) }}" class="btn btn-primary">Retour</a>
+    </div>
+</div>
+{% endblock %}

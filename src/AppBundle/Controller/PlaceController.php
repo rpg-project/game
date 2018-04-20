@@ -12,6 +12,16 @@ use AppBundle\Entity\Places;
 use AppBundle\Entity\Characterlocation;
 use AppBundle\Entity\Followersbycharacter;
 use AppBundle\Entity\Itemsbyfollowers;
+use AppBundle\Entity\Infos;
+use AppBundle\Entity\Infosbycharacter;
+
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 
 class PlaceController extends Controller
@@ -219,7 +229,7 @@ class PlaceController extends Controller
     /**
      * @Route("/quest/{placeId}", name="quest")
      */
-    public function questAction($level){
+    public function questAction($placeId){
 
         echo 'quêtes';
         die;
@@ -228,7 +238,7 @@ class PlaceController extends Controller
     /**
      * @Route("/training/{placeId}", name="training")
      */
-    public function trainingAction($level){
+    public function trainingAction($placeId){
 
         echo 'entrainement';
         die;
@@ -237,7 +247,7 @@ class PlaceController extends Controller
     /**
      * @Route("/craft/{placeId}", name="craft")
      */
-    public function craftAction($level){
+    public function craftAction($placeId){
 
         echo 'artisanat';
         die;
@@ -417,7 +427,7 @@ class PlaceController extends Controller
     /**
      * @Route("/healing/{placeId}", name="healing")
      */
-    public function healingAction($level){
+    public function healingAction($placeId){
 
         echo 'healing';
         die;
@@ -426,11 +436,158 @@ class PlaceController extends Controller
     /**
      * @Route("/info/{placeId}", name="info")
      */
-    public function infoAction($level){
+    public function infoAction($placeId){
 
-        echo 'info';
-        die;
+        $em = $this->getDoctrine()->getManager();
+
+        $session = $this->get('session');
+
+        $character = $session->get('character');
+
+        $function = $em->getRepository('AppBundle:Functionsbyplace')->findOneBy([
+            'placeid' => $placeId,
+            'functionid' => 8,
+        ]);
+
+        $character = $em->getRepository('AppBundle:Characters')->findOneBy([
+            'id'=>$character->getId(),
+        ]);
+
+        $infos = $em->getRepository('AppBundle:Infos')->findBy([
+            'placeId'=>$placeId,
+        ]);
+
+        $infoRead = $em->getRepository('AppBundle:Infosbycharacter')->findBy([
+            'characterid' => $character,
+
+        ]);
+
+        $informationsRead = array();
+        foreach($infoRead as $information){
+            $id = $information->getInfoid()->getId();
+            foreach ($infos as $key => $info){
+                if($info->getId() === $id){
+                    $informationsRead[] = $info;
+                    unset($infos[$key]);
+                }
+            }
+        }
+
+        return $this->render('default/infosList.html.twig', [
+            'infos' => $infos,
+            'infosRead' => $informationsRead,
+            'function' => $function,
+        ]);
+    }
+
+    /**
+     * @Route("/info/read/{id}/{placeId}", name="info_read")
+     */
+    public function infoReadAction($id, $placeId){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $session = $this->get('session');
+
+        $character = $session->get('character');
+
+        $character = $em->getRepository('AppBundle:Characters')->findOneBy([
+            'id'=>$character->getId(),
+        ]);
+
+        $info = $em->getRepository('AppBundle:Infos')->findOneBy([
+            'id'=> $id,
+        ]);
+
+        $infoRead = $em->getRepository('AppBundle:Infosbycharacter')->findOneBy([
+            'infoid'=> $info,
+            'characterid' => $character,
+
+        ]);
+
+        if($infoRead === null){
+            $newInfoRead = new Infosbycharacter();
+
+            $newInfoRead->setInfoid($info);
+            $newInfoRead->setCharacterid($character);
+
+            $em->persist($newInfoRead);
+            $em->flush();
+        }
+
+        return $this->render('default/showInformation.html.twig', array(
+            'info' => $info,
+            'placeId' => $placeId,
+        ));
+
     }
 
 
+
+    /**
+     * @Route("/admin/places", name="admin_places_list")
+     */
+    public function placesListAction(){
+        $em = $this->getDoctrine()->getManager();
+
+        $places = $em->getRepository('AppBundle:Places')->findAll();
+
+        return $this->render('default/placesList.html.twig', [
+            'places' => $places,
+        ]);
+
+    }
+
+    /**
+     * @Route("/admin/places/addinfo/{id}", name="admin_places_add_info")
+     */
+    public function placesAddInfoAction(Request $request, $id){
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = new Infos();
+
+        $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $entity);
+
+        $formBuilder
+            ->add('type', ChoiceType::class, array(
+                'choices' => array('Information' => 1, 'Tutorial' => 2),
+            ))
+            ->add('title', TextType::class)
+            ->add('infos', TextareaType::class)
+            ->add('save', SubmitType::class, array('attr'=> array('class' => "btn btn-primary")));
+
+        $entity->setPlaceId($id);
+
+        $form = $formBuilder->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('admin_information_show', array('id' => $entity->getId())));
+        }
+
+        return $this->render('default/newInformation.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/admin/places/informationShow/{id}", name="admin_information_show")
+     */
+    public function infoShowAction($id){
+        $em = $this->getDoctrine()->getManager();
+
+        $info = $em->getRepository('AppBundle:Infos')->findOneBy([
+            'id' => $id,
+        ]);
+
+        return $this->render('default/showInformation.html.twig', array(
+            'info' => $info,
+        ));
+    }
 }

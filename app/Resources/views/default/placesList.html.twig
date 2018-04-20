@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Liste des Lieux</h1>
+        <table class="table">
+            <tr>
+                <th>Nom</th>
+                <th>Type</th>
+                <th>Niveau</th>
+                <th>Zone</th>
+            </tr>
+            {% for place in places %}
+            <tr>
+                <td>{{ place.description }}</td>
+                <td>{{ place.type }}</td>
+                <td>{{ place.level }}</td>
+                <td><a href="{{ path('admin_places_add_info', {'id': place.id}) }}">Ajout Information</a></td>
+            </tr>
+                {% endfor %}
+        </table>
+    </div>
+    <a href="javascript:history.go(-1)" class="btn btn-primary">Retour</a>
+</div>
+{% endblock %}
