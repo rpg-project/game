@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
--- Host: 192.168.99.100    Database: rpg
+-- Host: 192.168.99.100    Database: rpg2
 -- ------------------------------------------------------
 -- Server version	5.7.21
 
@@ -43,6 +43,34 @@ LOCK TABLES `FollowersItems` WRITE;
 /*!40000 ALTER TABLE `FollowersItems` DISABLE KEYS */;
 INSERT INTO `FollowersItems` VALUES (20,2,2,0),(21,2,3,0),(22,9,3,0),(23,2,4,0),(24,6,4,0),(25,9,4,0),(26,5,4,0),(27,7,4,0),(28,8,4,0),(29,2,5,0),(30,3,5,0),(31,6,5,0),(32,9,5,0),(33,6,6,0),(34,2,8,0),(35,3,8,0),(36,4,8,0),(37,2,9,0),(38,4,10,0),(39,4,10,0),(40,4,11,0),(41,3,12,0),(42,6,12,0),(44,1,1,0);
 /*!40000 ALTER TABLE `FollowersItems` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Infos`
+--
+
+DROP TABLE IF EXISTS `Infos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Infos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` int(11) DEFAULT NULL,
+  `title` varchar(45) DEFAULT NULL,
+  `infos` varchar(45) DEFAULT NULL,
+  `place_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Infos`
+--
+
+LOCK TABLES `Infos` WRITE;
+/*!40000 ALTER TABLE `Infos` DISABLE KEYS */;
+INSERT INTO `Infos` VALUES (4,1,'Un mal couve','Depuis plusieurs mois.',1),(5,1,'dezdz','dddqsqdq',1);
+/*!40000 ALTER TABLE `Infos` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -354,6 +382,36 @@ INSERT INTO `functionsByPlace` VALUES (1,1,1,'Recrutement'),(2,1,8,'Rumeurs'),(3
 UNLOCK TABLES;
 
 --
+-- Table structure for table `infosByCharacter`
+--
+
+DROP TABLE IF EXISTS `infosByCharacter`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `infosByCharacter` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `characterId` int(11) DEFAULT NULL,
+  `infoId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `characId_idx` (`characterId`),
+  KEY `infoId_idx` (`infoId`),
+  CONSTRAINT `characId` FOREIGN KEY (`characterId`) REFERENCES `characters` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `infoId` FOREIGN KEY (`infoId`) REFERENCES `Infos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `infosByCharacter`
+--
+
+LOCK TABLES `infosByCharacter` WRITE;
+/*!40000 ALTER TABLE `infosByCharacter` DISABLE KEYS */;
+INSERT INTO `infosByCharacter` VALUES (1,27,4),(2,27,5);
+/*!40000 ALTER TABLE `infosByCharacter` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `items`
 --
 
@@ -385,7 +443,7 @@ CREATE TABLE `items` (
   `pop_rate` int(11) DEFAULT NULL,
   `pop_zone` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -553,7 +611,7 @@ CREATE TABLE `places` (
 
 LOCK TABLES `places` WRITE;
 /*!40000 ALTER TABLE `places` DISABLE KEYS */;
-INSERT INTO `places` VALUES (1,'Taverne',1,1),(2,'Poste de garde',2,1),(3,'Quincaillerie',3,1);
+INSERT INTO `places` VALUES (1,'Taverne',1,1),(2,'Poste de garde',2,1),(3,'Quincaillerie',3,1),(4,'toto',4,1);
 /*!40000 ALTER TABLE `places` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -694,11 +752,11 @@ INSERT INTO `users` VALUES (1,'Roland'),(2,'Rodolphe'),(3,'toto');
 UNLOCK TABLES;
 
 --
--- Dumping events for database 'rpg'
+-- Dumping events for database 'rpg2'
 --
 
 --
--- Dumping routines for database 'rpg'
+-- Dumping routines for database 'rpg2'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -710,4 +768,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-19 11:35:08
+-- Dump completed on 2018-04-20  9:26:07
