@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>{{ tutorial.title }}</h1>
+        <p>{{ tutorial.infos }}</p>
+
+        <a href="{{ path('places', {'id': tutorial.placeid}) }}">Skip</a>
+    </div>
+</div>
+{% endblock %}

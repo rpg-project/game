@@ -29,7 +29,7 @@ class Infos
     /**
      * @var string
      *
-     * @ORM\Column(name="infos", type="string", length=45, nullable=true)
+     * @ORM\Column(name="infos", type="text", length=65535, nullable=true)
      */
     private $infos;
 

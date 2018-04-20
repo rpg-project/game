@@ -40,6 +40,8 @@ class PlaceController extends Controller
 
         $session->set('place', $place);
 
+        $tutorial = $this->getTutorial($id);
+
         $functions = $em->getRepository("AppBundle:Functionsbyplace")->findBy([
             'placeid' => $place->getId(),
         ]);
@@ -47,10 +49,16 @@ class PlaceController extends Controller
         $session->set('functionsPlaces', $functions);
 
 
-        return $this->render('default/place.html.twig', [
-            'place' => $place,
-            'functions' => $functions,
-        ]);
+        if($tutorial !== false){
+            return $this->render('default/tutorial.html.twig', [
+                'tutorial' => $tutorial,
+            ]);
+        } else {
+            return $this->render('default/place.html.twig', [
+                'place' => $place,
+                'functions' => $functions,
+            ]);
+        }
     }
 
     /**
@@ -590,5 +598,49 @@ class PlaceController extends Controller
             'info' => $info,
             'placeId' => null,
         ));
+    }
+
+    /**
+     * @param $placeId
+     * @return \Symfony\Component\HttpFoundation\Response|void
+     */
+    public function getTutorial($placeId){
+        $em = $this->getDoctrine()->getManager();
+
+        $session = $this->get('session');
+
+        $character = $session->get('character');
+
+        $character = $em->getRepository('AppBundle:Characters')->findOneBy([
+            'id'=>$character->getId(),
+        ]);
+
+        $tuto = false;
+
+        $tutorial = $em->getRepository('AppBundle:Infos')->findOneBy([
+            'placeId' => $placeId,
+            'type'=> 2
+        ]);
+
+        if($tutorial !== null){
+            $read = $em->getRepository('AppBundle:Infosbycharacter')->findBy([
+                'characterid' => $character,
+                'infoid' => $tutorial,
+            ]);
+
+            if (empty($read)){
+                $newInfoRead = new Infosbycharacter();
+
+                $newInfoRead->setInfoid($tutorial);
+                $newInfoRead->setCharacterid($character);
+
+                $em->persist($newInfoRead);
+                $em->flush();
+
+                $tuto = $tutorial;
+            }
+        }
+
+        return $tuto;
     }
 }

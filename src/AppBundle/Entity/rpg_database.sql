@@ -56,11 +56,11 @@ CREATE TABLE `Infos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` int(11) DEFAULT NULL,
   `title` varchar(45) DEFAULT NULL,
-  `infos` varchar(45) DEFAULT NULL,
+  `infos` text,
   `place_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +69,7 @@ CREATE TABLE `Infos` (
 
 LOCK TABLES `Infos` WRITE;
 /*!40000 ALTER TABLE `Infos` DISABLE KEYS */;
-INSERT INTO `Infos` VALUES (4,1,'Un mal couve','Depuis plusieurs mois.',1),(5,1,'dezdz','dddqsqdq',1),(6,2,'tuto','tuto',1),(7,1,'fdsdqs','dsqdqd',1);
+INSERT INTO `Infos` VALUES (12,1,'Le shérif te recherche !','Pas de panique gamin !!\r\n\r\nRien de grave, il veut juste te demander un service.\r\n\r\nPour savoir ce qu\'il veut, retrouve le juste au poste de garde.',1),(13,1,'Un mal couve...','Depuis plusieurs mois, le gibier manque. Les chasseurs ont du mal à trouver ne serait-ce qu\'un lapin.\r\n\r\nD\'autres ont carrément peur d\'aller en forêt. Il paraîtrait que certains chasseurs ne sont jamais revenus...',1),(14,1,'Le paladin','Tu n\'as pas intérêt à sortir du droit chemin, gamin. \r\n\r\nSinon tu vas attirer l\'attention du Paladin. Et même s\'il ne sert que le bien et la justice, ce n\'est pas un tendre. Alors gare à toi !!',2),(15,1,'Routes non commerciales','Les routes commerciales ne sont plus sûres.\r\n\r\nLes patrouilleurs ruraux ne font plus leur travail et nos convois de marchandises sont souvent attaquées par des brigands.\r\n\r\nMais que fait le roi Olric !!\r\n\r\nDonc on engage de plus en plus une escorte pour atteindre notre destination sain et sauf.',3),(16,2,'Tutorial Taverne','Salut gamin, bienvenue dans ma taverne. Tu veux boire un coup ?Il y a beaucoup de passage ici. Des aventuriers que tu peux recruter si tu es assez connu ou si tu as de l\'or. Tu peux aussi glaner quelques rumeurs car les gens parlent toujours au barman. Certaines personnes embauchent des aventuriers pour effectuer des tâches qu\'ils ne peuvent pas faire. Hésite pas à lire le tableau des embauches.J\'ai des chambres. Si tu ne trouves pas où loger ou si tu veux te reposer, c\'est l\'endroit parfait. C\'est sûr et pas trop cher.Alors je te sers quoi gamin ?',1);
 /*!40000 ALTER TABLE `Infos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -398,7 +398,7 @@ CREATE TABLE `infosByCharacter` (
   KEY `infoId_idx` (`infoId`),
   CONSTRAINT `characId` FOREIGN KEY (`characterId`) REFERENCES `characters` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `infoId` FOREIGN KEY (`infoId`) REFERENCES `Infos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -407,7 +407,7 @@ CREATE TABLE `infosByCharacter` (
 
 LOCK TABLES `infosByCharacter` WRITE;
 /*!40000 ALTER TABLE `infosByCharacter` DISABLE KEYS */;
-INSERT INTO `infosByCharacter` VALUES (1,27,4),(3,27,5),(4,27,6),(5,27,7);
+INSERT INTO `infosByCharacter` VALUES (23,27,12),(24,27,13),(25,27,14),(26,27,15),(27,27,16);
 /*!40000 ALTER TABLE `infosByCharacter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -611,7 +611,7 @@ CREATE TABLE `places` (
 
 LOCK TABLES `places` WRITE;
 /*!40000 ALTER TABLE `places` DISABLE KEYS */;
-INSERT INTO `places` VALUES (1,'Taverne',1,1),(2,'Poste de garde',2,1),(3,'Quincaillerie',3,1),(4,'toto',4,1);
+INSERT INTO `places` VALUES (1,'Taverne',1,1),(2,'Poste de garde',2,1),(3,'Quincaillerie',3,1);
 /*!40000 ALTER TABLE `places` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -768,4 +768,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-20 14:09:21
+-- Dump completed on 2018-04-20 16:30:55
