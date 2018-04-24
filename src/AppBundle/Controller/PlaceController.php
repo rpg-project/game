@@ -14,6 +14,7 @@ use AppBundle\Entity\Followersbycharacter;
 use AppBundle\Entity\Itemsbyfollowers;
 use AppBundle\Entity\Infos;
 use AppBundle\Entity\Infosbycharacter;
+use AppBundle\Entity\Dictionary;
 
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -461,9 +462,29 @@ class PlaceController extends Controller
             'id'=>$character->getId(),
         ]);
 
-        $infos = $em->getRepository('AppBundle:Infos')->findBy([
-            'placeId'=>$placeId,
-        ]);
+
+
+        $chemin = dirname(__FILE__).'/../../../web/Ressources/infos.txt';
+
+        if(file_exists($chemin)){
+            $file = json_decode(file_get_contents($chemin));
+            $infos = array();
+            foreach ($file as $info){
+                if($info->placeId == $placeId){
+                    $new = new Infos();
+                    $new->setId($info->id);
+                    $new->setTitle($info->title);
+                    $new->setInfos($info->infos);
+                    $new->setPlaceId($info->placeId);
+                    $new->setType($info->type);
+                    $infos[] = $new;
+                }
+            }
+        } else {
+            $infos = $em->getRepository('AppBundle:Infos')->findBy([
+                'placeId'=>$placeId,
+            ]);
+        }
 
         $infoRead = $em->getRepository('AppBundle:Infosbycharacter')->findBy([
             'characterid' => $character,
@@ -540,8 +561,11 @@ class PlaceController extends Controller
 
         $places = $em->getRepository('AppBundle:Places')->findAll();
 
+        $dictionary = new Dictionary();
+
         return $this->render('default/placesList.html.twig', [
             'places' => $places,
+            'dico' => $dictionary,
         ]);
 
     }
@@ -554,11 +578,13 @@ class PlaceController extends Controller
 
         $entity = new Infos();
 
+        $dictionary = new Dictionary();
+
         $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $entity);
 
         $formBuilder
             ->add('type', ChoiceType::class, array(
-                'choices' => array('Information' => 1, 'Tutorial' => 2),
+                'choices' => $dictionary->getTypeLabelInfo(),
             ))
             ->add('title', TextType::class)
             ->add('infos', TextareaType::class)
@@ -594,9 +620,12 @@ class PlaceController extends Controller
             'id' => $id,
         ]);
 
+        $dictionary = new Dictionary();
+
         return $this->render('default/showInformation.html.twig', array(
             'info' => $info,
             'placeId' => null,
+            'dico' => $dictionary->getTypeLabelInfo(),
         ));
     }
 

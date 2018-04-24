@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 use AppBundle\Entity\Items;
+use AppBundle\Entity\Dictionary;
 
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -34,26 +35,17 @@ class ItemController extends Controller
             $maps[$map->getMapName()] = $map->getId();
         }
 
-        $rates = $em->getRepository('AppBundle:Rate')->findAll();
-
-        $rateLabel = array();
-        $popRate = array();
-        foreach ($rates as $rate){
-            $rateLabel[$rate->getRateLabel()] = $rate->getRateLabel();
-            $popRate[$rate->getRateLabel()] = $rate->getPopRate();
-        }
-
         $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $entity);
+
+        $dictionary = new Dictionary();
+
+        $rateLabel = $dictionary->getRate();
+        $popRate = $dictionary->getPopRate();
 
         $formBuilder
             ->add('name', TextType::class)
             ->add('type', ChoiceType::class, array(
-                'choices' => array(
-                    'Arme' => 1,
-                    'Contenaire' => 2,
-                    'Consommable' => 3,
-                    'Armure' => 4,
-                    )
+                'choices' => $dictionary->getTypeItem()
             ))
             ->add('level', TextType::class)
             ->add('level_min', TextType::class)
@@ -112,8 +104,11 @@ class ItemController extends Controller
 
         $item = $em->getRepository('AppBundle:Items')->find($id);
 
+        $dictionary = new Dictionary();
+
         return $this->render('default/item.html.twig', array(
             'item' => $item,
+            'dico' => $dictionary,
         ));
 
     }

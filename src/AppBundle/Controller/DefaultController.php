@@ -32,17 +32,41 @@ class DefaultController extends Controller
             $session->set('character', $character);
         }
 
-//        $chemin = dirname(__FILE__).'/../../../web/Ressources/Description_Followers.txt';
-//
-//        if(!file_exists($chemin)){
-//            $handle = fopen($chemin, "w");
-//            fputs($handle, "test2");
-//            fclose($handle);
-//        }
-       
+        $infos = $this->resource();
+
+        $chemin = dirname(__FILE__).'/../../../web/Ressources/infos.txt';
+
+        if(!file_exists($chemin)){
+            $handle = fopen($chemin, "w");
+            fputs($handle, $infos);
+            fclose($handle);
+        } else {
+            $handle = fopen($chemin, "w");
+            fputs($handle, $infos);
+            fclose($handle);
+        }
 
         return $this->render('default/index.html.twig', [
             'nbCharacters' => $nbCharacter
         ]);
+    }
+
+    public function resource(){
+        $em = $this->getDoctrine()->getManager();
+
+        $infos = $em->getRepository('AppBundle:Infos')->findAll();
+
+        $test = array();
+        foreach ($infos as $key => $info){
+            $test[$key]['id'] = $info->getId();
+            $test[$key]['title'] = $info->getTitle();
+            $test[$key]['infos'] = $info->getInfos();
+            $test[$key]['placeId'] = $info->getPlaceId();
+            $test[$key]['type'] = $info->getType();
+        }
+
+        $infos = json_encode($test);
+
+        return $infos;
     }
 }
