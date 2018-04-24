@@ -22,6 +22,7 @@
         <option name="fixed"/>
       </options>
     </field>
+    <field name="dateInfo" type="datetime" column="date_info" nullable="true"/>
     <field name="placeId" type="integer" column="place_id" nullable="true">
       <options>
         <option name="unsigned"/>

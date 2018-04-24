@@ -23,6 +23,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 
 class PlaceController extends Controller
@@ -582,11 +583,14 @@ class PlaceController extends Controller
 
         $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $entity);
 
+//        $date   = new \DateTime('now');
+
         $formBuilder
             ->add('type', ChoiceType::class, array(
                 'choices' => $dictionary->getTypeLabelInfo(),
             ))
             ->add('title', TextType::class)
+//            ->add('date_info', DateTime::class, array('data' => $date))
             ->add('infos', TextareaType::class)
             ->add('save', SubmitType::class, array('attr'=> array('class' => "btn btn-primary")));
 
@@ -597,6 +601,8 @@ class PlaceController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+
+            $entity->setDateInfo(new \DateTime('now'));
 
             $em->persist($entity);
             $em->flush();

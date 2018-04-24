@@ -34,6 +34,13 @@ class Infos
     private $infos;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_info", type="datetime", nullable=true)
+     */
+    private $dateInfo;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="place_id", type="integer", nullable=true)
@@ -95,6 +102,22 @@ class Infos
     public function setInfos($infos)
     {
         $this->infos = $infos;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateInfo()
+    {
+        return $this->dateInfo;
+    }
+
+    /**
+     * @param \DateTime $dateInfo
+     */
+    public function setDateInfo($dateInfo)
+    {
+        $this->dateInfo = $dateInfo;
     }
 
     /**
