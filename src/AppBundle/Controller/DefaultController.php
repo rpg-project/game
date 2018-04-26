@@ -2,6 +2,10 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Infos;
+use AppBundle\Entity\Items;
+use AppBundle\Repository\InfosRepository;
+use AppBundle\Repository\ItemsRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,19 +36,7 @@ class DefaultController extends Controller
             $session->set('character', $character);
         }
 
-        $infos = $this->resource();
-
-        $chemin = dirname(__FILE__).'/../../../web/Ressources/infos.txt';
-
-        if(!file_exists($chemin)){
-            $handle = fopen($chemin, "w");
-            fputs($handle, $infos);
-            fclose($handle);
-        } else {
-            $handle = fopen($chemin, "w");
-            fputs($handle, $infos);
-            fclose($handle);
-        }
+        $this->resource();
 
         return $this->render('default/index.html.twig', [
             'nbCharacters' => $nbCharacter
@@ -52,21 +44,60 @@ class DefaultController extends Controller
     }
 
     public function resource(){
+
         $em = $this->getDoctrine()->getManager();
 
-        $infos = $em->getRepository('AppBundle:Infos')->findAll();
+        $maj = [
+            'info' => ['table' => Infos::class, 'champ'=> 'dateInfo','file'=>'infos.txt'],
+            'item' => ['table' => Items::class, 'champ'=> 'dateInfo','file'=>'items.txt'],
+            ];
 
-        $test = array();
-        foreach ($infos as $key => $info){
-            $test[$key]['id'] = $info->getId();
-            $test[$key]['title'] = $info->getTitle();
-            $test[$key]['infos'] = $info->getInfos();
-            $test[$key]['placeId'] = $info->getPlaceId();
-            $test[$key]['type'] = $info->getType();
+        foreach ($maj as $key => $value){
+            echo 'Ecriture de '.$key.'<br/>';
+
+            $data = $em->getRepository($value['table'])->findBy([
+                $value['champ'] => null,
+                ]);
+
+            if(count($data) > 0 ) {
+                /** @var InfosRepository $results */
+                /** @var ItemsRepository $results */
+                $results = $em->getRepository($value['table'])->findAll();
+                $arr = [];
+                foreach ($results as $key => $result) {
+
+                    if ($result->getDateInfo() === null) {
+                        $result->setDateInfo(new \DateTime('now'));
+                        $em->persist($result);
+                        $em->flush();
+                    }
+//                    $reflect = new ReflectionClass($result);
+//                    $result   = $reflect->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED);
+
+                    $arr[$key] =  $this->object_to_array($result);
+
+                }
+               $content = json_encode($arr);
+
+                $chemin = dirname(__FILE__) . '/../../../web/Ressources/'.$value['file'];
+
+                $handle = fopen($chemin, "w");
+                fputs($handle, $content);
+                fclose($handle);
+            } else {
+                echo 'pas de nouvel ajout';
+            }
         }
+        return;
+    }
 
-        $infos = json_encode($test);
-
-        return $infos;
+    function object_to_array($obj) {
+        $_arr = is_object($obj) ? get_object_vars($obj) : $obj;
+        $arr = array();
+        foreach ($_arr as $key => $val) {
+            $val = (is_array($val) || is_object($val)) ? $this->object_to_array($val) : $val;
+            $arr[$key] = $val;
+        }
+        return $arr;
     }
 }

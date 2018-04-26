@@ -4,7 +4,7 @@
 <div class="container">
         <div class="row">
             <h1>{{ info.title }}</h1>
-            <p>{{ info.infos }}</p>
+            {{ info.infos|raw }}
         </div>
     {% if placeId  %}
         <a href="{{ path('info', {'placeId' : placeId}) }}" class="btn btn-primary">Retour</a>
