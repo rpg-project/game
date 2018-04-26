@@ -122,7 +122,6 @@ class PlayerController extends Controller
      * @Route("/stats_player", name="stats_player")
      */
     public function statsAction(){
-        $em = $this->getDoctrine()->getManager();
 
         $session = $this->get('session');
 
@@ -130,6 +129,7 @@ class PlayerController extends Controller
 
         return $this->render('default/stats.html.twig', [
             'stats' => $character,
+            'admin' => false,
         ]);
     }
 

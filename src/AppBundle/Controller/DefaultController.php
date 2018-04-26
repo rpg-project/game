@@ -53,7 +53,7 @@ class DefaultController extends Controller
             ];
 
         foreach ($maj as $key => $value){
-            echo 'Ecriture de '.$key.'<br/>';
+            echo '<p>Ecriture de '.$key.'</p>';
 
             $data = $em->getRepository($value['table'])->findBy([
                 $value['champ'] => null,
@@ -62,6 +62,7 @@ class DefaultController extends Controller
             if(count($data) > 0 ) {
                 /** @var InfosRepository $results */
                 /** @var ItemsRepository $results */
+                echo '<p>Génération fichier '.$value['file'].'</p>';
                 $results = $em->getRepository($value['table'])->findAll();
                 $arr = [];
                 foreach ($results as $key => $result) {
@@ -85,7 +86,7 @@ class DefaultController extends Controller
                 fputs($handle, $content);
                 fclose($handle);
             } else {
-                echo 'pas de nouvel ajout';
+                echo '<p>pas de nouvel ajout</p>';
             }
         }
         return;
