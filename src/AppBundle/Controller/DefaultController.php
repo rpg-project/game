@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Capacities;
+use AppBundle\Entity\Followers;
 use AppBundle\Entity\Infos;
 use AppBundle\Entity\Items;
 use AppBundle\Repository\InfosRepository;
@@ -50,6 +52,8 @@ class DefaultController extends Controller
         $maj = [
             'info' => ['table' => Infos::class, 'champ'=> 'dateInfo','file'=>'infos.txt'],
             'item' => ['table' => Items::class, 'champ'=> 'dateInfo','file'=>'items.txt'],
+            'capacity' => ['table' => Capacities::class, 'champ'=> 'dateInfo','file'=>'capacities.txt'],
+            'follower' => ['table' => Followers::class, 'champ'=> 'dateInfo','file'=>'followers.txt'],
             ];
 
         foreach ($maj as $key => $value){
@@ -59,7 +63,9 @@ class DefaultController extends Controller
                 $value['champ'] => null,
                 ]);
 
-            if(count($data) > 0 ) {
+            $chemin = dirname(__FILE__) . '/../../../web/Ressources/'.$value['file'];
+
+            if(count($data) > 0 || !file_exists($chemin)) {
                 /** @var InfosRepository $results */
                 /** @var ItemsRepository $results */
                 echo '<p>Génération fichier '.$value['file'].'</p>';
@@ -80,7 +86,7 @@ class DefaultController extends Controller
                 }
                $content = json_encode($arr);
 
-                $chemin = dirname(__FILE__) . '/../../../web/Ressources/'.$value['file'];
+
 
                 $handle = fopen($chemin, "w");
                 fputs($handle, $content);
