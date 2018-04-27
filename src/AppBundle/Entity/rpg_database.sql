@@ -32,7 +32,7 @@ CREATE TABLE `FollowersItems` (
   KEY `items_idx` (`ItemId`),
   CONSTRAINT `followers` FOREIGN KEY (`FollowersId`) REFERENCES `followers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `items` FOREIGN KEY (`ItemId`) REFERENCES `items` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `FollowersItems` (
 
 LOCK TABLES `FollowersItems` WRITE;
 /*!40000 ALTER TABLE `FollowersItems` DISABLE KEYS */;
-INSERT INTO `FollowersItems` VALUES (20,2,2,0),(21,2,3,0),(22,9,3,0),(23,2,4,0),(24,6,4,0),(25,9,4,0),(26,5,4,0),(27,7,4,0),(28,8,4,0),(29,2,5,0),(30,3,5,0),(31,6,5,0),(32,9,5,0),(33,6,6,0),(34,2,8,0),(35,3,8,0),(36,4,8,0),(37,2,9,0),(38,4,10,0),(39,4,10,0),(40,4,11,0),(41,3,12,0),(42,6,12,0),(44,1,1,0);
+INSERT INTO `FollowersItems` VALUES (47,2,2,0),(48,9,3,0),(49,2,3,0),(50,2,4,0),(52,7,4,0),(53,8,4,0),(54,6,4,0),(55,5,4,0),(56,2,5,0),(57,3,5,0),(58,6,5,0),(59,9,5,0),(60,2,7,0),(61,5,7,0),(62,7,7,0),(63,8,7,0),(64,6,6,0),(65,2,8,0),(66,4,8,0),(67,2,9,0),(68,4,10,0),(69,4,10,0),(70,4,11,0),(71,2,12,0),(73,1,1,0),(74,9,4,0);
 /*!40000 ALTER TABLE `FollowersItems` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -70,7 +70,7 @@ CREATE TABLE `Infos` (
 
 LOCK TABLES `Infos` WRITE;
 /*!40000 ALTER TABLE `Infos` DISABLE KEYS */;
-INSERT INTO `Infos` VALUES (12,1,'Le shérif te recherche !','<p>Pas de panique gamin !!\r \r Rien de grave, il veut juste te demander un service.\r</p><p>\rPour savoir ce qu\'il veut, retrouve le juste au <a href=\"/place/2\">poste de garde</a></p>','2018-04-25 14:33:58',1),(13,1,'Un mal couve...','Depuis plusieurs mois, le gibier manque. Les chasseurs ont du mal à trouver ne serait-ce qu\'un lapin.\r\n\r\nD\'autres ont carrément peur d\'aller en forêt. Il paraîtrait que certains chasseurs ne sont jamais revenus...','2018-04-25 14:33:58',1),(14,1,'Le paladin','Tu n\'as pas intérêt à sortir du droit chemin, gamin. \r\n\r\nSinon tu vas attirer l\'attention du Paladin. Et même s\'il ne sert que le bien et la justice, ce n\'est pas un tendre. Alors gare à toi !!','2018-04-25 14:33:58',2),(15,1,'Routes non commerciales','Les routes commerciales ne sont plus sûres.\r\n\r\nLes patrouilleurs ruraux ne font plus leur travail et nos convois de marchandises sont souvent attaquées par des brigands.\r\n\r\nMais que fait le roi Olric !!\r\n\r\nDonc on engage de plus en plus une escorte pour atteindre notre destination sain et sauf.','2018-04-25 14:33:58',3),(16,2,'Tutorial Taverne','<p>Salut gamin, bienvenue dans ma taverne.</p><p>Tu veux boire un coup ?</p><p>Il y a beaucoup de passage ici. Des aventuriers que tu peux recruter si tu es assez connu ou si tu as de l\'or.</p><p>Tu peux aussi glaner quelques rumeurs car les gens parlent toujours au barman.</p><p>Certaines personnes embauchent des aventuriers pour effectuer des tâches qu\'ils ne peuvent pas faire. Hésite pas à lire le tableau des embauches.</p><p>J\'ai des chambres. Si tu ne trouves pas où loger ou si tu veux te reposer, c\'est l\'endroit parfait. C\'est sûr et pas trop cher.Alors je te sers quoi gamin ?</p>','2018-04-25 14:33:58',1),(18,3,'fgdgdg','fdgdfg','2018-04-25 14:33:58',1),(19,1,'dsdqdqs','sqdqsdqsdqds','2018-04-25 14:33:58',1),(20,1,'cwcxw','cwxcwxc','2018-04-25 14:33:58',1),(22,1,'sdqd','qsdqsd','2013-01-01 00:00:00',1),(23,1,'sfdfsdf','sdfsdf','2018-04-24 12:23:13',1),(24,1,'sdqfezsd','dqsdqsd','2018-04-25 14:22:52',1),(25,1,'dsdsd','sdsdsdsd','2018-04-25 14:35:06',3),(26,1,'fdsfsdf','fsdfds','2018-04-25 14:36:03',2),(27,1,'infos','<p>ttt</p>\r\n<p>zerrzead</p>','2018-04-25 14:56:54',1),(28,1,'dsqdqsd','dqsdqsd','2018-04-25 15:24:26',1),(29,1,'sdqqsd','qsdqsd','2018-04-25 15:26:50',2),(30,1,'dsdsd','dsds','2018-04-25 15:28:53',1),(31,1,'dsqdq','dqsdqsd','2018-04-25 15:44:29',1),(32,1,'ezea','eazea','2018-04-25 16:02:21',2),(33,1,'dsqd','qsdqsd','2018-04-25 16:03:31',1),(34,1,'qsdsqd','dsqdsqd','2018-04-26 14:46:37',1);
+INSERT INTO `Infos` VALUES (12,1,'Le shérif te recherche !','<p>Pas de panique gamin !!\r \r Rien de grave, il veut juste te demander un service.\r</p><p>\rPour savoir ce qu\'il veut, retrouve le juste au <a href=\"/place/2\">poste de garde</a></p>','2018-04-25 14:33:58',1),(13,1,'Un mal couve...','Depuis plusieurs mois, le gibier manque. Les chasseurs ont du mal à trouver ne serait-ce qu\'un lapin.\r\n\r\nD\'autres ont carrément peur d\'aller en forêt. Il paraîtrait que certains chasseurs ne sont jamais revenus...','2018-04-25 14:33:58',1),(14,1,'Le paladin','Tu n\'as pas intérêt à sortir du droit chemin, gamin. \r\n\r\nSinon tu vas attirer l\'attention du Paladin. Et même s\'il ne sert que le bien et la justice, ce n\'est pas un tendre. Alors gare à toi !!','2018-04-25 14:33:58',2),(15,1,'Routes non commerciales','Les routes commerciales ne sont plus sûres.\r\n\r\nLes patrouilleurs ruraux ne font plus leur travail et nos convois de marchandises sont souvent attaquées par des brigands.\r\n\r\nMais que fait le roi Olric !!\r\n\r\nDonc on engage de plus en plus une escorte pour atteindre notre destination sain et sauf.','2018-04-25 14:33:58',3),(16,2,'Tutorial Taverne','<p>Salut gamin, bienvenue dans ma taverne.</p><p>Tu veux boire un coup ?</p><p>Il y a beaucoup de passage ici. Des aventuriers que tu peux recruter si tu es assez connu ou si tu as de l\'or.</p><p>Tu peux aussi glaner quelques rumeurs car les gens parlent toujours au barman.</p><p>Certaines personnes embauchent des aventuriers pour effectuer des tâches qu\'ils ne peuvent pas faire. Hésite pas à lire le tableau des embauches.</p><p>J\'ai des chambres. Si tu ne trouves pas où loger ou si tu veux te reposer, c\'est l\'endroit parfait. C\'est sûr et pas trop cher.Alors je te sers quoi gamin ?</p>','2018-04-25 14:33:58',1);
 /*!40000 ALTER TABLE `Infos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,7 +83,8 @@ DROP TABLE IF EXISTS `capacities`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `capacities` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `description` varchar(45) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `description` text,
   `type` int(11) DEFAULT NULL,
   `range` int(11) DEFAULT NULL,
   `attack` int(11) DEFAULT NULL,
@@ -103,7 +104,7 @@ CREATE TABLE `capacities` (
 
 LOCK TABLES `capacities` WRITE;
 /*!40000 ALTER TABLE `capacities` DISABLE KEYS */;
-INSERT INTO `capacities` VALUES (1,'/images/epee.jpg',1,1,0,0,0,0,0,0,NULL),(2,'/images/heal.jpg',2,1,0,0,0,0,4,-2,NULL),(3,'/images/charge.jpg',1,1,3,-3,4,NULL,NULL,-3,NULL),(4,NULL,1,5,0,0,0,0,0,0,NULL);
+INSERT INTO `capacities` VALUES (1,NULL,'/images/epee.jpg',1,1,0,0,0,0,0,0,'2018-04-26 14:59:06'),(2,NULL,'/images/heal.jpg',2,1,0,0,0,0,4,-2,'2018-04-26 14:59:06'),(3,NULL,'/images/charge.jpg',1,1,3,-3,4,NULL,NULL,-3,'2018-04-26 14:59:06'),(4,NULL,NULL,1,5,0,0,0,0,0,0,'2018-04-26 14:59:06');
 /*!40000 ALTER TABLE `capacities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -219,7 +220,7 @@ CREATE TABLE `characters` (
 
 LOCK TABLES `characters` WRITE;
 /*!40000 ALTER TABLE `characters` DISABLE KEYS */;
-INSERT INTO `characters` VALUES (24,'hhh',0,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,310,0,0,0,0,0,0,0,0,0,10,NULL,1,1,10),(27,'ddddddddd',30,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,690,0,0,0,0,0,5,0,0,31,10,NULL,2,1,10);
+INSERT INTO `characters` VALUES (24,'hhh',0,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,310,0,0,0,0,0,0,0,0,0,10,NULL,1,1,10),(27,'ddddddddd',30,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,370,0,0,0,0,0,5,0,0,32,10,NULL,2,1,10);
 /*!40000 ALTER TABLE `characters` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -285,10 +286,11 @@ CREATE TABLE `followers` (
   `good` int(11) DEFAULT NULL,
   `evil` int(11) DEFAULT NULL,
   `max_capacity_bag` int(11) DEFAULT NULL,
+  `description` text COLLATE utf8_unicode_ci,
   `date_info` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -297,7 +299,7 @@ CREATE TABLE `followers` (
 
 LOCK TABLES `followers` WRITE;
 /*!40000 ALTER TABLE `followers` DISABLE KEYS */;
-INSERT INTO `followers` VALUES (1,'Conan',1,5,5,5,5,3,3,4,2,0,1,0,' ',1,'SR',10,4,0,1,0,0,0,0,10,NULL),(2,'Sonia La Rousse',1,5,5,5,5,3,3,3,3,0,1,0,' ',1,'SR',10,4,0,1,0,0,0,0,10,NULL),(3,'Guard',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',50,1,1,0,10,0,0,0,10,NULL),(4,'Sherif',2,5,5,5,5,3,3,4,2,0,1,0,' ',1,'SR',10,4,1,1,50,0,0,0,10,NULL),(5,'Paladin',2,5,5,5,5,3,3,4,4,0,1,0,' ',1,'SSR',5,5,2,1,100,0,100,0,10,NULL),(6,'Picker',2,3,3,3,3,3,3,3,1,0,1,0,' ',1,'C',30,1,1,0,10,0,0,0,10,NULL),(7,'Archer',2,3,3,3,3,3,3,2,2,0,1,0,' ',1,'C',25,1,1,0,10,0,0,0,10,NULL),(8,'Merc',1,3,3,3,3,3,3,4,3,0,1,0,' ',1,'R',30,3,3,0,0,0,0,0,10,NULL),(9,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',1,'R',50,3,0,0,0,0,0,0,10,NULL),(10,'Thief',1,3,3,3,3,3,3,2,4,0,1,0,'',1,'R',20,3,4,0,0,10,0,0,10,NULL),(11,'Mage',1,3,3,3,3,3,3,4,2,0,1,0,'',1,'R',15,3,0,0,0,0,0,0,10,NULL),(12,'Priest',1,3,3,3,3,3,3,3,3,0,1,0,' ',1,'R',15,3,0,0,0,0,0,0,10,NULL);
+INSERT INTO `followers` VALUES (1,'Conan',1,5,5,5,5,3,3,4,2,0,1,0,'/images/conan.jpg',1,'SR',10,4,0,1,0,0,0,0,10,NULL,'2018-04-26 14:59:06'),(2,'Sonia La Rousse',1,5,5,5,5,3,3,3,3,0,1,0,'/images/sonia.jpg',1,'SR',10,4,0,1,0,0,0,0,10,NULL,'2018-04-26 14:59:06'),(3,'Guard',2,3,3,3,3,3,3,2,2,0,1,0,'/images/guard.jpg',1,'C',50,1,1,0,10,0,0,0,10,NULL,'2018-04-26 14:59:06'),(4,'Sherif',2,5,5,5,5,3,3,4,2,0,1,0,' ',1,'SR',10,4,1,1,50,0,0,0,10,NULL,'2018-04-26 14:59:06'),(5,'Paladin',2,5,5,5,5,3,3,4,4,0,1,0,'/images/paladin.jpg',1,'SSR',5,5,2,1,100,0,100,0,10,NULL,'2018-04-26 14:59:06'),(6,'Picker',2,3,3,3,3,3,3,3,1,0,1,0,'/images/picker.jpg',1,'C',30,1,1,0,10,0,0,0,10,NULL,'2018-04-26 14:59:06'),(7,'Archer',2,3,3,3,3,3,3,2,2,0,1,0,'/images/archer.jpg',1,'C',25,1,1,0,10,0,0,0,10,NULL,'2018-04-26 14:59:06'),(8,'Merc',1,3,3,3,3,3,3,4,3,0,1,0,'/images/merc.jpg',1,'R',30,3,3,0,0,0,0,0,10,NULL,'2018-04-26 14:59:06'),(9,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',1,'R',50,3,0,0,0,0,0,0,10,NULL,'2018-04-26 14:59:06'),(10,'Thief',1,3,3,3,3,3,3,2,4,0,1,0,'/images/thief.jog',1,'R',20,3,4,0,0,10,0,0,10,NULL,'2018-04-26 14:59:06'),(11,'Mage',1,3,3,3,3,3,3,4,2,0,1,0,'/images/mage.jpg',1,'R',15,3,0,0,0,0,0,0,10,NULL,'2018-04-26 14:59:07'),(12,'Priest',1,3,3,3,3,3,3,3,3,0,1,0,' ',1,'R',15,3,0,0,0,0,0,0,10,NULL,'2018-04-26 14:59:07'),(13,'Ghaalmaraz',1,5,5,5,5,3,2,5,2,1,1,0,'1',1,'SSR',5,5,0,1,0,0,0,0,NULL,NULL,'2018-04-27 11:41:01');
 /*!40000 ALTER TABLE `followers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -336,12 +338,11 @@ CREATE TABLE `followersByCharacter` (
   `good` int(11) DEFAULT NULL,
   `evil` int(11) DEFAULT NULL,
   `max_capacity_bag` int(11) DEFAULT NULL,
+  `description` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `characterId_idx` (`characterId`),
-  KEY `followerId_idx` (`followerId`),
-  CONSTRAINT `FK_492018735AF690F3` FOREIGN KEY (`characterId`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_49201873F542AA03` FOREIGN KEY (`followerId`) REFERENCES `followers` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=180 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  CONSTRAINT `FK_492018735AF690F3` FOREIGN KEY (`characterId`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=212 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -350,7 +351,7 @@ CREATE TABLE `followersByCharacter` (
 
 LOCK TABLES `followersByCharacter` WRITE;
 /*!40000 ALTER TABLE `followersByCharacter` DISABLE KEYS */;
-INSERT INTO `followersByCharacter` VALUES (169,0,'Merc',1,3,3,3,3,3,3,4,3,0,1,0,' ',3,'R',0,3,8,27,0,0,0,0,10),(170,1,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(171,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(172,1,'Priest',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,12,27,0,0,0,0,10),(173,0,'Thief',1,3,3,3,3,3,3,2,4,0,1,0,'',4,'R',0,3,10,27,0,10,0,0,10),(174,0,'Merc',1,3,3,3,3,3,3,4,3,0,1,0,' ',3,'R',0,3,8,27,0,0,0,0,10),(175,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(176,1,'Thief',1,3,3,3,3,3,3,2,4,0,1,0,'',4,'R',0,3,10,27,0,10,0,0,10),(177,1,'Conan',1,5,5,5,5,3,3,4,2,0,1,0,' ',0,'SR',1,4,1,27,0,0,0,0,10),(178,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10),(179,1,'Thief',1,3,3,3,3,3,3,2,4,0,1,0,'',4,'R',0,3,10,27,0,10,0,0,10);
+INSERT INTO `followersByCharacter` VALUES (192,0,'Merc',1,3,3,3,3,3,3,4,3,0,1,0,'/images/merc.jpg',3,'R',0,3,8,27,0,0,0,0,10,NULL),(193,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10,NULL),(194,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10,NULL),(195,0,'Sonia La Rousse',1,5,5,5,5,3,3,3,3,0,1,0,'/images/sonia.jpg',0,'SR',1,4,2,27,0,0,0,0,10,NULL),(196,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10,NULL),(197,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10,NULL),(198,0,'Conan',1,5,5,5,5,3,3,4,2,0,1,0,'/images/conan.jpg',0,'SR',1,4,1,27,0,0,0,0,10,NULL),(199,0,'Merc',1,3,3,3,3,3,3,4,3,0,1,0,'/images/merc.jpg',3,'R',0,3,8,27,0,0,0,0,10,NULL),(200,0,'Mage',1,3,3,3,3,3,3,4,2,0,1,0,'/images/mage.jpg',0,'R',0,3,11,27,0,0,0,0,10,NULL),(201,0,'Thief',1,3,3,3,3,3,3,2,4,0,1,0,'/images/thief.jog',4,'R',0,3,10,27,0,10,0,0,10,NULL),(202,0,'Thief',1,3,3,3,3,3,3,2,4,0,1,0,'/images/thief.jog',4,'R',0,3,10,27,0,10,0,0,10,NULL),(203,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10,NULL),(204,0,'Thief',1,3,3,3,3,3,3,2,4,0,1,0,'/images/thief.jog',4,'R',0,3,10,27,0,10,0,0,10,NULL),(205,0,'Merc',1,3,3,3,3,3,3,4,3,0,1,0,'/images/merc.jpg',3,'R',0,3,8,27,0,0,0,0,10,NULL),(206,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10,NULL),(207,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10,NULL),(208,1,'Ghaalmaraz',1,5,5,5,5,3,2,5,2,1,1,0,'1',0,'SSR',1,5,13,27,0,0,0,0,NULL,NULL),(209,0,'Ghaalmaraz',1,5,5,5,5,3,2,5,2,1,1,0,'1',0,'SSR',1,5,13,27,0,0,0,0,NULL,NULL),(210,0,'Merc',1,3,3,3,3,3,3,4,3,0,1,0,'/images/merc.jpg',3,'R',0,3,8,27,0,0,0,0,10,NULL),(211,0,'Ghaalmaraz',1,5,5,5,5,3,2,5,2,1,1,0,'1',0,'SSR',1,5,13,27,0,0,0,0,NULL,NULL);
 /*!40000 ALTER TABLE `followersByCharacter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -401,7 +402,7 @@ CREATE TABLE `infosByCharacter` (
   KEY `infoId_idx` (`infoId`),
   CONSTRAINT `characId` FOREIGN KEY (`characterId`) REFERENCES `characters` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `infoId` FOREIGN KEY (`infoId`) REFERENCES `Infos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -410,7 +411,7 @@ CREATE TABLE `infosByCharacter` (
 
 LOCK TABLES `infosByCharacter` WRITE;
 /*!40000 ALTER TABLE `infosByCharacter` DISABLE KEYS */;
-INSERT INTO `infosByCharacter` VALUES (23,27,12),(24,27,13),(25,27,14),(26,27,15),(27,27,16),(28,27,18),(29,27,19),(30,27,27);
+INSERT INTO `infosByCharacter` VALUES (40,27,16);
 /*!40000 ALTER TABLE `infosByCharacter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -445,9 +446,10 @@ CREATE TABLE `items` (
   `weigth` int(11) DEFAULT NULL,
   `pop_rate` int(11) DEFAULT NULL,
   `pop_zone` int(11) DEFAULT NULL,
+  `description` text,
   `date_info` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -456,7 +458,7 @@ CREATE TABLE `items` (
 
 LOCK TABLES `items` WRITE;
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
-INSERT INTO `items` VALUES (1,'Hache',1,1,1,'C',0,0,1,0,1,0,0,1,15,75,0,0,0,'/images/hache.png',1,50,1,'2018-04-25 15:50:38'),(2,'Epée',1,1,1,'C',0,0,1,0,1,0,0,1,15,75,0,0,0,'/images/sword.jpg',1,50,1,'2018-04-25 15:50:38'),(3,'Potion de soins',3,1,1,'C',0,0,0,0,0,5,0,1,30,75,0,0,0,'/images/heal_potion.png',1,50,1,'2018-04-25 15:50:38'),(4,'Dague',1,1,1,'C',0,0,1,0,2,0,0,1,25,65,0,0,0,'/images/dague.jpg',1,50,1,'2018-04-25 15:50:38'),(5,'Arc',1,1,1,'C',0,0,1,0,0,0,0,4,30,75,0,0,0,'/images/arc.jpg',2,50,1,'2018-04-25 15:50:38'),(6,'Pique',1,1,1,'C',0,0,1,0,0,0,0,5,20,75,0,0,0,'/images/pick.jpg',2,50,1,'2018-04-25 15:50:38'),(7,'Carquois',2,1,1,'C',0,0,0,0,0,0,0,0,20,50,1,1,20,'/images/carquois.jpg',1,50,1,'2018-04-25 15:50:38'),(8,'Flèche',3,1,1,'C',0,0,0,0,0,0,0,0,5,15,0,0,0,'/images/fleche.jpg',0,50,1,'2018-04-25 15:50:38'),(9,'Bouclier',1,1,1,'C',0,0,0,2,0,0,0,6,30,75,0,0,0,'/images/shield.jpg',1,50,1,'2018-04-25 15:50:38'),(10,'fdsfsdf',1,1,1,'SSR',1,1,1,1,1,1,1,1,1,1,1,1,1,'11',1,5,1,'2018-04-25 15:55:44'),(11,'f',1,1,1,'SSR',1,1,1,1,1,1,1,1,1,1,1,11,1,'1',1,5,1,'2018-04-25 15:57:21'),(12,'fsdqf',1,1,1,'SSR',1,1,1,1,11,1,1,1,11,1,1,1,11,'1',1,5,1,'2018-04-25 15:58:33'),(13,'1',1,1,1,'SSR',1,1,1,1,1,1,1,1,1,11,1,1,1,'1',1,5,1,'2018-04-25 16:00:15'),(14,'1',1,1,1,'SSR',1,1,1,1,11,1,1,11,1,1,1,1,1,'1',1,5,1,'2018-04-25 16:01:36'),(15,'1',1,1,1,'SSR',1,1,11,1,1,1,1,1,11,1,1,1,1,'1',1,5,1,'2018-04-25 16:11:44'),(16,'1',1,1,1,'SSR',1,1,11,1,1,1,1,1,11,1,1,1,11,'1',1,5,1,'2018-04-25 16:14:39'),(17,'1',1,1,1,'SSR',1,11,1,1,1,1,1,1,11,1,1,1,1,'1',1,5,1,'2018-04-25 16:15:48'),(18,'1',1,1,1,'SSR',1,1,1,11,1,1,1,1,1,1,11,1,1,'1',1,5,1,'2018-04-26 06:42:59'),(19,'1',1,1,1,'SSR',1,1,1,1,1,1,1,1,11,1,1,1,1,'1',1,5,1,'2018-04-26 13:38:53');
+INSERT INTO `items` VALUES (1,'Hache',1,1,1,'C',0,0,1,0,1,0,0,1,15,75,0,0,0,'/images/hache.png',1,50,1,NULL,'2018-04-25 15:50:38'),(2,'Epée',1,1,1,'C',0,0,1,0,1,0,0,1,15,75,0,0,0,'/images/sword.jpg',1,50,1,NULL,'2018-04-25 15:50:38'),(3,'Potion de soins',3,1,1,'C',0,0,0,0,0,5,0,1,30,75,0,0,0,'/images/heal_potion.png',1,50,1,NULL,'2018-04-25 15:50:38'),(4,'Dague',1,1,1,'C',0,0,1,0,2,0,0,1,25,65,0,0,0,'/images/dague.jpg',1,50,1,NULL,'2018-04-25 15:50:38'),(5,'Arc',1,1,1,'C',0,0,1,0,0,0,0,4,30,75,0,0,0,'/images/arc.jpg',2,50,1,NULL,'2018-04-25 15:50:38'),(6,'Pique',1,1,1,'C',0,0,1,0,0,0,0,5,20,75,0,0,0,'/images/pick.jpg',2,50,1,NULL,'2018-04-25 15:50:38'),(7,'Carquois',2,1,1,'C',0,0,0,0,0,0,0,0,20,50,1,1,20,'/images/carquois.jpg',1,50,1,NULL,'2018-04-25 15:50:38'),(8,'Flèche',3,1,1,'C',0,0,0,0,0,0,0,0,5,15,0,0,0,'/images/fleche.jpg',0,50,1,NULL,'2018-04-25 15:50:38'),(9,'Bouclier',1,1,1,'C',0,0,0,2,0,0,0,6,30,75,0,0,0,'/images/shield.jpg',1,50,1,NULL,'2018-04-25 15:50:38');
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -493,6 +495,7 @@ CREATE TABLE `itemsByCharacter` (
   `weigth` int(11) DEFAULT NULL,
   `characterId` int(11) DEFAULT NULL,
   `itemId` int(11) DEFAULT NULL,
+  `description` text,
   PRIMARY KEY (`id`),
   KEY `characterId_idx` (`characterId`),
   KEY `item_idx` (`itemId`),
@@ -507,7 +510,6 @@ CREATE TABLE `itemsByCharacter` (
 
 LOCK TABLES `itemsByCharacter` WRITE;
 /*!40000 ALTER TABLE `itemsByCharacter` DISABLE KEYS */;
-INSERT INTO `itemsByCharacter` VALUES (8,0,1,0,0,'Hache',1,1,1,'C',0,0,1,0,1,0,0,1,15,75,'/images/hache.png',0,1,27,1),(9,0,1,0,0,'Bouclier',1,1,1,'C',0,0,0,2,0,0,0,6,30,75,'/images/shield.jpg',0,1,27,9);
 /*!40000 ALTER TABLE `itemsByCharacter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -545,6 +547,7 @@ CREATE TABLE `itemsByFollowers` (
   `itemId` int(11) DEFAULT NULL,
   `followerId` int(11) DEFAULT NULL,
   `characterId` int(11) DEFAULT NULL,
+  `description` text,
   PRIMARY KEY (`id`),
   KEY `followerId_idx` (`followerId`),
   KEY `itemFollower_idx` (`itemId`),
@@ -552,7 +555,7 @@ CREATE TABLE `itemsByFollowers` (
   CONSTRAINT `charac` FOREIGN KEY (`characterId`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `followerId` FOREIGN KEY (`followerId`) REFERENCES `followersByCharacter` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `itemFollower` FOREIGN KEY (`itemId`) REFERENCES `items` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -561,7 +564,7 @@ CREATE TABLE `itemsByFollowers` (
 
 LOCK TABLES `itemsByFollowers` WRITE;
 /*!40000 ALTER TABLE `itemsByFollowers` DISABLE KEYS */;
-INSERT INTO `itemsByFollowers` VALUES (31,0,1,0,0,'Epée',1,1,1,'C',0,0,1,0,1,0,0,1,0,50,'/images/sword.jpg',0,1,2,169,NULL),(32,0,1,0,0,'Potion de soins',3,1,1,'C',0,0,0,0,0,5,0,1,0,75,'/images/heal_potion.png',0,1,3,169,NULL),(33,0,1,0,0,'Dague',1,1,1,'C',0,0,1,0,2,0,0,1,0,65,'/images/dague.jpg',0,1,4,169,NULL),(34,0,1,0,0,'Epée',1,1,1,'C',0,0,1,0,1,0,0,1,0,50,'/images/sword.jpg',0,1,2,170,NULL),(35,0,1,0,0,'Epée',1,1,1,'C',0,0,1,0,1,0,0,1,0,50,'/images/sword.jpg',0,1,2,171,NULL),(36,0,1,0,0,'Potion de soins',3,1,1,'C',0,0,0,0,0,5,0,1,0,75,'/images/heal_potion.png',0,1,3,172,NULL),(37,0,1,0,0,'Pique',1,1,1,'C',0,0,1,0,0,0,0,5,0,50,'/images/pick.jpg',0,2,6,172,NULL),(38,0,1,0,0,'Dague',1,1,1,'C',0,0,1,0,2,0,0,1,0,65,'/images/dague.jpg',0,1,4,173,NULL),(39,0,1,0,0,'Dague',1,1,1,'C',0,0,1,0,2,0,0,1,0,65,'/images/dague.jpg',0,1,4,173,NULL),(40,0,1,0,0,'Epée',1,1,1,'C',0,0,1,0,1,0,0,1,0,50,'/images/sword.jpg',0,1,2,174,NULL),(41,0,1,0,0,'Potion de soins',3,1,1,'C',0,0,0,0,0,5,0,1,0,75,'/images/heal_potion.png',0,1,3,174,NULL),(42,0,1,0,0,'Dague',1,1,1,'C',0,0,1,0,2,0,0,1,0,65,'/images/dague.jpg',0,1,4,174,NULL),(43,0,1,0,0,'Epée',1,1,1,'C',0,0,1,0,1,0,0,1,0,50,'/images/sword.jpg',0,1,2,175,NULL),(44,0,1,0,0,'Dague',1,1,1,'C',0,0,1,0,2,0,0,1,0,65,'/images/dague.jpg',0,1,4,176,NULL),(45,0,1,0,0,'Dague',1,1,1,'C',0,0,1,0,2,0,0,1,0,65,'/images/dague.jpg',0,1,4,176,NULL),(46,0,1,0,0,'Hache',1,1,1,'C',0,0,1,0,1,0,0,1,0,50,'/images/hache.png',0,1,1,177,NULL),(47,0,1,0,0,'Epée',1,1,1,'C',0,0,1,0,1,0,0,1,0,50,'/images/sword.jpg',0,1,2,178,NULL),(48,0,1,0,0,'Dague',1,1,1,'C',0,0,1,0,2,0,0,1,0,65,'/images/dague.jpg',0,1,4,179,NULL),(49,0,1,0,0,'Dague',1,1,1,'C',0,0,1,0,2,0,0,1,0,65,'/images/dague.jpg',0,1,4,179,NULL);
+INSERT INTO `itemsByFollowers` VALUES (67,0,1,0,0,'Epée',1,1,1,'C',0,0,1,0,1,0,0,1,0,75,'/images/sword.jpg',0,1,2,192,27,NULL),(68,0,1,0,0,'Dague',1,1,1,'C',0,0,1,0,2,0,0,1,0,65,'/images/dague.jpg',0,1,4,192,27,NULL),(69,0,1,0,0,'Epée',1,1,1,'C',0,0,1,0,1,0,0,1,0,75,'/images/sword.jpg',0,1,2,193,27,NULL),(70,0,1,0,0,'Epée',1,1,1,'C',0,0,1,0,1,0,0,1,0,75,'/images/sword.jpg',0,1,2,194,27,NULL),(71,0,1,0,0,'Epée',1,1,1,'C',0,0,1,0,1,0,0,1,0,75,'/images/sword.jpg',0,1,2,195,27,NULL),(72,0,1,0,0,'Epée',1,1,1,'C',0,0,1,0,1,0,0,1,0,75,'/images/sword.jpg',0,1,2,196,27,NULL),(73,0,1,0,0,'Epée',1,1,1,'C',0,0,1,0,1,0,0,1,0,75,'/images/sword.jpg',0,1,2,197,27,NULL),(74,0,1,0,0,'Hache',1,1,1,'C',0,0,1,0,1,0,0,1,0,75,'/images/hache.png',0,1,1,198,27,NULL),(75,0,1,0,0,'Epée',1,1,1,'C',0,0,1,0,1,0,0,1,0,75,'/images/sword.jpg',0,1,2,199,27,NULL),(76,0,1,0,0,'Dague',1,1,1,'C',0,0,1,0,2,0,0,1,0,65,'/images/dague.jpg',0,1,4,199,27,NULL),(77,0,1,0,0,'Dague',1,1,1,'C',0,0,1,0,2,0,0,1,0,65,'/images/dague.jpg',0,1,4,200,27,NULL),(78,0,1,0,0,'Dague',1,1,1,'C',0,0,1,0,2,0,0,1,0,65,'/images/dague.jpg',0,1,4,201,27,NULL),(79,0,1,0,0,'Dague',1,1,1,'C',0,0,1,0,2,0,0,1,0,65,'/images/dague.jpg',0,1,4,201,27,NULL),(80,0,1,0,0,'Dague',1,1,1,'C',0,0,1,0,2,0,0,1,0,65,'/images/dague.jpg',0,1,4,202,27,NULL),(81,0,1,0,0,'Dague',1,1,1,'C',0,0,1,0,2,0,0,1,0,65,'/images/dague.jpg',0,1,4,202,27,NULL),(82,0,1,0,0,'Epée',1,1,1,'C',0,0,1,0,1,0,0,1,0,75,'/images/sword.jpg',0,1,2,203,27,NULL),(83,0,1,0,0,'Dague',1,1,1,'C',0,0,1,0,2,0,0,1,0,65,'/images/dague.jpg',0,1,4,204,27,NULL),(84,0,1,0,0,'Dague',1,1,1,'C',0,0,1,0,2,0,0,1,0,65,'/images/dague.jpg',0,1,4,204,27,NULL),(85,0,1,0,0,'Epée',1,1,1,'C',0,0,1,0,1,0,0,1,0,75,'/images/sword.jpg',0,1,2,205,27,NULL),(86,0,1,0,0,'Dague',1,1,1,'C',0,0,1,0,2,0,0,1,0,65,'/images/dague.jpg',0,1,4,205,27,NULL),(87,0,1,0,0,'Epée',1,1,1,'C',0,0,1,0,1,0,0,1,0,75,'/images/sword.jpg',0,1,2,206,27,NULL),(88,0,1,0,0,'Epée',1,1,1,'C',0,0,1,0,1,0,0,1,0,75,'/images/sword.jpg',0,1,2,207,27,NULL),(89,0,1,0,0,'Epée',1,1,1,'C',0,0,1,0,1,0,0,1,0,75,'/images/sword.jpg',0,1,2,210,27,NULL),(90,0,1,0,0,'Dague',1,1,1,'C',0,0,1,0,2,0,0,1,0,65,'/images/dague.jpg',0,1,4,210,27,NULL);
 /*!40000 ALTER TABLE `itemsByFollowers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -717,7 +720,7 @@ CREATE TABLE `team` (
   KEY `mate_idx` (`team_mate_id`),
   CONSTRAINT `charactr` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `mate` FOREIGN KEY (`team_mate_id`) REFERENCES `followersByCharacter` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -726,7 +729,7 @@ CREATE TABLE `team` (
 
 LOCK TABLES `team` WRITE;
 /*!40000 ALTER TABLE `team` DISABLE KEYS */;
-INSERT INTO `team` VALUES (88,1,0,177,27),(89,2,0,170,27),(90,3,0,172,27),(91,4,0,176,27),(92,5,0,179,27);
+INSERT INTO `team` VALUES (98,1,0,208,27);
 /*!40000 ALTER TABLE `team` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -772,4 +775,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-26 16:58:48
+-- Dump completed on 2018-04-27 15:34:57

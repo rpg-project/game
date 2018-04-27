@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Followersbycharacter
  *
- * @ORM\Table(name="followersByCharacter", indexes={@ORM\Index(name="characterId_idx", columns={"characterId"}), @ORM\Index(name="followerId_idx", columns={"followerId"})})
+ * @ORM\Table(name="followersByCharacter", indexes={@ORM\Index(name="characterId_idx", columns={"characterId"})})
  * @ORM\Entity
  */
 class Followersbycharacter
@@ -148,6 +148,13 @@ class Followersbycharacter
     /**
      * @var integer
      *
+     * @ORM\Column(name="followerId", type="integer", nullable=true)
+     */
+    private $followerid;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="law", type="integer", nullable=true)
      */
     private $law;
@@ -181,6 +188,13 @@ class Followersbycharacter
     private $maxCapacityBag;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", length=65535, nullable=true)
+     */
+    private $description;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -188,16 +202,6 @@ class Followersbycharacter
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
-    /**
-     * @var \AppBundle\Entity\Followers
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Followers")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="followerId", referencedColumnName="id")
-     * })
-     */
-    private $followerid;
 
     /**
      * @var \AppBundle\Entity\Characters
@@ -516,6 +520,22 @@ class Followersbycharacter
     /**
      * @return int
      */
+    public function getFollowerid()
+    {
+        return $this->followerid;
+    }
+
+    /**
+     * @param int $followerid
+     */
+    public function setFollowerid($followerid)
+    {
+        $this->followerid = $followerid;
+    }
+
+    /**
+     * @return int
+     */
     public function getLaw()
     {
         return $this->law;
@@ -594,6 +614,22 @@ class Followersbycharacter
     }
 
     /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
      * @return int
      */
     public function getId()
@@ -607,22 +643,6 @@ class Followersbycharacter
     public function setId($id)
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return Followers
-     */
-    public function getFollowerid()
-    {
-        return $this->followerid;
-    }
-
-    /**
-     * @param Followers $followerid
-     */
-    public function setFollowerid($followerid)
-    {
-        $this->followerid = $followerid;
     }
 
     /**

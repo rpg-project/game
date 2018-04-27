@@ -17,161 +17,168 @@ class Items
      *
      * @ORM\Column(name="name", type="string", length=50, nullable=true)
      */
-    public $name;
+    private $name;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="type", type="integer", nullable=true)
      */
-    public $type;
+    private $type;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="level", type="integer", nullable=true)
      */
-    public $level;
+    private $level;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="level_min", type="integer", nullable=true)
      */
-    public $levelMin;
+    private $levelMin;
 
     /**
      * @var string
      *
      * @ORM\Column(name="quality", type="string", length=45, nullable=true)
      */
-    public $quality;
+    private $quality;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="bonus_move", type="integer", nullable=true)
      */
-    public $bonusMove;
+    private $bonusMove;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="bonus_quickness", type="integer", nullable=true)
      */
-    public $bonusQuickness;
+    private $bonusQuickness;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="bonus_attack", type="integer", nullable=true)
      */
-    public $bonusAttack;
+    private $bonusAttack;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="bonus_defense", type="integer", nullable=true)
      */
-    public $bonusDefense;
+    private $bonusDefense;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="bonus_critical", type="integer", nullable=true)
      */
-    public $bonusCritical;
+    private $bonusCritical;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="bonus_health", type="integer", nullable=true)
      */
-    public $bonusHealth;
+    private $bonusHealth;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="bonus_energy", type="integer", nullable=true)
      */
-    public $bonusEnergy;
+    private $bonusEnergy;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="capacity", type="integer", nullable=true)
      */
-    public $capacity;
+    private $capacity;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="price_buy", type="integer", nullable=true)
      */
-    public $priceBuy;
+    private $priceBuy;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="price_sell", type="integer", nullable=true)
      */
-    public $priceSell;
+    private $priceSell;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="open", type="integer", nullable=true)
      */
-    public $open;
+    private $open;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="container", type="integer", nullable=true)
      */
-    public $container;
+    private $container;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="container_space", type="integer", nullable=true)
      */
-    public $containerSpace;
+    private $containerSpace;
 
     /**
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=50, nullable=true)
      */
-    public $image;
+    private $image;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="weigth", type="integer", nullable=true)
      */
-    public $weigth;
+    private $weigth;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="pop_rate", type="integer", nullable=true)
      */
-    public $popRate;
+    private $popRate;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="pop_zone", type="integer", nullable=true)
      */
-    public $popZone;
+    private $popZone;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", length=65535, nullable=true)
+     */
+    private $description;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_info", type="datetime", nullable=true)
      */
-    public $dateInfo;
+    private $dateInfo;
 
     /**
      * @var integer
@@ -180,7 +187,7 @@ class Items
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    public $id;
+    private $id;
 
     /**
      * @return string
@@ -532,6 +539,22 @@ class Items
     public function setPopZone($popZone)
     {
         $this->popZone = $popZone;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
 
     /**

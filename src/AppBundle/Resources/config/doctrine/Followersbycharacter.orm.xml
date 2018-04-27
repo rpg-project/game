@@ -3,7 +3,6 @@
   <entity name="AppBundle\Entity\Followersbycharacter" table="followersByCharacter">
     <indexes>
       <index name="characterId_idx" columns="characterId"/>
-      <index name="followerId_idx" columns="followerId"/>
     </indexes>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
@@ -103,6 +102,11 @@
         <option name="unsigned"/>
       </options>
     </field>
+    <field name="followerid" type="integer" column="followerId" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
     <field name="law" type="integer" column="law" nullable="true">
       <options>
         <option name="unsigned"/>
@@ -128,11 +132,11 @@
         <option name="unsigned"/>
       </options>
     </field>
-    <many-to-one field="followerid" target-entity="Followers" fetch="LAZY">
-      <join-columns>
-        <join-column name="followerId" referenced-column-name="id"/>
-      </join-columns>
-    </many-to-one>
+    <field name="description" type="text" column="description" length="65535" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
     <many-to-one field="characterid" target-entity="Characters" fetch="LAZY">
       <join-columns>
         <join-column name="characterId" referenced-column-name="id"/>

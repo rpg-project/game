@@ -15,72 +15,79 @@ class Capacities
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=45, nullable=true)
+     * @ORM\Column(name="name", type="string", length=45, nullable=true)
      */
-    public $description;
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", length=65535, nullable=true)
+     */
+    private $description;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="type", type="integer", nullable=true)
      */
-    public $type;
+    private $type;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="range", type="integer", nullable=true)
      */
-    public $range;
+    private $range;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="attack", type="integer", nullable=true)
      */
-    public $attack;
+    private $attack;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="defense", type="integer", nullable=true)
      */
-    public $defense;
+    private $defense;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="move", type="integer", nullable=true)
      */
-    public $move;
+    private $move;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="quickness", type="integer", nullable=true)
      */
-    public $quickness;
+    private $quickness;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="health", type="integer", nullable=true)
      */
-    public $health;
+    private $health;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="energy", type="integer", nullable=true)
      */
-    public $energy;
+    private $energy;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_info", type="datetime", nullable=true)
      */
-    public $dateInfo;
+    private $dateInfo;
 
     /**
      * @var integer
@@ -89,7 +96,23 @@ class Capacities
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    public $id;
+    private $id;
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
 
     /**
      * @return string

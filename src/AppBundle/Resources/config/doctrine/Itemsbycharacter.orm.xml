@@ -118,6 +118,11 @@
         <option name="unsigned"/>
       </options>
     </field>
+    <field name="description" type="text" column="description" length="65535" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
     <many-to-one field="itemid" target-entity="Items" fetch="LAZY">
       <join-columns>
         <join-column name="itemId" referenced-column-name="id"/>

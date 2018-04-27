@@ -167,6 +167,13 @@ class Itemsbyfollowers
     private $weigth;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", length=65535, nullable=true)
+     */
+    private $description;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -555,6 +562,22 @@ class Itemsbyfollowers
     public function setWeigth($weigth)
     {
         $this->weigth = $weigth;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
 
     /**

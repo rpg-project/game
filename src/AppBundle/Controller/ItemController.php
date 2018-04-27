@@ -74,6 +74,7 @@ class ItemController extends Controller
             ->add('container', TextType::class)
             ->add('container_space', TextType::class)
             ->add('weigth', TextType::class)
+            ->add('description', TextareaType::class)
             ->add('save', SubmitType::class, array('attr'=> array('class' => "btn btn-primary")));
 
         $form = $formBuilder->getForm();

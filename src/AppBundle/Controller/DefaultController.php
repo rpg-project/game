@@ -38,10 +38,11 @@ class DefaultController extends Controller
             $session->set('character', $character);
         }
 
-        $this->resource();
+        $messages = $this->resource();
 
         return $this->render('default/index.html.twig', [
-            'nbCharacters' => $nbCharacter
+            'nbCharacters' => $nbCharacter,
+            'messages' => $messages,
         ]);
     }
 
@@ -50,25 +51,34 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $maj = [
-            'info' => ['table' => Infos::class, 'champ'=> 'dateInfo','file'=>'infos.txt'],
-            'item' => ['table' => Items::class, 'champ'=> 'dateInfo','file'=>'items.txt'],
-            'capacity' => ['table' => Capacities::class, 'champ'=> 'dateInfo','file'=>'capacities.txt'],
-            'follower' => ['table' => Followers::class, 'champ'=> 'dateInfo','file'=>'followers.txt'],
+            'Informations' => ['table' => Infos::class, 'champ'=> 'dateInfo','file'=>'infos.txt'],
+            'Items' => ['table' => Items::class, 'champ'=> 'dateInfo','file'=>'items.txt'],
+            'Capacities' => ['table' => Capacities::class, 'champ'=> 'dateInfo','file'=>'capacities.txt'],
+            'Followers' => ['table' => Followers::class, 'champ'=> 'dateInfo','file'=>'followers.txt'],
             ];
 
+        $messages = array();
+        $x=0;
+
         foreach ($maj as $key => $value){
-            echo '<p>Ecriture de '.$key.'</p>';
+            $messages[$x]['title'] = 'Ecriture de '.$key;
 
             $data = $em->getRepository($value['table'])->findBy([
                 $value['champ'] => null,
                 ]);
 
+            $table = $em->getRepository($value['table'])->findAll();
+
             $chemin = dirname(__FILE__) . '/../../../web/Ressources/'.$value['file'];
 
-            if(count($data) > 0 || !file_exists($chemin)) {
-                /** @var InfosRepository $results */
-                /** @var ItemsRepository $results */
-                echo '<p>Génération fichier '.$value['file'].'</p>';
+            $file = json_decode(file_get_contents($chemin));
+
+            $messages[$x]['nbfiles'] = count($file);
+            $messages[$x]['nbTables'] = count($table);
+
+            if(count($data) > 0 || !file_exists($chemin) || count($file) !== count($table) ) {
+
+                $messages[$x]['result'] = 'Génération fichier '.$value['file'];
                 $results = $em->getRepository($value['table'])->findAll();
                 $arr = [];
                 foreach ($results as $key => $result) {
@@ -84,18 +94,18 @@ class DefaultController extends Controller
                     $arr[$key] =  $this->object_to_array($result);
 
                 }
-               $content = json_encode($arr);
-
-
+                $content = json_encode($arr);
 
                 $handle = fopen($chemin, "w");
                 fputs($handle, $content);
                 fclose($handle);
             } else {
-                echo '<p>pas de nouvel ajout</p>';
+                $messages[$x]['result'] = "pas de nouvel ajout";
             }
+            $x++;
         }
-        return;
+
+        return $messages;
     }
 
     function object_to_array($obj) {

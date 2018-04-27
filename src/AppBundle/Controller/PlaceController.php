@@ -167,7 +167,7 @@ class PlaceController extends Controller
                 $newFollower->setEvil($summonTable[$i]->getEvil());
                 $newFollower->setMaxCapacityBag($summonTable[$i]->getMaxCapacityBag());
                 $newFollower->setCharacterid($character);
-                $newFollower->setFollowerid($summonTable[$i]);
+                $newFollower->setFollowerid($summonTable[$i]->getId());
 
                 $em->persist($newFollower);
                 $em->flush();
@@ -462,8 +462,6 @@ class PlaceController extends Controller
         $character = $em->getRepository('AppBundle:Characters')->findOneBy([
             'id'=>$character->getId(),
         ]);
-
-
 
         $chemin = dirname(__FILE__).'/../../../web/Ressources/infos.txt';
 

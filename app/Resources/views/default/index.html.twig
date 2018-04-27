@@ -10,7 +10,15 @@
             {% else %}
                 <a href="{{ path('player_homepage') }}" class="btn btn-primary">Se Connecter</a>
             {% endif %}
-            <a href="{{ path('admin') }}" class="btn btn-primary">Page Administrateur</a>
+    </div>
+    <div class="row">
+        <h1>Informations Techniques</h1>
+        <a href="{{ path('admin') }}" class="btn btn-primary">Page Administrateur</a>
+        {% for message in messages %}
+            <h4>{{ message.title }}</h4>
+            <p>{{ message.result }}</p>
+            <p>{{ message.nbfiles }} / {{ message.nbTables }}</p>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

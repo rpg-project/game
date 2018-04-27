@@ -128,6 +128,7 @@ class FollowerController extends Controller
         ->add('Chaos', TextType::class)
         ->add('Good', TextType::class)
         ->add('Evil', TextType::class)
+        ->add('description', TextareaType::class)
         ->add('save', SubmitType::class, array('attr'=> array('class' => "btn btn-primary")));
         
         $form = $formBuilder->getForm(); 

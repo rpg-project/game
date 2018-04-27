@@ -13,9 +13,9 @@
 
                     {% if follower.mate.teamed == 0 %}
                         {% if follower.avalaible == true %}
-                            <td><a href ="{{ path("options_team_add", {"place": place, "followerId": follower.mate.followerId.id, "teamMateId" : follower.mate.id}) }}" > {{ follower.mate.followerId.name }}</a></td>
+                            <td><a href ="{{ path("options_team_add", {"place": place, "followerId": follower.mate.followerId, "teamMateId" : follower.mate.id}) }}" > {{ follower.mate.name }}</a></td>
                         {% else %}
-                            <td><a href="{{ path('stats_follower', {'id' : follower.mate.id}) }}" style="color:red;">{{ follower.mate.followerId.name }}</a></td>
+                            <td><a href="{{ path('stats_follower', {'id' : follower.mate.id}) }}" style="color:red;">{{ follower.mate.name }}</a></td>
                         {% endif %}
                         <td>{{ follower.mate.rateLabel }}</td>
                         <td>{{ follower.mate.level }}</td>

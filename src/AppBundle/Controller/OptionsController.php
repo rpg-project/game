@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Characters;
+use AppBundle\Entity\Followers;
 use AppBundle\Entity\Followersbycharacter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -355,7 +356,24 @@ class OptionsController extends Controller
 
         $session = $this->get('session');
 
-        $followers = $em->getRepository('AppBundle:Followers')-> findAll();
+        $chemin = dirname(__FILE__).'/../../../web/Ressources/followers.txt';
+
+        if(file_exists($chemin)){
+            $file = json_decode(file_get_contents($chemin));
+            $followers = array();
+            foreach ($file as $follower){
+                    $new = new Followers();
+                    $new->setId($follower->id);
+                    $new->setName($follower->name);
+                    $new->setRateLabel($follower->rateLabel);
+                    $new->setGoal($follower->goal);
+                    $followers[] = $new;
+
+            }
+        } else {
+
+            $followers = $em->getRepository('AppBundle:Followers')-> findAll();
+        }
 
         $session->set('followersLibrary', $followers);
 
@@ -427,7 +445,7 @@ class OptionsController extends Controller
         foreach ($team as $mate){
               if($mate !== false) {
                   if ($mate->getTeamMate()->getUniqueRate() == 1) {
-                      $uniqueList[] = $mate;
+                      $uniqueList[] = $mate->getTeamMate()->getFollowerid();
                   }
               }
         }
@@ -442,10 +460,13 @@ class OptionsController extends Controller
 
         $list = array();
         $x = 0;
+
         foreach ($followers as $follower){
             $list[$follower->getId()]['mate'] = $follower;
             $list[$follower->getId()]['avalaible'] = $this->goal($follower->getGoal());
-            if(in_array($follower->getFollowerid()->getId(), $uniqueList, true)){
+
+            if(in_array($follower->getFollowerid(), $uniqueList, true)){
+                echo 'ici';
                 $list[$follower->getId()]['avalaible'] = false;
             }
             $x++;
