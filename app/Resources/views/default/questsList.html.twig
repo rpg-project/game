@@ -6,7 +6,7 @@
         <h1>Listes des {{ function }}</h1>
         <ul>
             {% for quest in quests %}
-                <li>{{ quest.title }} {% block done %}{{ render(controller(
+                <li>Chapitre {{ quest.difficulty }} : {{ quest.title }} {% block done %}{{ render(controller(
                     'AppBundle\\Controller\\PlaceController::questsDone', {'id' : quest.id})) }}{% endblock %}</li>
             {% endfor %}
         </ul>

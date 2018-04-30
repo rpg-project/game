@@ -262,18 +262,12 @@ class PlaceController extends Controller
         ]);
 
         $listQuest = array();
-        echo $count = count($questsDone);
-
-
-//        var_dump($quests);
+        $count = count($questsDone);
         foreach ($quests as $quest){
             if($quest->getDifficulty() <= $count+1){
                 $listQuest[] = $quest;
             }
         }
-
-        var_dump($listQuest);
-
 
         $session->set('quests', $quests);
 
@@ -313,7 +307,6 @@ class PlaceController extends Controller
 
         $questDone = $em->getRepository('AppBundle:Questsbycharacter')->findBy([
             'characterid' => $character,
-            'status' => 1,
             'questid' => $quest,
         ]);
 
@@ -326,8 +319,9 @@ class PlaceController extends Controller
         return $this->render('default/questDone.html.twig', [
             'done' => $done,
         ]);
-
     }
+
+
 
     /**
      * @Route("/training/{placeId}", name="training")

@@ -509,10 +509,10 @@ CREATE TABLE `infosByQuest` (
   `questId` int(11) DEFAULT NULL,
   `infosId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `quid_idx` (`questId`),
   KEY `infid_idx` (`infosId`),
+  KEY `questid_idx` (`questId`),
   CONSTRAINT `infid` FOREIGN KEY (`infosId`) REFERENCES `Infos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `quid` FOREIGN KEY (`questId`) REFERENCES `quests` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `questid` FOREIGN KEY (`questId`) REFERENCES `quests` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -690,10 +690,10 @@ CREATE TABLE `itemsByQuest` (
   `itemId` int(11) DEFAULT NULL,
   `questId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `questid_idx` (`questId`),
   KEY `itemid_idx` (`itemId`),
+  KEY `quid_idx` (`questId`),
   CONSTRAINT `iid` FOREIGN KEY (`itemId`) REFERENCES `items` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `qid` FOREIGN KEY (`questId`) REFERENCES `quests` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `quid` FOREIGN KEY (`questId`) REFERENCES `quests` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -858,7 +858,7 @@ DROP TABLE IF EXISTS `quests`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `quests` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(45) DEFAULT NULL,
   `description` text,
   `difficulty` int(11) DEFAULT NULL,
@@ -876,7 +876,7 @@ CREATE TABLE `quests` (
   KEY `place_idx` (`placeId`),
   KEY `pId_idx` (`placeId`),
   CONSTRAINT `pId` FOREIGN KEY (`placeId`) REFERENCES `places` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -885,6 +885,7 @@ CREATE TABLE `quests` (
 
 LOCK TABLES `quests` WRITE;
 /*!40000 ALTER TABLE `quests` DISABLE KEYS */;
+INSERT INTO `quests` VALUES (2,'Enquête','<p>Faire une enquête pour déterminer pourquoi plus de gibier</p>',1,100,25,100,25,0,0,0,1,'2018-04-30 11:49:51',2),(3,'Chasse aux Loups','Tracter et chasser ces loups',2,100,50,100,100,0,0,0,2,'2018-04-30 13:47:28',2),(4,'test','test',3,100,100,110,0,10,0,0,0,'2018-04-30 14:26:08',2);
 /*!40000 ALTER TABLE `quests` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -901,10 +902,10 @@ CREATE TABLE `questsByCharacter` (
   `questId` int(11) DEFAULT NULL,
   `characterId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `questID_idx` (`questId`),
   KEY `cid_idx` (`characterId`),
+  KEY `qid_idx` (`questId`),
   CONSTRAINT `cid` FOREIGN KEY (`characterId`) REFERENCES `characters` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `questID` FOREIGN KEY (`questId`) REFERENCES `quests` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `qid` FOREIGN KEY (`questId`) REFERENCES `quests` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -914,6 +915,7 @@ CREATE TABLE `questsByCharacter` (
 
 LOCK TABLES `questsByCharacter` WRITE;
 /*!40000 ALTER TABLE `questsByCharacter` DISABLE KEYS */;
+INSERT INTO `questsByCharacter` VALUES (1,0,2,27),(2,0,3,27);
 /*!40000 ALTER TABLE `questsByCharacter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1016,4 +1018,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-30 11:07:46
+-- Dump completed on 2018-04-30 16:27:55
