@@ -68,6 +68,7 @@ class Dictionary
         'Information' => 1,
         'Tutorial' => 2,
         'Information Globale' => 3,
+        'Trigger' => 4,
     );
 
     /** @var array */
@@ -75,8 +76,17 @@ class Dictionary
         1 => 'Information',
         2 => 'Tutorial',
         3 => 'Information Globale',
+        4 => 'Trigger'
     );
 
+    /** @var array */
+    private static $typeMonster = array(
+        1 => 'Agressive', //attaque à vue
+        2 => 'Inoffensive', //n'attaque jamais
+        3 => 'Defensive', //attaque si attaqué
+        4 => 'Fleeing', //fui à vue
+        5 => 'Boss',
+    );
 
 
     /**
@@ -207,6 +217,20 @@ class Dictionary
         self::$typeLabelInfo = $typeLabelInfo;
     }
 
+    /**
+     * @return array
+     */
+    public static function getTypeMonster()
+    {
+        return self::$typeMonster;
+    }
 
+    /**
+     * @param array $typeMonster
+     */
+    public static function setTypeMonster($typeMonster)
+    {
+        self::$typeMonster = $typeMonster;
+    }
 
 }
