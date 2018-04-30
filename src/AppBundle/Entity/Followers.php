@@ -17,189 +17,189 @@ class Followers
      *
      * @ORM\Column(name="name", type="string", length=50, nullable=true)
      */
-    private $name;
+    public $name;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="type", type="integer", nullable=true)
      */
-    private $type;
+    public $type;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="health", type="integer", nullable=true)
      */
-    private $health;
+    public $health;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="max_health", type="integer", nullable=true)
      */
-    private $maxHealth;
+    public $maxHealth;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="energy", type="integer", nullable=true)
      */
-    private $energy;
+    public $energy;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="max_energy", type="integer", nullable=true)
      */
-    private $maxEnergy;
+    public $maxEnergy;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="move", type="integer", nullable=true)
      */
-    private $move;
+    public $move;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="quickness", type="integer", nullable=true)
      */
-    private $quickness;
+    public $quickness;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="attack", type="integer", nullable=true)
      */
-    private $attack;
+    public $attack;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="defense", type="integer", nullable=true)
      */
-    private $defense;
+    public $defense;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="critical", type="integer", nullable=true)
      */
-    private $critical;
+    public $critical;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="level", type="integer", nullable=true)
      */
-    private $level;
+    public $level;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="xp", type="integer", nullable=true)
      */
-    private $xp;
+    public $xp;
 
     /**
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=50, nullable=true)
      */
-    private $image;
+    public $image;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="level_min", type="integer", nullable=true)
      */
-    private $levelMin;
+    public $levelMin;
 
     /**
      * @var string
      *
      * @ORM\Column(name="rate_label", type="string", length=45, nullable=true)
      */
-    private $rateLabel;
+    public $rateLabel;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="pop_rate", type="integer", nullable=true)
      */
-    private $popRate;
+    public $popRate;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="price_back", type="integer", nullable=true)
      */
-    private $priceBack;
+    public $priceBack;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="goal", type="integer", nullable=true)
      */
-    private $goal;
+    public $goal;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="unique_rate", type="integer", nullable=true)
      */
-    private $uniqueRate;
+    public $uniqueRate;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="law", type="integer", nullable=true)
      */
-    private $law;
+    public $law;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="chaos", type="integer", nullable=true)
      */
-    private $chaos;
+    public $chaos;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="good", type="integer", nullable=true)
      */
-    private $good;
+    public $good;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="evil", type="integer", nullable=true)
      */
-    private $evil;
+    public $evil;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="max_capacity_bag", type="integer", nullable=true)
      */
-    private $maxCapacityBag;
+    public $maxCapacityBag;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", length=65535, nullable=true)
      */
-    private $description;
+    public $description;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_info", type="datetime", nullable=true)
      */
-    private $dateInfo;
+    public $dateInfo;
 
     /**
      * @var integer
@@ -208,7 +208,7 @@ class Followers
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    public $id;
 
     /**
      * @return string

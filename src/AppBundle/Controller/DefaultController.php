@@ -71,12 +71,26 @@ class DefaultController extends Controller
 
             $chemin = dirname(__FILE__) . '/../../../web/Ressources/'.$value['file'];
 
-            $file = json_decode(file_get_contents($chemin));
+            if(!file_exists($chemin)){
+                echo $value['file'].' non existant/';
+                $handle = fopen($chemin, "w");
+                $file = array();
+            } else {
+                echo $value['file'].' existant/';
+
+                $file = json_decode(file_get_contents($chemin));
+                echo count($file).'/';
+            }
+
+
+
+            echo count($file).'/';
+            echo count($table).'<br/>';
 
             $messages[$x]['nbfiles'] = count($file);
             $messages[$x]['nbTables'] = count($table);
 
-            if(count($data) > 0 || !file_exists($chemin) || count($file) !== count($table) ) {
+            if(count($data) > 0 || count($file) !== count($table) ) {
 
                 $messages[$x]['result'] = 'Génération fichier '.$value['file'];
                 $results = $em->getRepository($value['table'])->findAll();
@@ -96,7 +110,9 @@ class DefaultController extends Controller
                 }
                 $content = json_encode($arr);
 
-                $handle = fopen($chemin, "w");
+                if(!$handle){
+                    $handle = fopen($chemin, "w");
+                }
                 fputs($handle, $content);
                 fclose($handle);
             } else {

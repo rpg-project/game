@@ -17,35 +17,35 @@ class Infos
      *
      * @ORM\Column(name="type", type="integer", nullable=true)
      */
-    private $type;
+    public $type;
 
     /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=45, nullable=true)
      */
-    private $title;
+    public $title;
 
     /**
      * @var string
      *
      * @ORM\Column(name="infos", type="text", length=65535, nullable=true)
      */
-    private $infos;
+    public $infos;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_info", type="datetime", nullable=true)
      */
-    private $dateInfo;
+    public $dateInfo;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="place_id", type="integer", nullable=true)
      */
-    private $placeId;
+    public $placeId;
 
     /**
      * @var integer
@@ -54,7 +54,7 @@ class Infos
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    public $id;
 
     /**
      * @return int

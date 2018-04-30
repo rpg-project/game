@@ -17,168 +17,168 @@ class Items
      *
      * @ORM\Column(name="name", type="string", length=50, nullable=true)
      */
-    private $name;
+    public $name;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="type", type="integer", nullable=true)
      */
-    private $type;
+    public $type;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="level", type="integer", nullable=true)
      */
-    private $level;
+    public $level;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="level_min", type="integer", nullable=true)
      */
-    private $levelMin;
+    public $levelMin;
 
     /**
      * @var string
      *
      * @ORM\Column(name="quality", type="string", length=45, nullable=true)
      */
-    private $quality;
+    public $quality;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="bonus_move", type="integer", nullable=true)
      */
-    private $bonusMove;
+    public $bonusMove;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="bonus_quickness", type="integer", nullable=true)
      */
-    private $bonusQuickness;
+    public $bonusQuickness;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="bonus_attack", type="integer", nullable=true)
      */
-    private $bonusAttack;
+    public $bonusAttack;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="bonus_defense", type="integer", nullable=true)
      */
-    private $bonusDefense;
+    public $bonusDefense;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="bonus_critical", type="integer", nullable=true)
      */
-    private $bonusCritical;
+    public $bonusCritical;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="bonus_health", type="integer", nullable=true)
      */
-    private $bonusHealth;
+    public $bonusHealth;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="bonus_energy", type="integer", nullable=true)
      */
-    private $bonusEnergy;
+    public $bonusEnergy;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="capacity", type="integer", nullable=true)
      */
-    private $capacity;
+    public $capacity;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="price_buy", type="integer", nullable=true)
      */
-    private $priceBuy;
+    public $priceBuy;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="price_sell", type="integer", nullable=true)
      */
-    private $priceSell;
+    public $priceSell;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="open", type="integer", nullable=true)
      */
-    private $open;
+    public $open;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="container", type="integer", nullable=true)
      */
-    private $container;
+    public $container;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="container_space", type="integer", nullable=true)
      */
-    private $containerSpace;
+    public $containerSpace;
 
     /**
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=50, nullable=true)
      */
-    private $image;
+    public $image;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="weigth", type="integer", nullable=true)
      */
-    private $weigth;
+    public $weigth;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="pop_rate", type="integer", nullable=true)
      */
-    private $popRate;
+    public $popRate;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="pop_zone", type="integer", nullable=true)
      */
-    private $popZone;
+    public $popZone;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", length=65535, nullable=true)
      */
-    private $description;
+    public $description;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_info", type="datetime", nullable=true)
      */
-    private $dateInfo;
+    public $dateInfo;
 
     /**
      * @var integer
@@ -187,7 +187,7 @@ class Items
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    public $id;
 
     /**
      * @return string

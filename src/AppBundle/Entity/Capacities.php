@@ -17,77 +17,77 @@ class Capacities
      *
      * @ORM\Column(name="name", type="string", length=45, nullable=true)
      */
-    private $name;
+    public $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", length=65535, nullable=true)
      */
-    private $description;
+    public $description;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="type", type="integer", nullable=true)
      */
-    private $type;
+    public $type;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="range", type="integer", nullable=true)
      */
-    private $range;
+    public $range;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="attack", type="integer", nullable=true)
      */
-    private $attack;
+    public $attack;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="defense", type="integer", nullable=true)
      */
-    private $defense;
+    public $defense;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="move", type="integer", nullable=true)
      */
-    private $move;
+    public $move;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="quickness", type="integer", nullable=true)
      */
-    private $quickness;
+    public $quickness;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="health", type="integer", nullable=true)
      */
-    private $health;
+    public $health;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="energy", type="integer", nullable=true)
      */
-    private $energy;
+    public $energy;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_info", type="datetime", nullable=true)
      */
-    private $dateInfo;
+    public $dateInfo;
 
     /**
      * @var integer
@@ -96,7 +96,7 @@ class Capacities
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    public $id;
 
     /**
      * @return string
