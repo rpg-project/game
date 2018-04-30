@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\Questsbycharacter" table="questsByCharacter">
+    <indexes>
+      <index name="questID_idx" columns="questId"/>
+      <index name="cid_idx" columns="characterId"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="status" type="integer" column="status" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <many-to-one field="questid" target-entity="Quests" fetch="LAZY">
+      <join-columns>
+        <join-column name="questId" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="characterid" target-entity="Characters" fetch="LAZY">
+      <join-columns>
+        <join-column name="characterId" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

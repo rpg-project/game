@@ -17,14 +17,28 @@ class Titles
      *
      * @ORM\Column(name="title", type="string", length=45, nullable=true)
      */
-    private $title;
+    public $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=45, nullable=true)
+     */
+    public $description;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_info", type="datetime", nullable=true)
+     */
+    public $dateInfo;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="number", type="integer", nullable=true)
      */
-    private $number;
+    public $number;
 
     /**
      * @var integer
@@ -33,7 +47,7 @@ class Titles
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    public $id;
 
     /**
      * @var \AppBundle\Entity\Monsters
@@ -43,7 +57,7 @@ class Titles
      *   @ORM\JoinColumn(name="monsterId", referencedColumnName="id")
      * })
      */
-    private $monsterid;
+    public $monsterid;
 
     /**
      * @return string
@@ -59,6 +73,38 @@ class Titles
     public function setTitle($title)
     {
         $this->title = $title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateInfo()
+    {
+        return $this->dateInfo;
+    }
+
+    /**
+     * @param \DateTime $dateInfo
+     */
+    public function setDateInfo($dateInfo)
+    {
+        $this->dateInfo = $dateInfo;
     }
 
     /**

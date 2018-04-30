@@ -109,6 +109,8 @@ DROP TABLE IF EXISTS `Titles`;
 CREATE TABLE `Titles` (
   `id` int(11) NOT NULL,
   `title` varchar(45) DEFAULT NULL,
+  `description` varchar(45) DEFAULT NULL,
+  `date_info` datetime DEFAULT NULL,
   `number` int(11) DEFAULT NULL,
   `monsterId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -496,6 +498,34 @@ INSERT INTO `infosByCharacter` VALUES (40,27,16);
 UNLOCK TABLES;
 
 --
+-- Table structure for table `infosByQuest`
+--
+
+DROP TABLE IF EXISTS `infosByQuest`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `infosByQuest` (
+  `id` int(11) NOT NULL,
+  `questId` int(11) DEFAULT NULL,
+  `infosId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `quid_idx` (`questId`),
+  KEY `infid_idx` (`infosId`),
+  CONSTRAINT `infid` FOREIGN KEY (`infosId`) REFERENCES `Infos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `quid` FOREIGN KEY (`questId`) REFERENCES `quests` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `infosByQuest`
+--
+
+LOCK TABLES `infosByQuest` WRITE;
+/*!40000 ALTER TABLE `infosByQuest` DISABLE KEYS */;
+/*!40000 ALTER TABLE `infosByQuest` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `items`
 --
 
@@ -649,6 +679,34 @@ INSERT INTO `itemsByFollowers` VALUES (67,0,1,0,0,'Epée',1,1,1,'C',0,0,1,0,1,0,
 UNLOCK TABLES;
 
 --
+-- Table structure for table `itemsByQuest`
+--
+
+DROP TABLE IF EXISTS `itemsByQuest`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `itemsByQuest` (
+  `id` int(11) NOT NULL,
+  `itemId` int(11) DEFAULT NULL,
+  `questId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `questid_idx` (`questId`),
+  KEY `itemid_idx` (`itemId`),
+  CONSTRAINT `iid` FOREIGN KEY (`itemId`) REFERENCES `items` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `qid` FOREIGN KEY (`questId`) REFERENCES `quests` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `itemsByQuest`
+--
+
+LOCK TABLES `itemsByQuest` WRITE;
+/*!40000 ALTER TABLE `itemsByQuest` DISABLE KEYS */;
+/*!40000 ALTER TABLE `itemsByQuest` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `map`
 --
 
@@ -793,6 +851,73 @@ INSERT INTO `placesFunction` VALUES (1,'summon',1),(2,'quest',2),(3,'training',3
 UNLOCK TABLES;
 
 --
+-- Table structure for table `quests`
+--
+
+DROP TABLE IF EXISTS `quests`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `quests` (
+  `id` int(11) NOT NULL,
+  `title` varchar(45) DEFAULT NULL,
+  `description` text,
+  `difficulty` int(11) DEFAULT NULL,
+  `glory_reward` int(11) DEFAULT NULL,
+  `gold_reward` int(11) DEFAULT NULL,
+  `xp_reward` int(11) DEFAULT NULL,
+  `bonus_law` int(11) DEFAULT NULL,
+  `bonus_chaos` int(11) DEFAULT NULL,
+  `bonus_good` int(11) DEFAULT NULL,
+  `bonus_evil` int(11) DEFAULT NULL,
+  `level_min` int(11) DEFAULT NULL,
+  `date_info` datetime DEFAULT NULL,
+  `placeId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `place_idx` (`placeId`),
+  KEY `pId_idx` (`placeId`),
+  CONSTRAINT `pId` FOREIGN KEY (`placeId`) REFERENCES `places` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `quests`
+--
+
+LOCK TABLES `quests` WRITE;
+/*!40000 ALTER TABLE `quests` DISABLE KEYS */;
+/*!40000 ALTER TABLE `quests` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `questsByCharacter`
+--
+
+DROP TABLE IF EXISTS `questsByCharacter`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `questsByCharacter` (
+  `id` int(11) NOT NULL,
+  `status` int(11) DEFAULT NULL,
+  `questId` int(11) DEFAULT NULL,
+  `characterId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `questID_idx` (`questId`),
+  KEY `cid_idx` (`characterId`),
+  CONSTRAINT `cid` FOREIGN KEY (`characterId`) REFERENCES `characters` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `questID` FOREIGN KEY (`questId`) REFERENCES `quests` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `questsByCharacter`
+--
+
+LOCK TABLES `questsByCharacter` WRITE;
+/*!40000 ALTER TABLE `questsByCharacter` DISABLE KEYS */;
+/*!40000 ALTER TABLE `questsByCharacter` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `rate`
 --
 
@@ -891,4 +1016,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-30  9:12:42
+-- Dump completed on 2018-04-30 11:07:46

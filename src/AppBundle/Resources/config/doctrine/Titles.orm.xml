@@ -12,6 +12,12 @@
         <option name="fixed"/>
       </options>
     </field>
+    <field name="description" type="string" column="description" length="45" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="dateInfo" type="datetime" column="date_info" nullable="true"/>
     <field name="number" type="integer" column="number" nullable="true">
       <options>
         <option name="unsigned"/>
