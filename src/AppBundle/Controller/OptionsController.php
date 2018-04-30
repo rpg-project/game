@@ -466,7 +466,6 @@ class OptionsController extends Controller
             $list[$follower->getId()]['avalaible'] = $this->goal($follower->getGoal());
 
             if(in_array($follower->getFollowerid(), $uniqueList, true)){
-                echo 'ici';
                 $list[$follower->getId()]['avalaible'] = false;
             }
             $x++;

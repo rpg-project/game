@@ -72,20 +72,11 @@ class DefaultController extends Controller
             $chemin = dirname(__FILE__) . '/../../../web/Ressources/'.$value['file'];
 
             if(!file_exists($chemin)){
-                echo $value['file'].' non existant/';
                 $handle = fopen($chemin, "w");
                 $file = array();
             } else {
-                echo $value['file'].' existant/';
-
                 $file = json_decode(file_get_contents($chemin));
-                echo count($file).'/';
             }
-
-
-
-            echo count($file).'/';
-            echo count($table).'<br/>';
 
             $messages[$x]['nbfiles'] = count($file);
             $messages[$x]['nbTables'] = count($table);
