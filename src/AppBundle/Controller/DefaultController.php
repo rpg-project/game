@@ -6,6 +6,7 @@ use AppBundle\Entity\Capacities;
 use AppBundle\Entity\Followers;
 use AppBundle\Entity\Infos;
 use AppBundle\Entity\Items;
+use AppBundle\Entity\Quests;
 use AppBundle\Repository\InfosRepository;
 use AppBundle\Repository\ItemsRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -55,6 +56,7 @@ class DefaultController extends Controller
             'Items' => ['table' => Items::class, 'champ'=> 'dateInfo','file'=>'items.txt'],
             'Capacities' => ['table' => Capacities::class, 'champ'=> 'dateInfo','file'=>'capacities.txt'],
             'Followers' => ['table' => Followers::class, 'champ'=> 'dateInfo','file'=>'followers.txt'],
+            'Quêtes' => ['table' => Quests::class, 'champ'=> 'dateInfo','file'=>'quests.txt'],
             ];
 
         $messages = array();
