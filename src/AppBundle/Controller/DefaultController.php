@@ -62,6 +62,8 @@ class DefaultController extends Controller
         $messages = array();
         $x=0;
 
+        $handle ="";
+
         foreach ($maj as $key => $value){
             $messages[$x]['title'] = 'Ecriture de '.$key;
 

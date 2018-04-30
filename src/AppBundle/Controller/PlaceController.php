@@ -226,7 +226,7 @@ class PlaceController extends Controller
 
         }
 
-         return $this->render('default/summon.html.twig', [
+        return $this->render('default/summon.html.twig', [
             'summonTitle' => $summonLabel,
             'summons' => $summonResult,
             'amountMoney' => $amountMoney,
@@ -241,8 +241,92 @@ class PlaceController extends Controller
      */
     public function questAction($placeId){
 
-        echo 'quêtes';
-        die;
+        $em = $this->getDoctrine()->getManager();
+
+        $session = $this->get('session');
+
+        $place = $em->getRepository('AppBundle:Quests')->findOneBy([
+            'id' => $placeId,
+        ]);
+
+        $quests = $em->getRepository('AppBundle:Quests')->findBy([
+            'placeid' => $place,
+        ]);
+
+        $character = $session->get('character');
+
+        $character = $em->getRepository("AppBundle:Characters")->find($character->getId());
+
+        $questsDone = $em->getRepository('AppBundle:Questsbycharacter')->findBy([
+            'characterid' => $character,
+        ]);
+
+        $listQuest = array();
+        echo $count = count($questsDone);
+
+
+//        var_dump($quests);
+        foreach ($quests as $quest){
+            if($quest->getDifficulty() <= $count+1){
+                $listQuest[] = $quest;
+            }
+        }
+
+        var_dump($listQuest);
+
+
+        $session->set('quests', $quests);
+
+        $functionsPlaces = $session->get('functionsPlaces');
+
+        foreach ($functionsPlaces as $function){
+            if( $function->getFunctionid()->getTypefunction() === 2){
+                $function = $function->getName();
+                break;
+            }
+        }
+
+        $session->set('function', $function);
+
+        return $this->render('default/questsList.html.twig', [
+            'quests' => $listQuest,
+            'function' => $function,
+        ]);
+    }
+
+    /**
+     * @Route("/quest/done/{id]}", name="questsDone")
+     */
+    public function questsDone($id){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $session = $this->get('session');
+
+        $character = $session->get('character');
+
+        $character = $em->getRepository("AppBundle:Characters")->find($character->getId());
+
+        $quest = $em->getRepository('AppBundle:Quests')->findOneBy([
+            'id' => $id,
+        ]);
+
+        $questDone = $em->getRepository('AppBundle:Questsbycharacter')->findBy([
+            'characterid' => $character,
+            'status' => 1,
+            'questid' => $quest,
+        ]);
+
+        $done = "todo";
+        if(!empty($questDone)){
+            $done = "cleared";
+        }
+
+
+        return $this->render('default/questDone.html.twig', [
+            'done' => $done,
+        ]);
+
     }
 
     /**
