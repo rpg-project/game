@@ -80,12 +80,39 @@ class Dictionary
     );
 
     /** @var array */
+    private static $typeLabelMonster = array(
+        'Agressive' => 1, //attaque à vue
+        'Inoffensive' => 2, //n'attaque jamais
+        'Defensive' => 3, //attaque si attaqué
+        'Fleeing' => 4, //fui à vue
+        'Boss' => 5,
+    );
+
+    /** @var array */
     private static $typeMonster = array(
         1 => 'Agressive', //attaque à vue
         2 => 'Inoffensive', //n'attaque jamais
         3 => 'Defensive', //attaque si attaqué
         4 => 'Fleeing', //fui à vue
         5 => 'Boss',
+    );
+
+    /** @var array */
+    private static $LabelDifficulties = array(
+        'Easy' => 1,
+        'Moderate' => 2,
+        'Hard' => 3,
+        'Very Hard' => 4,
+        'Impossible' => 5,
+    );
+
+    /** @var array */
+    private static $difficulties = array(
+        1 => 'Easy',
+        2 => 'Moderate',
+        3 => 'Hard',
+        4 => 'Very Hard',
+        5 => 'Impossible',
     );
 
 
@@ -231,6 +258,54 @@ class Dictionary
     public static function setTypeMonster($typeMonster)
     {
         self::$typeMonster = $typeMonster;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getTypeLabelMonster()
+    {
+        return self::$typeLabelMonster;
+    }
+
+    /**
+     * @param array $typeLabelMonster
+     */
+    public static function setTypeLabelMonster($typeLabelMonster)
+    {
+        self::$typeLabelMonster = $typeLabelMonster;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getLabelDifficulties()
+    {
+        return self::$LabelDifficulties;
+    }
+
+    /**
+     * @param array $LabelDifficulties
+     */
+    public static function setLabelDifficulties($LabelDifficulties)
+    {
+        self::$LabelDifficulties = $LabelDifficulties;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getDifficulties()
+    {
+        return self::$difficulties;
+    }
+
+    /**
+     * @param array $difficulties
+     */
+    public static function setDifficulties($difficulties)
+    {
+        self::$difficulties = $difficulties;
     }
 
 }

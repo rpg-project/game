@@ -21,6 +21,7 @@
                     {% endfor %}</td>
                 <td>{{ place.level }}</td>
                 <td><a href="{{ path('admin_places_add_info', {'id': place.id}) }}" class="btn btn-primary">Ajout Information</a></td>
+                <td><a href="{{ path('admin_places_add_quete', {'id': place.id}) }}" class="btn btn-primary">Ajout Quête</a></td>
                 <td><a href="#"  class="btn btn-warning">Ajout Fonction</a></td>
             </tr>
                 {% endfor %}
