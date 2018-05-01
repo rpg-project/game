@@ -12,8 +12,23 @@
 </head>
 <body>
 {% block body %}
+<div class="container">
+    <div class="row">
 
+        {% block team %}
+        {% endblock %}
 
+        {% block main %}
+        {% endblock %}
+
+        {% block rightbar %}
+        {% endblock %}
+
+        {% block optionsbar %}
+        {% endblock %}        
+
+    </div>
+</div>
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('roland/js/vendor/modernizr-3.5.0.min.js') }}"></script>
