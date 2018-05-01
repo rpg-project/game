@@ -1,17 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends 'default/playerPage.html.twig' %}
 
-{% block body %}
-
-    <div class="container">
-        <div class="row">
-            <h1> {{ function }} </h1>
-            <ul>
-                <li><a href="{{ path("summons", {'level' : place.level, 'placeType' : place.type, 'summonType': 1 }) }}">Invocation Simple 10 points de Gloire</a></li>
-                <li><a href="{{ path("summons", {'level' : place.level, 'placeType' : place.type, 'summonType': 10 }) }}">Multi-Invocation 100 points de Gloire</a></li>
-            </ul>
-        </div>
-
-        <a href="javascript:history.go(-1)" class="btn btn-primary">Retour</a>
-    </div>
-
+{% block main %}
+<div id="map" class="col-lg-8">
+    <h1> {{ function }} <a href="javascript:history.go(-1)" class="btn btn-primary">Retour</a></h1>
+    <ul>
+        <li><a href="{{ path("summons", {'level' : place.level, 'placeType' : place.type, 'summonType': 1 }) }}">Invocation Simple 10 points de Gloire</a></li>
+        <li><a href="{{ path("summons", {'level' : place.level, 'placeType' : place.type, 'summonType': 10 }) }}">Multi-Invocation 100 points de Gloire</a></li>
+    </ul>
+</div>
 {% endblock %}

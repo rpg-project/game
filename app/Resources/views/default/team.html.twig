@@ -1,39 +1,33 @@
-{% extends 'base.html.twig' %}
+{% extends 'default/playerPage.html.twig' %}
 
-{% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
-                <h1>Equipe</h1>
-                <table class="table">
-                    {% for key,mate in team %}
-                        {% if mate == false %}
-                            <tr>
-                                <th>Position {{ key }}</th>
-                                <td><a href="{{ path("options_team_choice", {'place' : key}) }}" class="btn btn-primary">Ajout Equipier {{ key }}</a></td>
-                            </tr>
-                        {% else  %}
+{% block main %}
+<div id="map" class="col-lg-8">
+    <div class="col-lg-6">
+    
+        <h1>Equipe <a href="{{ path('player_homepage') }}" class="btn btn-primary">Retour</a></h1>
+        <table class="table">
+            {% for key,mate in team %}
+                {% if mate == false %}
+                    <tr>
+                        <th>Position {{ key }}</th>
+                        <td><a href="{{ path("options_team_choice", {'place' : key}) }}" class="btn btn-primary">Ajout Equipier {{ key }}</a></td>
+                    </tr>
+                {% else  %}
 
-                                <tr>
-                                    <th>Position {{ key }}</th>
-                                    {% if mate.avalaible == 0 %}
-                                    <td>{{ mate.teammate.name }}</td>
-                                    <td><a href="{{ path("options_team_del", {'place' : key, 'teamMateId' : mate.teammate.id}) }}" class="btn btn-primary">Retirer</a></td>
-                                    {% else %}
-                                        <td style="color:red;">{{ mate.teammate.name }}</td>
-                                        <td><a href="{{ path("options_team_del", {'place' : key, 'teamMateId' : mate.teammate.id}) }}" class="btn btn-primary">Retirer</a></td>
-                                    {% endif %}
-                                </tr>
+                        <tr>
+                            <th>Position {{ key }}</th>
+                            {% if mate.avalaible == 0 %}
+                            <td>{{ mate.teammate.name }}</td>
+                            <td><a href="{{ path("options_team_del", {'place' : key, 'teamMateId' : mate.teammate.id}) }}" class="btn btn-primary">Retirer</a></td>
+                            {% else %}
+                                <td style="color:red;">{{ mate.teammate.name }}</td>
+                                <td><a href="{{ path("options_team_del", {'place' : key, 'teamMateId' : mate.teammate.id}) }}" class="btn btn-primary">Retirer</a></td>
+                            {% endif %}
+                        </tr>
 
-                        {% endif %}
-                    {% endfor %}
-                </table>
-            </div>
-
-        </div>
-        <div class="row">
-            <a href="{{ path('player_homepage') }}" class="btn btn-primary">Retour</a>
-        </div>
-
+                {% endif %}
+            {% endfor %}
+        </table>
     </div>
+</div>
 {% endblock%}

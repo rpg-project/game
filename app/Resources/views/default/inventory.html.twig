@@ -1,19 +1,23 @@
-{% extends 'base.html.twig' %}
+{% extends 'default/playerPage.html.twig' %}
 
-{% block body %}
-<div class="container">
+{% block main %}
+<div id="map" class="col-lg-8">
     <div class="row">
-        <h1>Inventaire {{ character.name }}</h1>
-        <div class="col-lg-4">
-            <h4>Equipé</h4>
-            <ul>
-                {% for item in listEquiped %}
-                    {% if item.contained == 0 %}
-                        <li>{{ item.name }}</li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
+        <div class="col-lg-12">
+            <h1>Inventaire {{ character.name }} <a href="{{ path('player_homepage') }}" class="btn btn-primary">Retour</a></h1>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+                <h4>Equipé</h4>
+                <ul>
+                    {% for item in listEquiped %}
+                        {% if item.contained == 0 %}
+                            <li>{{ item.name }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
         <div class="col-lg-6">
                 <h4>Contenu du sac ( {{ count }} / {{ character.maxBagCapacity }})</h4>
                 <table style="text-align:center;"><tr>
@@ -59,13 +63,10 @@
                 </ul>
             {% endfor %}
         </div>
-    </div>
+    </div> 
     <div class="row">
         {% block follower %}
         {% endblock %}
-    </div>
-    <div class="row">
-        <a href="{{ path('player_homepage') }}" class="btn btn-primary">Retour</a>
     </div>
 </div>
 {% endblock %}

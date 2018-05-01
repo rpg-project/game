@@ -1,9 +1,7 @@
-{% extends 'base.html.twig' %}
+{% extends 'default/playerPage.html.twig' %}
 
-{% block body %}
-
-<div class="container">
-    <div class="row">
+{% block main %}
+<div id="map" class="col-lg-8">
         <h1> {{ place.description }}</h1>
         <ul>
             {% for function in functions %}
@@ -14,8 +12,6 @@
         </ul>
 
         <a href="{{ path('player_homepage') }}" class="btn btn-primary">Retour</a>
-
-    </div>
 </div>
 
 {% endblock %}

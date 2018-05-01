@@ -1,25 +1,19 @@
-{% extends 'base.html.twig' %}
+{% extends 'default/playerPage.html.twig' %}
 
-{% block body %}
+{% block main %}
+<div id="map" class="col-lg-8">
+    <h1> {{ summonTitle }} <a href="javascript:history.go(-1)" class="btn btn-primary">Retour</a></h1>
+    {% if summons == null %}
+        {{ noMoney }}
+    {% else %}
+    <ul>
+        {% for summon in summons %}
+            <li>
+                {{ summon.name }}
+            </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 
-    <div class="container">
-        <div class="row">
-            <h1> {{ summonTitle }} </h1>
-            {% if summons == null %}
-                {{ noMoney }}
-            {% else %}
-            <ul>
-                {% for summon in summons %}
-                    <li>
-                        {{ summon.name }}
-                    </li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-
-        </div>
-
-        <a href="javascript:history.go(-1)" class="btn btn-primary">Retour</a>
-    </div>
-
+</div>
 {% endblock %}

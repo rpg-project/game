@@ -1,56 +1,55 @@
-{% extends 'base.html.twig' %}
+{% extends 'default/playerPage.html.twig' %}
 
-{% block body %}
-	<div class="container">
-	    <div class="row">
-	    	<div class="col-lg-10">
-	    	<h1>Bibliothèque des Suivants 
-	    	<a href="{{ path('options_list') }}" class="btn btn-primary">Retour</a>
-	    	</h1>
-	        <table class="table">
-	        	<tr>
-	        		<th>Nom du suivant</th>
-	        		<th>Rareté</th>
-	        		<th>Pré-Requis</th>
-	        	</tr>
+{% block main %}
+<div id="map" class="col-lg-8">
+    	<div class="col-lg-10">
+    	<h1>Bibliothèque des Suivants 
+    	<a href="{{ path('options_list') }}" class="btn btn-primary">Retour</a>
+    	</h1>
+        <table class="table">
+        	<tr>
+        		<th>Nom du suivant</th>
+        		<th>Rareté</th>
+        		<th>Pré-Requis</th>
+        	</tr>
 
-				{% for follower in followers %}
-					<tr>
-					<td><a href ="{{ path('stats_library', {'id' : follower.id}) }}" > {{ follower.name }}</a></td>
-					<td>{{ follower.rateLabel }}
-						{% if follower.uniqueRate == 1 %}
-						Unique
-						{% endif %}
-					</td>
-					<td>{% if follower.goal == 1 %}
-						Loi
-						{% endif %}
-						{% if follower.goal == 2 %}
-						Loi et Bien
-						{% endif %}
-						{% if follower.goal == 3 %}
-						Or
-						{% endif %}
-						{% if follower.goal == 4 %}
-						Chaos
-						{% endif %}
-						{% if follower.goal == 5 %}
-						Mal
-						{% endif %}
-					</td>
-					</tr>
-				{% endfor %}
-				
-			</table>
-		</div>
-		<div class="col-lg-2">
-			<h3>Tri</h3>
-			<ul>
-				<li><a href="{{ path('options_followers_list_order', {'order' : 'name'}) }}">Nom</a></li>
-				<li><a href="{{ path('options_followers_list_order', {'order' : 'rate'}) }}">Rareté</a></li>
-				<li><a href="{{ path('options_followers_list_order', {'order' : 'goal'}) }}">Pré-requis</a></li>
-			</ul>
-		</div>
-
+			{% for follower in followers %}
+				<tr>
+				<td><a href ="{{ path('stats_library', {'id' : follower.id}) }}" > {{ follower.name }}</a></td>
+				<td>{{ follower.rateLabel }}
+					{% if follower.uniqueRate == 1 %}
+					Unique
+					{% endif %}
+				</td>
+				<td>{% if follower.goal == 1 %}
+					Loi
+					{% endif %}
+					{% if follower.goal == 2 %}
+					Loi et Bien
+					{% endif %}
+					{% if follower.goal == 3 %}
+					Or
+					{% endif %}
+					{% if follower.goal == 4 %}
+					Chaos
+					{% endif %}
+					{% if follower.goal == 5 %}
+					Mal
+					{% endif %}
+				</td>
+				</tr>
+			{% endfor %}
+			
+		</table>
 	</div>
+	<div class="col-lg-2">
+		<h3>Tri</h3>
+		<ul>
+			<li><a href="{{ path('options_followers_list_order', {'order' : 'name'}) }}">Nom</a></li>
+			<li><a href="{{ path('options_followers_list_order', {'order' : 'rate'}) }}">Rareté</a></li>
+			<li><a href="{{ path('options_followers_list_order', {'order' : 'goal'}) }}">Pré-requis</a></li>
+		</ul>
+	</div>
+
+</div>
 {% endblock%}

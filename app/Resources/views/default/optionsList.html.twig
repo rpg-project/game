@@ -1,16 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends 'default/playerPage.html.twig' %}
 
-{% block body %}
-	<div class="container">
-	    <div class="row">
-	    	<h1>Options</h1>
-	    	<ul>
-	    		<li><a href="{{ path('options_followers_list') }}" class="btn btn-primary">Bibilothèque de personnages</a></li>
-				<li><a href="{{ path('options_delete_count') }}"  class="btn btn-danger">Suppression du compte</a></li>
-	    	</ul>
-	    </div>
-	    <div class="row">
-		    <a href="{{ path('player_homepage') }}" class="btn btn-primary">Retour</a>
-		</div>
-	</div>
+{% block main %}
+<div id="map" class="col-lg-8">
+	<h1>Options <a href="{{ path('player_homepage') }}" class="btn btn-primary">Retour</a></h1>
+	<ul>
+		<li><a href="{{ path('options_followers_list') }}" class="btn btn-primary">Bibilothèque de personnages</a></li>
+		<li><a href="{{ path('options_delete_count') }}"  class="btn btn-danger">Suppression du compte</a></li>
+	</ul>
+</div>
 {% endblock %}

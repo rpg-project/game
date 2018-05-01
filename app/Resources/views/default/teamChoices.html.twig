@@ -1,42 +1,37 @@
-{% extends 'base.html.twig' %}
+{% extends 'default/playerPage.html.twig' %}
 
-{% block body %}
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8">
-            <h1>Liste des Suivants</h1>
-            <table class="table">
-                <tr>
-                    <th>Nom du suivant</th>
-                    {% for follower in followers %}
-                <tr>
+{% block main %}
+<div id="map" class="col-lg-8">
+    <div class="col-lg-8">
+        <h1>Liste des Suivants <a href="javascript:history.go(-1)" class="btn btn-primary">Retour</a></h1>
+        <table class="table">
+            <tr>
+                <th>Nom du suivant</th>
+                {% for follower in followers %}
+            <tr>
 
-                    {% if follower.mate.teamed == 0 %}
-                        {% if follower.avalaible == true %}
-                            <td><a href ="{{ path("options_team_add", {"place": place, "followerId": follower.mate.followerId, "teamMateId" : follower.mate.id}) }}" > {{ follower.mate.name }}</a></td>
-                        {% else %}
-                            <td><a href="{{ path('stats_follower', {'id' : follower.mate.id}) }}" style="color:red;">{{ follower.mate.name }}</a></td>
-                        {% endif %}
-                        <td>{{ follower.mate.rateLabel }}</td>
-                        <td>{{ follower.mate.level }}</td>
+                {% if follower.mate.teamed == 0 %}
+                    {% if follower.avalaible == true %}
+                        <td><a href ="{{ path("options_team_add", {"place": place, "followerId": follower.mate.followerId, "teamMateId" : follower.mate.id}) }}" > {{ follower.mate.name }}</a></td>
+                    {% else %}
+                        <td><a href="{{ path('stats_follower', {'id' : follower.mate.id}) }}" style="color:red;">{{ follower.mate.name }}</a></td>
                     {% endif %}
+                    <td>{{ follower.mate.rateLabel }}</td>
+                    <td>{{ follower.mate.level }}</td>
+                {% endif %}
 
-                </tr>
-                {% endfor %}
+            </tr>
+            {% endfor %}
 
-            </table>
-        </div>
-        <div class="col-lg-2">
-            <h3>Tri</h3>
-            <ul>
-                <li><a href="{{ path('options_team_choice_order', {'order' : 'name'}) }}">Nom</a></li>
-                <li><a href="{{ path('options_team_choice_order', {'order' : 'rate'}) }}">Rareté</a></li>
-                <li><a href="{{ path('options_team_choice_order', {'order' : 'level'}) }}">Niveau</a></li>
-            </ul>
-        </div>
+        </table>
     </div>
-    <div class="row">
-        <a href="javascript:history.go(-1)" class="btn btn-primary">Retour</a>
+    <div class="col-lg-2">
+        <h3>Tri</h3>
+        <ul>
+            <li><a href="{{ path('options_team_choice_order', {'order' : 'name'}) }}">Nom</a></li>
+            <li><a href="{{ path('options_team_choice_order', {'order' : 'rate'}) }}">Rareté</a></li>
+            <li><a href="{{ path('options_team_choice_order', {'order' : 'level'}) }}">Niveau</a></li>
+        </ul>
     </div>
 </div>
 {% endblock %}

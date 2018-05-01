@@ -1,0 +1,12 @@
+{% block optionsbar %}
+    <div class="row text-center">
+       <table class="table">
+           <tr>
+               <td><a href="{{ path("options_team", {'id': character.id}) }}" class="btn btn-primary">Equipe</a></td>
+               <td><a href="{{ path("options_followers", {'id': character.id}) }}" class="btn btn-primary">Suivants</a></td>
+               <td><a href="{{ path("options_inventory", {'id': character.id}) }}" class="btn btn-primary">Inventaire</a></td>
+               <td><a href="{{ path("options_list") }}" class="btn btn-primary">Options</a></td>
+           </tr>
+       </table>
+    </div>
+{% endblock %}

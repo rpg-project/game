@@ -1,10 +1,8 @@
-{% extends 'base.html.twig' %}
+{% extends 'default/playerPage.html.twig' %}
 
-{% block body %}
-
-<div class="container">
-    <div class="row">
-        <h1>{{ function.name }}</h1>
+{% block main %}
+<div id="map" class="col-lg-8">
+        <h1>{{ function.name }} <a href="{{ path('places', {'id': function.placeid.id}) }}" class="btn btn-primary">Retour</a></h1>
         <ul>
             {% if infos != null %}
                 {% for info in infos %}
@@ -22,9 +20,5 @@
                 {% endfor %}
             </ul>
         {% endif %}
-    </div>
-    <div class="row">
-        <a href="{{ path('places', {'id': function.placeid.id}) }}" class="btn btn-primary">Retour</a>
-    </div>
 </div>
 {% endblock %}

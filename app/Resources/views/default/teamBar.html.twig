@@ -1,0 +1,42 @@
+{% block team %}
+    <div id="player" class="col-lg-2" >
+            <table class="table text-center">
+                <tr>
+                    <td colspan="2"><img src="{{ character.image }}" width=50 height="50"></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><a href="{{ path('stats_player') }}">{{ character.name }}</a></td>
+                </tr>
+                <tr>
+                    <th class="health"></th>
+                    <td>{{ character.health }} / {{ character.maxHealth }}</td>
+                </tr>
+                <tr>
+                    <th  class="gold"></th>
+                    <td>{{ character.gold }}</td>
+                </tr>
+                {% for mate in team %}
+                    {% if mate == false %}
+                        <tr>
+                            <td>vide</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="2"><img src="{{ mate.teammate.image }}" width=50 height="50"></td>
+                        </tr>
+                        <tr>
+                            {% if mate.avalaible == 0 %}
+                                <td><a href="{{ path("stats_follower", {'id' : mate.teammate.id}) }}">{{ mate.teammate.name }}</a></td>
+                            {% else %}
+                                <td><a href="{{ path("stats_follower", {'id' : mate.teammate.id}) }}" style="color:red;">{{ mate.teammate.name }}</a></td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <th class="health"></th>
+                            <td>{{ mate.teammate.health }} / {{ mate.teammate.maxHealth }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+{% endblock %}

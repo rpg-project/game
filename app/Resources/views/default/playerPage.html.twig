@@ -1,87 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-<div class="container">
-    <div class="row">
+{% block team %}
+    {{ render(controller('AppBundle\\Controller\\PlayerController::teambar')) }}
+{% endblock %}
 
-        <div id="player" class="col-lg-2" >
-            <table class="table text-center">
-                <tr>
-                    <td colspan="2"><img src="{{ character.image }}" width=50 height="50"></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><a href="{{ path('stats_player') }}">{{ character.name }}</a></td>
-                </tr>
-                <tr>
-                    <th class="health"></th>
-                    <td>{{ character.health }} / {{ character.maxHealth }}</td>
-                </tr>
-                <tr>
-                    <th  class="gold"></th>
-                    <td>{{ character.gold }}</td>
-                </tr>
-                <tr>
-                    {% for capacity in capacities %}
-                        <td><img src="{{ capacity.description }}" width=40 heigh="40"></td>
-                    {% endfor %}
-                </tr>
-                {% for mate in team %}
-                    {% if mate == false %}
-                        <tr>
-                            <td>vide</td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="2"><img src="{{ mate.teammate.image }}" width=50 height="50"></td>
-                        </tr>
-                        <tr>
-                            {% if mate.avalaible == 0 %}
-                                <td><a href="{{ path("stats_follower", {'id' : mate.teammate.id}) }}">{{ mate.teammate.name }}</a></td>
-                            {% else %}
-                                <td><a href="{{ path("stats_follower", {'id' : mate.teammate.id}) }}" style="color:red;">{{ mate.teammate.name }}</a></td>
-                            {% endif %}
-                        </tr>
-                        <tr>
-                            <th class="health"></th>
-                            <td>{{ mate.teammate.health }} / {{ mate.teammate.maxHealth }}</td>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
-            </table>
-        </div>
-        <div id="map" class="col-lg-8">
+{% block main %}
+    <div id="map" class="col-lg-8">
             <h1>{{ map.mapName }}</h1>
             {% for place in places %}
                 <a href="{{ path("places", {'id': place.id}) }}" class="btn btn-primary">{{ place.description }}</a>
             {% endfor %}
         </div>
-        <div id="stats" class="col-lg-2">
-            <table class="table text-center">
-                <tr>
-                    <td>Gloire {{ character.glory }} </td>
-                </tr>
-                <tr>
-                    <td>Loi {{ balance }} Chaos</td>
-                </tr>
-                <tr>
-                    <td>Bien {{ goodness }} Mal</td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <div class="row text-center">
-       <table class="table">
-           <tr>
-               <td><a href="{{ path("options_team", {'id': character.id}) }}" class="btn btn-primary">Equipe</a></td>
-               <td><a href="{{ path("options_followers", {'id': character.id}) }}" class="btn btn-primary">Suivants</a></td>
-               <td><a href="{{ path("options_inventory", {'id': character.id}) }}" class="btn btn-primary">Inventaire</a></td>
-               <td><a href="{{ path("options_list") }}" class="btn btn-primary">Options</a></td>
-           </tr>
-       </table>
-    </div>
+{% endblock %}
 
-</div>
+{% block rightbar %}
+    {{ render(controller('AppBundle\\Controller\\PlayerController::rightbar')) }}
+{% endblock %}
 
+{% block optionsbar %}
+    {{ render(controller('AppBundle\\Controller\\PlayerController::optionsbar')) }}
 {% endblock %}
 
 {% block stylesheets %}
