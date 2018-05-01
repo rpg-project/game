@@ -30,68 +30,6 @@ class PlayerController extends Controller
 
         $session->set('character', $character);
 
-        $capacities = $em->getRepository('AppBundle:Capacitiesbycharacter')->findBy([
-            'characterid' => $character->getId(),
-        ]);
-
-        $characterCapacities = [];
-        $x=0;
-        while(isset($capacities[$x])){
-            $characterCapacities[] = $em->getRepository('AppBundle:Capacities')->find(
-                $capacities[$x]->getCapacityid()
-            );
-            $x++;
-        }
-
-        $team = $em->getRepository('AppBundle:Team')->findBy([
-            'character' => $character,
-        ]);
-
-        $balanceTeam = 0;
-        $goodnessTeam = 0;
-        foreach($team as $mate){
-            $balanceTeam += $mate->getTeamMate()->getLaw() - $mate->getTeamMate()->getChaos();
-            $goodnessTeam += $mate->getTeamMate()->getGood() - $mate->getTeamMate()->getEvil();
-        }
-
-        $session->set('balanceTeam', $balanceTeam);
-        $session->set('goodnessTeam', $goodnessTeam);
-
-        $balance = $character->getLaw() - $character->getChaos();
-        $session->set('balance', $balance);
-        $goodness = $character->getGood() - $character->getEvil();
-        $session->set('goodness', $goodness);
-        $session->set('gold', $character->getGold());
-
-        $teamFinal = array();
-        for($i=1; $i <=5; $i++){
-            $teamFinal[$i] = false;
-        }
-        $goldMin = 0;
-        if(!empty($team)){
-            foreach ($team as $mate){
-                $place = $mate->getPlace();
-                $follower = $em->getRepository('AppBundle:Followersbycharacter')->findOneBy([
-                    'id' => $mate->getTeamMate(),
-                ]);
-                if($follower->getGoal() == 3){
-                    $goldMin += $follower->getLevel() * $follower->getFollowerid()->getLevelMin();
-                    $session->set('goldMin', $goldMin);
-                }
-                $avalaible = $this->goal($follower->getGoal());
-                if($avalaible == false){
-                    $mate->setAvalaible(1);
-                } else {
-                    $mate->setAvalaible(0);
-                }
-                $teamFinal[$place] = $mate;
-                $em->persist($mate);
-                $em->flush();
-                $balance += $follower->getLaw() - $follower->getChaos();
-                $goodness += $follower->getGood() - $follower->getEvil();
-            }
-        }
-
         $map = $em->getRepository('AppBundle:Map')->find($character->getLocation());
 
         $places = $em->getRepository('AppBundle:Placesbymap')->findBy([
@@ -110,11 +48,7 @@ class PlayerController extends Controller
         return $this->render('default/playerPage.html.twig', [
             'character' => $character,
             'map' => $map,
-            'capacities' => $characterCapacities,
             'places' => $placesByMap,
-            'team' => $teamFinal,
-            'balance' => $balance,
-            'goodness' => $goodness,
         ]);
     }
 
@@ -178,4 +112,114 @@ class PlayerController extends Controller
 
         return $available;
     }
+
+    /**
+     * affiche la bar des options
+     */
+    public function optionsbar()
+    {
+        $session = $this->get('session');
+
+        $character = $session->get('character');
+
+        return $this->render('default/optionsBar.html.twig', [
+            'character' => $character,
+            
+        ]);
+    }
+
+    /**
+     * affiche la bar à droite
+     */
+    public function rightbar()
+    {
+        $session = $this->get('session');
+
+        $character = $session->get('character');
+
+        $balance = $session->get('balance');
+        $goodness = $session->get('goodness');
+
+        return $this->render('default/rightBar.html.twig', [
+            'character' => $character,
+            'balance' => $balance,
+            'goodness' => $goodness,
+        ]);
+    }
+
+    /**
+     * affiche la bar de l'équipe
+     */
+    public function teambar()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $session = $this->get('session');
+
+        $character = $session->get('character');
+
+        $team = $em->getRepository('AppBundle:Team')->findBy([
+            'character' => $character,
+        ]);
+
+        $balanceTeam = 0;
+        $goodnessTeam = 0;
+        foreach($team as $mate){
+            $balanceTeam += $mate->getTeamMate()->getLaw() - $mate->getTeamMate()->getChaos();
+            $goodnessTeam += $mate->getTeamMate()->getGood() - $mate->getTeamMate()->getEvil();
+        }
+
+        $session->set('balanceTeam', $balanceTeam);
+        $session->set('goodnessTeam', $goodnessTeam);
+
+        $balance = $character->getLaw() - $character->getChaos();
+        $session->set('balance', $balance);
+        $goodness = $character->getGood() - $character->getEvil();
+        $session->set('goodness', $goodness);
+        $session->set('gold', $character->getGold());
+
+        $teamFinal = array();
+        for($i=1; $i <=5; $i++){
+            $teamFinal[$i] = false;
+        }
+        $goldMin = 0;
+        if(!empty($team)){
+            foreach ($team as $mate){
+                $place = $mate->getPlace();
+                $follower = $em->getRepository('AppBundle:Followersbycharacter')->findOneBy([
+                    'id' => $mate->getTeamMate(),
+                ]);
+                if($follower->getGoal() == 3){
+                    $goldMin += $follower->getLevel() * $follower->getFollowerid()->getLevelMin();
+                    $session->set('goldMin', $goldMin);
+                }
+                $avalaible = $this->goal($follower->getGoal());
+                if($avalaible == false){
+                    $mate->setAvalaible(1);
+                } else {
+                    $mate->setAvalaible(0);
+                }
+                $teamFinal[$place] = $mate;
+                $em->persist($mate);
+                $em->flush();
+                $balance += $follower->getLaw() - $follower->getChaos();
+                $goodness += $follower->getGood() - $follower->getEvil();
+            }
+        }
+
+        $session->set('balance', $balance);
+        $session->set('goodness', $goodness);
+
+        return $this->render('default/teamBar.html.twig', [
+            'character' => $character,
+            //'map' => $map,
+            //'capacities' => $characterCapacities,
+            //'places' => $placesByMap,
+            'team' => $teamFinal,
+            'balance' => $balance,
+            'goodness' => $goodness,
+        ]);
+
+    }
+
 }
