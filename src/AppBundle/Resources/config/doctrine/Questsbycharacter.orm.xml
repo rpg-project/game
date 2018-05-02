@@ -8,7 +8,12 @@
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="status" type="integer" column="status" nullable="true">
+    <field name="placeid" type="integer" column="placeId" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="difficulty" type="integer" column="difficulty" nullable="false">
       <options>
         <option name="unsigned"/>
       </options>

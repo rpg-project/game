@@ -18,7 +18,17 @@
         <option name="fixed"/>
       </options>
     </field>
-    <field name="difficulty" type="integer" column="difficulty" nullable="true">
+    <field name="chapter" type="integer" column="chapter" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="difficultyMax" type="integer" column="difficulty_max" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="difficultyMin" type="integer" column="difficulty_min" nullable="false">
       <options>
         <option name="unsigned"/>
       </options>
