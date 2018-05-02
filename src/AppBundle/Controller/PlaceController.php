@@ -245,7 +245,7 @@ class PlaceController extends Controller
 
         $session = $this->get('session');
 
-        $place = $em->getRepository('AppBundle:Quests')->findOneBy([
+        $place = $em->getRepository('AppBundle:Places')->findOneBy([
             'id' => $placeId,
         ]);
 
@@ -259,12 +259,13 @@ class PlaceController extends Controller
 
         $questsDone = $em->getRepository('AppBundle:Questsbycharacter')->findBy([
             'characterid' => $character,
+            'placeid' => $placeId,
         ]);
 
         $listQuest = array();
         $count = count($questsDone);
         foreach ($quests as $quest){
-            if($quest->getDifficulty() <= $count+1){
+            if($quest->getChapter() <= $count+1){
                 $listQuest[] = $quest;
             }
         }
@@ -282,16 +283,20 @@ class PlaceController extends Controller
 
         $session->set('function', $function);
 
+        $dico = new Dictionary();
+
         return $this->render('default/questsList.html.twig', [
             'quests' => $listQuest,
             'function' => $function,
+            'dico' => $dico,
+            'character' => $character,
         ]);
     }
 
     /**
-     * @Route("/quest/done/{id]}", name="questsDone")
+     * @Route("/quest/done/{id]/{difficulty}}", name="questsDone")
      */
-    public function questsDone($id){
+    public function questsDone($id, $difficulty){
 
         $em = $this->getDoctrine()->getManager();
 
@@ -308,13 +313,13 @@ class PlaceController extends Controller
         $questDone = $em->getRepository('AppBundle:Questsbycharacter')->findBy([
             'characterid' => $character,
             'questid' => $quest,
+            'difficulty' => $difficulty,
         ]);
 
-        $done = "todo";
+        $done = "btn-primary";
         if(!empty($questDone)){
-            $done = "cleared";
+            $done = "btn-success";
         }
-
 
         return $this->render('default/questDone.html.twig', [
             'done' => $done,

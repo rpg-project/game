@@ -28,6 +28,18 @@ class QuestController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        $quests = $em->getRepository('AppBundle:Quests')->findBy([
+            'placeid' => $id,
+            ]);
+
+        $countQuests = count($quests);
+
+        $newChapter = 1;
+        if($countQuests >= 1){
+            $newChapter = $quests[$countQuests-1]->getChapter()+1;    
+        } 
+        
+
         $entity = new Quests();
 
         $dictionary = new Dictionary();
@@ -36,8 +48,12 @@ class QuestController extends Controller
 
         $formBuilder
             ->add('title', TextType::class)
+            ->add('chapter', TextType::class, array('data' => $newChapter))
             ->add('description', TextareaType::class)
-            ->add('difficulty', ChoiceType::class, array(
+            ->add('difficulty_Min', ChoiceType::class, array(
+                'choices' => $dictionary->getLabelDifficulties(),
+            ))
+            ->add('difficulty_Max', ChoiceType::class, array(
                 'choices' => $dictionary->getLabelDifficulties(),
             ))
             ->add('gloryReward', TextType::class)
