@@ -29,9 +29,23 @@ class Quests
     /**
      * @var integer
      *
-     * @ORM\Column(name="difficulty", type="integer", nullable=true)
+     * @ORM\Column(name="chapter", type="integer", nullable=true)
      */
-    public $difficulty;
+    public $chapter;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="difficulty_max", type="integer", nullable=true)
+     */
+    public $difficultyMax;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="difficulty_min", type="integer", nullable=true)
+     */
+    public $difficultyMin;
 
     /**
      * @var integer
@@ -150,17 +164,49 @@ class Quests
     /**
      * @return int
      */
-    public function getDifficulty()
+    public function getChapter()
     {
-        return $this->difficulty;
+        return $this->chapter;
     }
 
     /**
-     * @param int $difficulty
+     * @param int $chapter
      */
-    public function setDifficulty($difficulty)
+    public function setChapter($chapter)
     {
-        $this->difficulty = $difficulty;
+        $this->chapter = $chapter;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDifficultyMax()
+    {
+        return $this->difficultyMax;
+    }
+
+    /**
+     * @param int $difficultyMax
+     */
+    public function setDifficultyMax($difficultyMax)
+    {
+        $this->difficultyMax = $difficultyMax;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDifficultyMin()
+    {
+        return $this->difficultyMin;
+    }
+
+    /**
+     * @param int $difficultyMin
+     */
+    public function setDifficultyMin($difficultyMin)
+    {
+        $this->difficultyMin = $difficultyMin;
     }
 
     /**

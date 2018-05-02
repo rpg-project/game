@@ -12,12 +12,20 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Questsbycharacter
 {
+
     /**
      * @var integer
      *
-     * @ORM\Column(name="status", type="integer", nullable=true)
+     * @ORM\Column(name="difficulty", type="integer", nullable=true)
      */
-    private $status;
+    private $difficulty;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="placeId", type="integer", nullable=true)
+     */
+    private $placeid;
 
     /**
      * @var integer
@@ -51,17 +59,33 @@ class Questsbycharacter
     /**
      * @return int
      */
-    public function getStatus()
+    public function getDifficulty()
     {
-        return $this->status;
+        return $this->difficulty;
     }
 
     /**
-     * @param int $status
+     * @param int $difficulty
      */
-    public function setStatus($status)
+    public function setDifficulty($difficulty)
     {
-        $this->status = $status;
+        $this->difficulty = $difficulty;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPlaceid()
+    {
+        return $this->placeid;
+    }
+
+    /**
+     * @param int $placeid
+     */
+    public function setPlaceid($placeid)
+    {
+        $this->placeid = $placeid;
     }
 
     /**
