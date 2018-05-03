@@ -2,7 +2,7 @@
     <div id="player" class="col-lg-2" >
             <table class="table text-center">
                 <tr>
-                    <td colspan="2"><img src="{{ character.image }}" width=50 height="50"></td>
+                    <td colspan="2"><img src="{{ asset(null) }}{{ character.image }}" width=50 height="50"></td>
                 </tr>
                 <tr>
                     <td colspan="2"><a href="{{ path('stats_player') }}">{{ character.name }}</a></td>
@@ -22,7 +22,7 @@
                         </tr>
                     {% else %}
                         <tr>
-                            <td colspan="2"><img src="{{ mate.teammate.image }}" width=50 height="50"></td>
+                            <td colspan="2"><img src="{{ asset(null) }}{{ mate.teammate.image }}" width=50 height="50"></td>
                         </tr>
                         <tr>
                             {% if mate.avalaible == 0 %}

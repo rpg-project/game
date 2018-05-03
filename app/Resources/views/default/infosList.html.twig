@@ -6,7 +6,7 @@
         <ul>
             {% if infos != null %}
                 {% for info in infos %}
-                    <li><img src="/images/info{{ info.type }}.png" width="40"> <a href="{{ path('info_read', {'id': info.id, 'placeId' : function.placeid.id}) }}">{{ info.title }}</a></li>
+                    <li><img src="{{ asset(null) }}images/info{{ info.type }}.png" width="40"> <a href="{{ path('info_read', {'id': info.id, 'placeId' : function.placeid.id}) }}">{{ info.title }}</a></li>
                 {% endfor %}
             {% else %}
                 <p>Pas de nouvelles {{ function.name }}</p>
@@ -16,7 +16,7 @@
             <h4>{{ function.name }} lu(e)s</h4>
             <ul>
                 {% for info in infosRead %}
-                    <li><img src="/images/info{{ info.type }}.png" width="40"> <a href="{{ path('info_read', {'id': info.id, 'placeId' : function.placeid.id}) }}">{{ info.title }}</a></li>
+                    <li><img src="{{ asset(null) }}images/info{{ info.type }}.png" width="40"> <a href="{{ path('info_read', {'id': info.id, 'placeId' : function.placeid.id}) }}">{{ info.title }}</a></li>
                 {% endfor %}
             </ul>
         {% endif %}
