@@ -212,27 +212,12 @@ class FollowerController extends Controller
         $chosenItem->setEquiped(0);
         $chosenItem->setFollowersid($follower);
 
-        $em = $this->getDoctrine()->getManager();
         $em->persist($chosenItem);
         $em->flush();
 
-        $chosenListItem = $em->getRepository('AppBundle:FollowersItems')->findBy([
-            'followersid'=> $follower->getId(),
-        ]);
-
-        $chosenList = array();
-        foreach ($chosenListItem as $item){
-            $chosenList[] = $em->getRepository('AppBundle:Items')->findOneBy([
-                'id' => $item->getItemid(),
+        return $this->redirectToRoute('admin_follower_show', [
+            'id' => $follower->getId(),
             ]);
-        }
-
-        return $this->render('default/stats.html.twig', array(
-            'stats' => $follower,
-            'admin' => true,
-            'items' => $items,
-            'chosen' => $chosenList,
-        ));
 
     }
 
@@ -253,7 +238,7 @@ class FollowerController extends Controller
             'id' => $id,
         ]);
 
-        $itemFollower =  $em->getRepository('AppBundle:FollowersItems')->findOneBy([
+        $itemFollower =  $em->getRepository('AppBundle:Followersitems')->findOneBy([
             'itemid'=> $item,
             'followersid' => $follower,
         ]);
@@ -261,23 +246,9 @@ class FollowerController extends Controller
         $em->remove($itemFollower);
         $em->flush();
 
-        $chosenListItem = $em->getRepository('AppBundle:FollowersItems')->findBy([
-            'followersid'=> $follower,
-        ]);
-
-        $chosenList = array();
-        foreach ($chosenListItem as $item){
-            $chosenList[] = $em->getRepository('AppBundle:Items')->findOneBy([
-                'id' => $item->getItemid(),
+        return $this->redirectToRoute('admin_follower_show', [
+            'id' => $follower->getId(),
             ]);
-        }
-
-        return $this->render('default/stats.html.twig', array(
-            'stats' => $follower,
-            'admin' => true,
-            'items' => $items,
-            'chosen' => $chosenList,
-        ));
     }
 
     /**
