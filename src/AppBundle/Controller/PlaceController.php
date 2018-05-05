@@ -294,7 +294,7 @@ class PlaceController extends Controller
     }
 
     /**
-     * @Route("/quest/done/{id]/{difficulty}}", name="questsDone")
+     * @Route("/quest/done/{id}/{difficulty}", name="questsDone")
      */
     public function questsDone($id, $difficulty){
 
@@ -323,6 +323,24 @@ class PlaceController extends Controller
 
         return $this->render('default/questDone.html.twig', [
             'done' => $done,
+        ]);
+    }
+
+    /**
+     * @Route("/quest/running/{id}", name="running_quest")
+     */
+    public function runningQuest($id){
+
+        $chemin = dirname(__FILE__).'/../../../web/Ressources/quest'.$id.'.txt';
+
+        $map = "";
+        if(file_exists($chemin)){
+            $file = json_decode(file_get_contents($chemin));
+            $map = $file[0];
+        }
+
+        return $this->render('default/map.html.twig', [
+            'map' => $map,
         ]);
     }
 
@@ -652,64 +670,7 @@ class PlaceController extends Controller
 
     }
 
-    /**
-     * @Route("/admin/places/addinfo/{id}", name="admin_places_add_info")
-     */
-    public function placesAddInfoAction(Request $request, $id){
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = new Infos();
-
-        $dictionary = new Dictionary();
-
-        $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $entity);
-
-        $formBuilder
-            ->add('type', ChoiceType::class, array(
-                'choices' => $dictionary->getTypeLabelInfo(),
-            ))
-            ->add('title', TextType::class)
-            ->add('infos', TextareaType::class)
-            ->add('save', SubmitType::class, array('attr'=> array('class' => "btn btn-primary")));
-
-        $entity->setPlaceId($id);
-
-        $form = $formBuilder->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('admin_information_show', array('id' => $entity->getId())));
-        }
-
-        return $this->render('default/newInformation.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
-    }
-
-    /**
-     * @Route("/admin/places/informationShow/{id}", name="admin_information_show")
-     */
-    public function infoShowAction($id){
-        $em = $this->getDoctrine()->getManager();
-
-        $info = $em->getRepository('AppBundle:Infos')->findOneBy([
-            'id' => $id,
-        ]);
-
-        $dictionary = new Dictionary();
-
-        return $this->render('default/showInformation.html.twig', array(
-            'info' => $info,
-            'placeId' => null,
-            'dico' => $dictionary->getTypeLabelInfo(),
-        ));
-    }
+    
 
     /**
      * @param $placeId

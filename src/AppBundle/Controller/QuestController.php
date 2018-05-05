@@ -81,7 +81,7 @@ class QuestController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_quest_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('admin_places_quest_show', array('id' => $entity->getId())));
         }
 
         return $this->render('default/newQuest.html.twig', array(
@@ -93,7 +93,7 @@ class QuestController extends Controller
 
     /**
     * Show a quest entity.
-    * @Route("/admin/quest/show/{id}", name="admin_quest_show")
+    * @Route("/admin/places/quest/show/{id}", name="admin_places_quest_show")
     *
     */
     public function questShow($id)
@@ -110,6 +110,24 @@ class QuestController extends Controller
             'dico' => $dictionary,
         ));
 
+    }
+
+    /**
+     * @Route("/admin/places/quest/list/{id}", name="admin_places_list_quests")
+     */
+    public function placesListQuestsAction($id){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $quests = $em->getRepository('AppBundle:Quests')->findBy([
+            'placeid'=> $id,
+            ]);
+
+        return $this->render('default/listQuests.html.twig', array(
+            'quests' => $quests,
+            'placeId' => $id,
+            //'dico' => $dictionary->getTypeLabelInfo(),
+        ));
     }
 
 
