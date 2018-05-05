@@ -115,6 +115,16 @@ class Dictionary
         5 => 'Impossible',
     );
 
+    /** @var array */
+    private static $LabelDecoration = array(
+        'none' => null,
+        'arbre' => 'arbre.jpg',
+        'chemin' => 'chemin.jpg',
+        'herbe' => 'herbe.png',
+        'arbre sombre' => 'arbre_sombre.png',
+        'chemin noir' => 'chemin_noir.png',
+    );
+
 
     /**
      * @return array
@@ -306,6 +316,22 @@ class Dictionary
     public static function setDifficulties($difficulties)
     {
         self::$difficulties = $difficulties;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getLabelDecoration()
+    {
+        return self::$LabelDecoration;
+    }
+
+    /**
+     * @param array $LabelDecoration
+     */
+    public static function setLabelDecoration($LabelDecoration)
+    {
+        self::$LabelDecoration = $LabelDecoration;
     }
 
 }
