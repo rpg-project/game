@@ -1,0 +1,17 @@
+{% extends 'default/playerPage.html.twig' %}
+
+{% block main %}
+<div id="map" class="col-lg-8">
+	<h1><a href="javascript:history.go(-1)" class="btn btn-primary">Retour</a></h1>
+	<table id="zone" style="border:1px solid black;">
+		{% for lines in map %}
+		<tr>
+			{% for col in lines %}
+				<td style="height:40px;width:40px;background-image:url({{asset(null)}}images/{{col.0}});background-repeat:none;background-size:contain;" ></td>
+			{% endfor %}
+		</tr>
+		{% endfor %}
+		
+	</table>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'default/cell.html.twig' %}
+
+{% block cell %}
+	<h1>cellule </h1>
+	{{ form_start(form) }}
+	<div class="row">	
+		{{ form_label(form.x, "x") }}
+		{{ form_widget(form.x) }}
+	</div>
+	<div class="row">
+		
+		{{ form_label(form.y, "y") }}
+		{{ form_widget(form.y) }}
+	</div>
+	<div class="row">
+		{{ form_label(form.decoration, "Décor") }}
+		{{ form_widget(form.decoration) }}
+		{% for key,image in dico %}
+			{% if image is not null %}
+				<a class="decoration" href="#" title="{{ image }}"><img src="{{asset(null)}}/images/{{image}}" width='40' height='40'></a>
+			{% endif %}
+		{% endfor %}
+	</div>
+	<div class="row">
+		{{ form_label(form.monster, "Monstre") }}
+		{{ form_widget(form.monster) }}
+		{% for monster in monsters %}
+				<a class="monster" href="#" title="{{ monster.description }}"><img src="{{asset(null)}}{{monster.description}}" width='40' height='40'></a>
+		{% endfor %}
+	</div>
+	<div class="row">
+		{{ form_label(form.trigger, "Trigger") }}
+		{{ form_widget(form.trigger) }}
+	</div>
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

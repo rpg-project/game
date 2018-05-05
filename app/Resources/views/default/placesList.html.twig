@@ -9,7 +9,9 @@
                 <th>Nom</th>
                 <th>Type</th>
                 <th>Niveau</th>
-                <th colspan="2"></th>
+                <th colspan="2" class="text-center">Informations</th>
+                <th colspan="2" class="text-center">Quetes</th>
+                <th colspan="2" class="text-center">Fonctions</th>
             </tr>
             {% for place in places %}
             <tr>
@@ -20,8 +22,12 @@
                         {% endif %}
                     {% endfor %}</td>
                 <td>{{ place.level }}</td>
+                <td><a href="{{ path('admin_places_list_info', {'id' : place.id}) }}" class="btn btn-primary">Liste des Information</a></td>
                 <td><a href="{{ path('admin_places_add_info', {'id': place.id}) }}" class="btn btn-primary">Ajout Information</a></td>
+                <td><a href="{{ path('admin_places_list_quests', {'id' : place.id}) }}" class="btn btn-primary">Liste des Quête</a></td>
+                
                 <td><a href="{{ path('admin_places_add_quete', {'id': place.id}) }}" class="btn btn-primary">Ajout Quête</a></td>
+                <td><a href="#" class="btn btn-primary">Liste des Fonctions</a></td>
                 <td><a href="#"  class="btn btn-warning">Ajout Fonction</a></td>
             </tr>
                 {% endfor %}

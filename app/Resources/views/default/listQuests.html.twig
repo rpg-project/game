@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+<div class="container">
+    <div class="row">
+    	<h1>Liste des Quetes</h1>
+    	<ul>
+    	{% for quest in quests %}
+    		<li><a href= "{{ path('admin_places_quest_show', {'id' : quest.id}) }}">{{ quest.title }}</a></li>
+    	{% endfor %}
+    	</ul>
+    </div>
+</div>
+{% endblock %}

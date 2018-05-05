@@ -11,7 +11,7 @@
                     	
                 		{% for key,label in dico.difficulties %}
                 			{% if key == i %}
-                				<a href="#" class="btn {% block done %}{{ render(controller(
+                				<a href="{{ path('running_quest', {'id': quest.id})}}" class="btn {% block done %}{{ render(controller(
                 'AppBundle\\Controller\\PlaceController::questsDone', {'id' : quest.id, 'difficulty' : i })) }}{% endblock %}">{{ label }} </a>
                 			{% endif %}
             			{% endfor %}

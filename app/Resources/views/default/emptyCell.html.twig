@@ -1,0 +1,17 @@
+{% extends 'default/cell.html.twig' %}
+
+{% block cell %}
+	<h1>cellule </h1>
+	{{ form_start(form) }}
+	<div class="row">
+		{{ form_label(form.decoration, "Décor") }}
+		{{ form_widget(form.decoration) }}
+		{% for key,image in dico %}
+			{% if image is not null %}
+				<a class="decoration" href="#" title="{{ image }}"><img src="{{asset(null)}}/images/{{image}}" width='40' height='40'></a>
+			{% endif %}
+		{% endfor %}
+	</div>
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+<div class="container">
+    <div class="row">
+    	<h1>Liste des informations</h1>
+    	<ul>
+    	{% for info in infos %}
+    		<li><a href= "{{ path('admin_places_information_show', {'id' : info.id}) }}">{{ info.title }}</a></li>
+    	{% endfor %}
+    	</ul>
+    </div>
+</div>
+{% endblock %}

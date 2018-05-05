@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+<div class="container">
+	<div class="row">
+		<h1>Carte</h1>
+		<div class="col-lg-6">			
+			<table class="text-center">
+			{% for a,line in map %}
+				<tr>
+					{% for b,col in line %}
+						
+						{% if col is null %}
+							<td style='border:1px solid black;' width='40' height='40'>
+								<a href = "{{ path('admin_map_cell', {'x' : a, 'y' : b}) }}">Case Vide</a>
+							</td>
+						{% else %}
+							{% if col.decoration is null %}
+								<td style='border:1px solid black;' width='40' height='40'>
+							{% else %}
+								<td style='border:1px solid black;background-image:url({{asset(null)}}images/{{col.decoration}});background-repeat:none;background-size:contain;' width='40' height='40'>
+							{% endif %}
+								{% if col.monster == '0' %}
+									<a href="{{ path('admin_map_cell', {'x' : a, 'y' : b}) }}"	trigger="{{ col.trigger }}" class="btn btn-primary;display:none;"></a></td>									
+								{% else %}
+									<a href="{{ path('admin_map_cell', {'x' : a, 'y' : b}) }}"	trigger="{{ col.trigger }}"><img src="{{asset(null)}}{{col.monster}}" width='40' height='40'></a></td>
+								{% endif %}
+						{% endif %}
+						
+					{% endfor %}
+				</tr>
+			{% endfor %}
+			</table>
+
+			<a href="{{ path('admin_map_empty_cell') }}" class="btn btn-primary">Remplissage Case Vide</a> 	
+			<a href="{{ path('admin_map_empty') }}" class="btn btn-primary">Vider les cases</a>
+			<a href="#" class="btn btn-warning">Générer map</a> 		
+		</div>
+		<div class="col-lg-6">
+			{% block cell %}
+			{% endblock %}
+		</div>
+	</div>
+</div>
+{% endblock %}
