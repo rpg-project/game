@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mer 02 Mai 2018 à 11:06
+-- Généré le :  Mar 08 Mai 2018 à 10:28
 -- Version du serveur :  5.5.43-0ubuntu0.14.10.1
 -- Version de PHP :  5.5.12-2ubuntu4.4
 
@@ -144,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `characters` (
 
 INSERT INTO `characters` (`id`, `name`, `gold`, `health`, `max_health`, `stamina`, `max_stamina`, `energy`, `max_energy`, `move`, `quickness`, `attack`, `defense`, `critical`, `level`, `xp`, `image`, `location`, `repop_location`, `glory`, `faith`, `craft_skill`, `law`, `chaos`, `good`, `evil`, `war_rank`, `arena_rank`, `box_size`, `max_box_size`, `last_login`, `userId`, `title`, `max_bag_capacity`) VALUES
 (24, 'hhh', 0, 5, 5, 5, 5, 5, 5, 3, 3, 3, 3, 1, 1, 0, '/images/tete.jpg', 1, 1, 310, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, NULL, 1, 1, 10),
-(27, 'ddddddddd', 30, 5, 5, 5, 5, 5, 5, 3, 3, 3, 3, 1, 2, 0, '/images/tete.jpg', 1, 1, 360, 0, 0, 0, 0, 0, 5, 0, 0, 33, 10, NULL, 2, 1, 10);
+(27, 'ddddddddd', 30, 5, 5, 5, 5, 5, 5, 3, 3, 3, 3, 1, 2, 0, '/images/tete.jpg', 1, 1, 360, 0, 0, 0, 0, 0, 5, 0, 0, 0, 10, NULL, 2, 1, 10);
 
 -- --------------------------------------------------------
 
@@ -216,7 +216,7 @@ CREATE TABLE IF NOT EXISTS `followers` (
   `max_capacity_bag` int(11) DEFAULT NULL,
   `description` text COLLATE utf8_unicode_ci,
   `date_info` datetime DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=13 ;
 
 --
 -- Contenu de la table `followers`
@@ -234,8 +234,7 @@ INSERT INTO `followers` (`id`, `name`, `type`, `health`, `max_health`, `energy`,
 (9, 'Aventurer', 1, 3, 3, 3, 3, 3, 3, 3, 3, 0, 1, 0, ' ', 1, 'R', 50, 3, 0, 0, 0, 0, 0, 0, 10, NULL, '2018-04-26 14:59:06'),
 (10, 'Thief', 1, 3, 3, 3, 3, 3, 3, 2, 4, 0, 1, 0, '/images/thief.jog', 1, 'R', 20, 3, 4, 0, 0, 10, 0, 0, 10, NULL, '2018-04-26 14:59:06'),
 (11, 'Mage', 1, 3, 3, 3, 3, 3, 3, 4, 2, 0, 1, 0, '/images/mage.jpg', 1, 'R', 15, 3, 0, 0, 0, 0, 0, 0, 10, NULL, '2018-04-26 14:59:07'),
-(12, 'Priest', 1, 3, 3, 3, 3, 3, 3, 3, 3, 0, 1, 0, ' ', 1, 'R', 15, 3, 0, 0, 0, 0, 0, 0, 10, NULL, '2018-04-26 14:59:07'),
-(13, 'Ghaalmaraz', 1, 5, 5, 5, 5, 3, 2, 5, 2, 1, 1, 0, '1', 1, 'SSR', 5, 5, 0, 1, 0, 0, 0, 0, NULL, NULL, '2018-04-27 11:41:01');
+(12, 'Priest', 1, 3, 3, 3, 3, 3, 3, 3, 3, 0, 1, 0, ' ', 1, 'R', 15, 3, 0, 0, 0, 0, 0, 0, 10, NULL, '2018-04-26 14:59:07');
 
 -- --------------------------------------------------------
 
@@ -272,34 +271,7 @@ CREATE TABLE IF NOT EXISTS `followersByCharacter` (
   `evil` int(11) DEFAULT NULL,
   `max_capacity_bag` int(11) DEFAULT NULL,
   `description` text COLLATE utf8_unicode_ci
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=213 ;
-
---
--- Contenu de la table `followersByCharacter`
---
-
-INSERT INTO `followersByCharacter` (`id`, `teamed`, `name`, `type`, `health`, `max_health`, `energy`, `max_energy`, `move`, `quickness`, `attack`, `defense`, `critical`, `level`, `xp`, `image`, `goal`, `rate_label`, `unique_rate`, `price_back`, `followerId`, `characterId`, `law`, `chaos`, `good`, `evil`, `max_capacity_bag`, `description`) VALUES
-(192, 0, 'Merc', 1, 3, 3, 3, 3, 3, 3, 4, 3, 0, 1, 0, '/images/merc.jpg', 3, 'R', 0, 3, 8, 27, 0, 0, 0, 0, 10, NULL),
-(193, 0, 'Aventurer', 1, 3, 3, 3, 3, 3, 3, 3, 3, 0, 1, 0, ' ', 0, 'R', 0, 3, 9, 27, 0, 0, 0, 0, 10, NULL),
-(194, 0, 'Aventurer', 1, 3, 3, 3, 3, 3, 3, 3, 3, 0, 1, 0, ' ', 0, 'R', 0, 3, 9, 27, 0, 0, 0, 0, 10, NULL),
-(195, 0, 'Sonia La Rousse', 1, 5, 5, 5, 5, 3, 3, 3, 3, 0, 1, 0, '/images/sonia.jpg', 0, 'SR', 1, 4, 2, 27, 0, 0, 0, 0, 10, NULL),
-(196, 0, 'Aventurer', 1, 3, 3, 3, 3, 3, 3, 3, 3, 0, 1, 0, ' ', 0, 'R', 0, 3, 9, 27, 0, 0, 0, 0, 10, NULL),
-(197, 0, 'Aventurer', 1, 3, 3, 3, 3, 3, 3, 3, 3, 0, 1, 0, ' ', 0, 'R', 0, 3, 9, 27, 0, 0, 0, 0, 10, NULL),
-(198, 0, 'Conan', 1, 5, 5, 5, 5, 3, 3, 4, 2, 0, 1, 0, '/images/conan.jpg', 0, 'SR', 1, 4, 1, 27, 0, 0, 0, 0, 10, NULL),
-(199, 0, 'Merc', 1, 3, 3, 3, 3, 3, 3, 4, 3, 0, 1, 0, '/images/merc.jpg', 3, 'R', 0, 3, 8, 27, 0, 0, 0, 0, 10, NULL),
-(200, 0, 'Mage', 1, 3, 3, 3, 3, 3, 3, 4, 2, 0, 1, 0, '/images/mage.jpg', 0, 'R', 0, 3, 11, 27, 0, 0, 0, 0, 10, NULL),
-(201, 0, 'Thief', 1, 3, 3, 3, 3, 3, 3, 2, 4, 0, 1, 0, '/images/thief.jog', 4, 'R', 0, 3, 10, 27, 0, 10, 0, 0, 10, NULL),
-(202, 0, 'Thief', 1, 3, 3, 3, 3, 3, 3, 2, 4, 0, 1, 0, '/images/thief.jog', 4, 'R', 0, 3, 10, 27, 0, 10, 0, 0, 10, NULL),
-(203, 0, 'Aventurer', 1, 3, 3, 3, 3, 3, 3, 3, 3, 0, 1, 0, ' ', 0, 'R', 0, 3, 9, 27, 0, 0, 0, 0, 10, NULL),
-(204, 0, 'Thief', 1, 3, 3, 3, 3, 3, 3, 2, 4, 0, 1, 0, '/images/thief.jog', 4, 'R', 0, 3, 10, 27, 0, 10, 0, 0, 10, NULL),
-(205, 0, 'Merc', 1, 3, 3, 3, 3, 3, 3, 4, 3, 0, 1, 0, '/images/merc.jpg', 3, 'R', 0, 3, 8, 27, 0, 0, 0, 0, 10, NULL),
-(206, 0, 'Aventurer', 1, 3, 3, 3, 3, 3, 3, 3, 3, 0, 1, 0, ' ', 0, 'R', 0, 3, 9, 27, 0, 0, 0, 0, 10, NULL),
-(207, 0, 'Aventurer', 1, 3, 3, 3, 3, 3, 3, 3, 3, 0, 1, 0, ' ', 0, 'R', 0, 3, 9, 27, 0, 0, 0, 0, 10, NULL),
-(208, 0, 'Ghaalmaraz', 1, 5, 5, 5, 5, 3, 2, 5, 2, 1, 1, 0, '1', 0, 'SSR', 1, 5, 13, 27, 0, 0, 0, 0, NULL, NULL),
-(209, 0, 'Ghaalmaraz', 1, 5, 5, 5, 5, 3, 2, 5, 2, 1, 1, 0, '1', 0, 'SSR', 1, 5, 13, 27, 0, 0, 0, 0, NULL, NULL),
-(210, 0, 'Merc', 1, 3, 3, 3, 3, 3, 3, 4, 3, 0, 1, 0, '/images/merc.jpg', 3, 'R', 0, 3, 8, 27, 0, 0, 0, 0, 10, NULL),
-(211, 0, 'Ghaalmaraz', 1, 5, 5, 5, 5, 3, 2, 5, 2, 1, 1, 0, '1', 0, 'SSR', 1, 5, 13, 27, 0, 0, 0, 0, NULL, NULL),
-(212, 0, 'Merc', 1, 3, 3, 3, 3, 3, 3, 4, 3, 0, 1, 0, '/images/merc.jpg', 3, 'R', 0, 3, 8, 27, 0, 0, 0, 0, 10, NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -312,39 +284,18 @@ CREATE TABLE IF NOT EXISTS `FollowersItems` (
   `ItemId` int(11) DEFAULT NULL,
   `FollowersId` int(11) DEFAULT NULL,
   `Equiped` int(11) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=76 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=163 ;
 
 --
 -- Contenu de la table `FollowersItems`
 --
 
 INSERT INTO `FollowersItems` (`id`, `ItemId`, `FollowersId`, `Equiped`) VALUES
-(47, 2, 2, 0),
-(48, 9, 3, 0),
-(49, 2, 3, 0),
-(50, 2, 4, 0),
-(52, 7, 4, 0),
-(53, 8, 4, 0),
-(54, 6, 4, 0),
-(55, 5, 4, 0),
-(56, 2, 5, 0),
-(57, 3, 5, 0),
-(58, 6, 5, 0),
-(59, 9, 5, 0),
-(60, 2, 7, 0),
-(61, 5, 7, 0),
-(62, 7, 7, 0),
-(63, 8, 7, 0),
-(64, 6, 6, 0),
-(65, 2, 8, 0),
-(66, 4, 8, 0),
-(67, 2, 9, 0),
-(68, 4, 10, 0),
-(69, 4, 10, 0),
-(70, 4, 11, 0),
-(71, 2, 12, 0),
-(74, 9, 4, 0),
-(75, 1, 1, 0);
+(158, 1, 12, 0),
+(159, 2, 12, 0),
+(160, 3, 12, 0),
+(161, 4, 12, 0),
+(162, 5, 12, 0);
 
 -- --------------------------------------------------------
 
@@ -389,18 +340,27 @@ CREATE TABLE IF NOT EXISTS `Infos` (
   `infos` text,
   `date_info` datetime DEFAULT NULL,
   `place_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=39 ;
 
 --
 -- Contenu de la table `Infos`
 --
 
 INSERT INTO `Infos` (`id`, `type`, `title`, `infos`, `date_info`, `place_id`) VALUES
-(12, 1, 'Le shérif te recherche !', '<p>Pas de panique gamin !!\r \r Rien de grave, il veut juste te demander un service.\r</p><p>\rPour savoir ce qu''il veut, retrouve le juste au <a href="/place/2">poste de garde</a></p>', '2018-04-25 14:33:58', 1),
+(12, 1, 'Le shérif te recherche !', '<p>Pas de panique gamin !!  Rien de grave, il veut juste te demander un service.</p><p>Pour savoir ce qu''il veut, retrouve le juste au <a href="/place/2">poste de garde</a></p>', '2018-04-25 14:33:58', 1),
 (13, 1, 'Un mal couve...', 'Depuis plusieurs mois, le gibier manque. Les chasseurs ont du mal à trouver ne serait-ce qu''un lapin.\r\n\r\nD''autres ont carrément peur d''aller en forêt. Il paraîtrait que certains chasseurs ne sont jamais revenus...', '2018-04-25 14:33:58', 1),
 (14, 1, 'Le paladin', 'Tu n''as pas intérêt à sortir du droit chemin, gamin. \r\n\r\nSinon tu vas attirer l''attention du Paladin. Et même s''il ne sert que le bien et la justice, ce n''est pas un tendre. Alors gare à toi !!', '2018-04-25 14:33:58', 2),
 (15, 1, 'Routes non commerciales', 'Les routes commerciales ne sont plus sûres.\r\n\r\nLes patrouilleurs ruraux ne font plus leur travail et nos convois de marchandises sont souvent attaquées par des brigands.\r\n\r\nMais que fait le roi Olric !!\r\n\r\nDonc on engage de plus en plus une escorte pour atteindre notre destination sain et sauf.', '2018-04-25 14:33:58', 3),
-(16, 2, 'Tutorial Taverne', '<p>Salut gamin, bienvenue dans ma taverne.</p><p>Tu veux boire un coup ?</p><p>Il y a beaucoup de passage ici. Des aventuriers que tu peux recruter si tu es assez connu ou si tu as de l''or.</p><p>Tu peux aussi glaner quelques rumeurs car les gens parlent toujours au barman.</p><p>Certaines personnes embauchent des aventuriers pour effectuer des tâches qu''ils ne peuvent pas faire. Hésite pas à lire le tableau des embauches.</p><p>J''ai des chambres. Si tu ne trouves pas où loger ou si tu veux te reposer, c''est l''endroit parfait. C''est sûr et pas trop cher.Alors je te sers quoi gamin ?</p>', '2018-04-25 14:33:58', 1);
+(16, 1, 'Tutorial Taverne', '<p>Salut gamin, bienvenue dans ma taverne.</p><p>Tu veux boire un coup ?</p><p>Il y a beaucoup de passage ici. Des aventuriers que tu peux recruter si tu es assez connu ou si tu as de l''or.</p><p>Tu peux aussi glaner quelques rumeurs car les gens parlent toujours au barman.</p><p>Certaines personnes embauchent des aventuriers pour effectuer des tâches qu''ils ne peuvent pas faire. Hésite pas à lire le tableau des embauches.</p><p>J''ai des chambres. Si tu ne trouves pas où loger ou si tu veux te reposer, c''est l''endroit parfait. C''est sûr et pas trop cher.Alors je te sers quoi gamin ?</p>', '2018-04-25 14:33:58', 1),
+(24, 4, 'Passage vers Map 13', '<a href=''http://localhost/game-rpg/web/app_dev.php/admin/info/triggers/../../../quest/running/2/13'' class=''btn btn-primary''>Passage</a>', '2018-05-08 07:52:47', 2),
+(25, 4, 'Passage vers Map 14', '<a href=''http://localhost/game-rpg/web/app_dev.php/admin/info/triggers/../../../quest/running/2/14'' class=''btn btn-primary''>Passage</a>', '2018-05-08 07:52:47', 2),
+(26, 4, 'Entrée Forêt Mysétrieuse', 'Tu entres dans la Forêt Mystérieuse armé de ton arc. Quels mystères te réserve-t-elle ?', '2018-05-08 08:00:21', 2),
+(27, 4, 'Hurlement', 'Un hurlement de Loup retentit. Tu sens tes genoux défaillir.', '2018-05-08 08:06:14', 2),
+(28, 4, 'Un Loup !!', 'Un loup devant toi !! Il lève sa gueule et commence à grogner. Tu y vois le sang de sa dernière victime : un lapin. Va-t-il passer à un gibier plus gros ?', '2018-05-08 08:06:14', 2),
+(29, 4, 'Des traces de biche', 'Tu avances sur le sentier quand tu repères des traces de biche qui vont sur le sentier de droite.', '2018-05-08 08:06:14', 2),
+(30, 4, 'Souche de bucheron', 'Une souche de bucheron. Il y a même encore une hachette de bucheron. Tu peux même récupérer des branches afin d''en faire des flèches une fois de retour au village.', '2018-05-08 08:06:14', 2),
+(33, 4, 'Une Hutte dans la Forêt', 'La hutte sur laquelle tu viens de tomber est habitée par la druidesse', '2018-05-08 10:03:43', 2),
+(38, 4, 'Une terreur sans nom !!', 'Arrivé au bout du sentier, tu sens une présence derrière toi. Tu te retournes et tu vois la silhouette d''une créature géante. Tu ne vois que ces yeux jaunes et tu prends alors tes jambes à ton cou pour fuir le plus vite possible, en espérant qu''elle ne te poursuivra pas...', '2018-05-08 10:26:03', 2);
 
 -- --------------------------------------------------------
 
@@ -412,14 +372,15 @@ CREATE TABLE IF NOT EXISTS `infosByCharacter` (
 `id` int(11) NOT NULL,
   `characterId` int(11) DEFAULT NULL,
   `infoId` int(11) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=41 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=42 ;
 
 --
 -- Contenu de la table `infosByCharacter`
 --
 
 INSERT INTO `infosByCharacter` (`id`, `characterId`, `infoId`) VALUES
-(40, 27, 16);
+(40, 27, 16),
+(41, 27, 24);
 
 -- --------------------------------------------------------
 
@@ -551,39 +512,7 @@ CREATE TABLE IF NOT EXISTS `itemsByFollowers` (
   `followerId` int(11) DEFAULT NULL,
   `characterId` int(11) DEFAULT NULL,
   `description` text
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=93 ;
-
---
--- Contenu de la table `itemsByFollowers`
---
-
-INSERT INTO `itemsByFollowers` (`id`, `equiped`, `contained`, `container_space`, `containerId`, `name`, `type`, `level_min`, `level`, `quality`, `bonus_move`, `bonus_quickness`, `bonus_attack`, `bonus_defense`, `bonus_critical`, `bonus_health`, `bonus_energy`, `capacity`, `price_buy`, `price_sell`, `image`, `open`, `weigth`, `itemId`, `followerId`, `characterId`, `description`) VALUES
-(67, 0, 1, 0, 0, 'Epée', 1, 1, 1, 'C', 0, 0, 1, 0, 1, 0, 0, 1, 0, 75, '/images/sword.jpg', 0, 1, 2, 192, 27, NULL),
-(68, 0, 1, 0, 0, 'Dague', 1, 1, 1, 'C', 0, 0, 1, 0, 2, 0, 0, 1, 0, 65, '/images/dague.jpg', 0, 1, 4, 192, 27, NULL),
-(69, 0, 1, 0, 0, 'Epée', 1, 1, 1, 'C', 0, 0, 1, 0, 1, 0, 0, 1, 0, 75, '/images/sword.jpg', 0, 1, 2, 193, 27, NULL),
-(70, 0, 1, 0, 0, 'Epée', 1, 1, 1, 'C', 0, 0, 1, 0, 1, 0, 0, 1, 0, 75, '/images/sword.jpg', 0, 1, 2, 194, 27, NULL),
-(71, 0, 1, 0, 0, 'Epée', 1, 1, 1, 'C', 0, 0, 1, 0, 1, 0, 0, 1, 0, 75, '/images/sword.jpg', 0, 1, 2, 195, 27, NULL),
-(72, 0, 1, 0, 0, 'Epée', 1, 1, 1, 'C', 0, 0, 1, 0, 1, 0, 0, 1, 0, 75, '/images/sword.jpg', 0, 1, 2, 196, 27, NULL),
-(73, 0, 1, 0, 0, 'Epée', 1, 1, 1, 'C', 0, 0, 1, 0, 1, 0, 0, 1, 0, 75, '/images/sword.jpg', 0, 1, 2, 197, 27, NULL),
-(74, 0, 1, 0, 0, 'Hache', 1, 1, 1, 'C', 0, 0, 1, 0, 1, 0, 0, 1, 0, 75, '/images/hache.png', 0, 1, 1, 198, 27, NULL),
-(75, 0, 1, 0, 0, 'Epée', 1, 1, 1, 'C', 0, 0, 1, 0, 1, 0, 0, 1, 0, 75, '/images/sword.jpg', 0, 1, 2, 199, 27, NULL),
-(76, 0, 1, 0, 0, 'Dague', 1, 1, 1, 'C', 0, 0, 1, 0, 2, 0, 0, 1, 0, 65, '/images/dague.jpg', 0, 1, 4, 199, 27, NULL),
-(77, 0, 1, 0, 0, 'Dague', 1, 1, 1, 'C', 0, 0, 1, 0, 2, 0, 0, 1, 0, 65, '/images/dague.jpg', 0, 1, 4, 200, 27, NULL),
-(78, 0, 1, 0, 0, 'Dague', 1, 1, 1, 'C', 0, 0, 1, 0, 2, 0, 0, 1, 0, 65, '/images/dague.jpg', 0, 1, 4, 201, 27, NULL),
-(79, 0, 1, 0, 0, 'Dague', 1, 1, 1, 'C', 0, 0, 1, 0, 2, 0, 0, 1, 0, 65, '/images/dague.jpg', 0, 1, 4, 201, 27, NULL),
-(80, 0, 1, 0, 0, 'Dague', 1, 1, 1, 'C', 0, 0, 1, 0, 2, 0, 0, 1, 0, 65, '/images/dague.jpg', 0, 1, 4, 202, 27, NULL),
-(81, 0, 1, 0, 0, 'Dague', 1, 1, 1, 'C', 0, 0, 1, 0, 2, 0, 0, 1, 0, 65, '/images/dague.jpg', 0, 1, 4, 202, 27, NULL),
-(82, 0, 1, 0, 0, 'Epée', 1, 1, 1, 'C', 0, 0, 1, 0, 1, 0, 0, 1, 0, 75, '/images/sword.jpg', 0, 1, 2, 203, 27, NULL),
-(83, 0, 1, 0, 0, 'Dague', 1, 1, 1, 'C', 0, 0, 1, 0, 2, 0, 0, 1, 0, 65, '/images/dague.jpg', 0, 1, 4, 204, 27, NULL),
-(84, 0, 1, 0, 0, 'Dague', 1, 1, 1, 'C', 0, 0, 1, 0, 2, 0, 0, 1, 0, 65, '/images/dague.jpg', 0, 1, 4, 204, 27, NULL),
-(85, 0, 1, 0, 0, 'Epée', 1, 1, 1, 'C', 0, 0, 1, 0, 1, 0, 0, 1, 0, 75, '/images/sword.jpg', 0, 1, 2, 205, 27, NULL),
-(86, 0, 1, 0, 0, 'Dague', 1, 1, 1, 'C', 0, 0, 1, 0, 2, 0, 0, 1, 0, 65, '/images/dague.jpg', 0, 1, 4, 205, 27, NULL),
-(87, 0, 1, 0, 0, 'Epée', 1, 1, 1, 'C', 0, 0, 1, 0, 1, 0, 0, 1, 0, 75, '/images/sword.jpg', 0, 1, 2, 206, 27, NULL),
-(88, 0, 1, 0, 0, 'Epée', 1, 1, 1, 'C', 0, 0, 1, 0, 1, 0, 0, 1, 0, 75, '/images/sword.jpg', 0, 1, 2, 207, 27, NULL),
-(89, 0, 1, 0, 0, 'Epée', 1, 1, 1, 'C', 0, 0, 1, 0, 1, 0, 0, 1, 0, 75, '/images/sword.jpg', 0, 1, 2, 210, 27, NULL),
-(90, 0, 1, 0, 0, 'Dague', 1, 1, 1, 'C', 0, 0, 1, 0, 2, 0, 0, 1, 0, 65, '/images/dague.jpg', 0, 1, 4, 210, 27, NULL),
-(91, 0, 1, 0, 0, 'Epée', 1, 1, 1, 'C', 0, 0, 1, 0, 1, 0, 0, 1, 0, 75, '/images/sword.jpg', 0, 1, 2, 212, 27, NULL),
-(92, 0, 1, 0, 0, 'Dague', 1, 1, 1, 'C', 0, 0, 1, 0, 2, 0, 0, 1, 0, 65, '/images/dague.jpg', 0, 1, 4, 212, 27, NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -617,19 +546,25 @@ CREATE TABLE IF NOT EXISTS `KillingBoard` (
 --
 
 CREATE TABLE IF NOT EXISTS `map` (
-  `id` int(11) NOT NULL,
+`id` int(11) NOT NULL,
   `map_name` varchar(50) DEFAULT NULL,
-  `type` varchar(45) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
   `width` varchar(45) DEFAULT NULL,
-  `height` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `height` varchar(45) DEFAULT NULL,
+  `map_content` text NOT NULL,
+  `key_id` int(11) NOT NULL,
+  `date_info` datetime DEFAULT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 --
 -- Contenu de la table `map`
 --
 
-INSERT INTO `map` (`id`, `map_name`, `type`, `width`, `height`) VALUES
-(1, 'starting ground', 'Town', NULL, NULL);
+INSERT INTO `map` (`id`, `map_name`, `type`, `width`, `height`, `map_content`, `key_id`, `date_info`) VALUES
+(1, 'starting ground', 1, NULL, NULL, '', 0, '0000-00-00 00:00:00'),
+(12, 'Forêt Mystérieuse', 2, '11', '10', '{"0":{"0":{"x":0,"y":0,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"1":{"x":0,"y":1,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"2":{"x":0,"y":2,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"3":{"x":0,"y":3,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"4":{"x":0,"y":4,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"5":{"x":"0","y":"5","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":25},"6":{"x":0,"y":6,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"7":{"x":0,"y":7,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"8":{"x":0,"y":8,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"9":{"x":0,"y":9,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"10":{"x":0,"y":10,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0}},"1":{"0":{"x":1,"y":0,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"1":{"x":"1","y":"1","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":30},"2":{"x":"1","y":"2","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":0},"3":{"x":1,"y":3,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"4":{"x":"1","y":"4","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":0},"5":{"x":"1","y":"5","decoration":"chemin.jpg","obstacle":"0","monster":"\\/images\\/biche.jpg","trigger":0},"6":{"x":1,"y":6,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"7":{"x":1,"y":7,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"8":{"x":1,"y":8,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"9":{"x":1,"y":9,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"10":{"x":1,"y":10,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0}},"2":{"0":{"x":2,"y":0,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"1":{"x":2,"y":1,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"2":{"x":"2","y":"2","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":0},"3":{"x":2,"y":3,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"4":{"x":"2","y":"4","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":0},"5":{"x":2,"y":5,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"6":{"x":2,"y":6,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"7":{"x":2,"y":7,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"8":{"x":2,"y":8,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"9":{"x":2,"y":9,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"10":{"x":2,"y":10,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0}},"3":{"0":{"x":3,"y":0,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"1":{"x":3,"y":1,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"2":{"x":"3","y":"2","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":29},"3":{"x":"3","y":"3","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":0},"4":{"x":"3","y":"4","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":0},"5":{"x":3,"y":5,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"6":{"x":3,"y":6,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"7":{"x":3,"y":7,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"8":{"x":3,"y":8,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"9":{"x":3,"y":9,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"10":{"x":3,"y":10,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0}},"4":{"0":{"x":4,"y":0,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"1":{"x":4,"y":1,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"2":{"x":"4","y":"2","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":0},"3":{"x":4,"y":3,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"4":{"x":4,"y":4,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"5":{"x":4,"y":5,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"6":{"x":4,"y":6,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"7":{"x":4,"y":7,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"8":{"x":4,"y":8,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"9":{"x":"4","y":"9","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":33},"10":{"x":4,"y":10,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0}},"5":{"0":{"x":5,"y":0,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"1":{"x":5,"y":1,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"2":{"x":"5","y":"2","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":0},"3":{"x":5,"y":3,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"4":{"x":5,"y":4,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"5":{"x":5,"y":5,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"6":{"x":5,"y":6,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"7":{"x":5,"y":7,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"8":{"x":5,"y":8,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"9":{"x":"5","y":"9","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":0},"10":{"x":5,"y":10,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0}},"6":{"0":{"x":6,"y":0,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"1":{"x":6,"y":1,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"2":{"x":"6","y":"2","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":0},"3":{"x":"6","y":"3","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":0},"4":{"x":"6","y":"4","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":0},"5":{"x":"6","y":"5","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":27},"6":{"x":"6","y":"6","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":0},"7":{"x":"6","y":"7","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":28},"8":{"x":"6","y":"8","decoration":"chemin.jpg","obstacle":"0","monster":"\\/images\\/wolf.jpg","trigger":0},"9":{"x":"6","y":"9","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":0},"10":{"x":"6","y":"10","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":24}},"7":{"0":{"x":7,"y":0,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"1":{"x":7,"y":1,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"2":{"x":7,"y":2,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"3":{"x":7,"y":3,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"4":{"x":7,"y":4,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"5":{"x":"7","y":"5","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":0},"6":{"x":7,"y":6,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"7":{"x":7,"y":7,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"8":{"x":7,"y":8,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"9":{"x":7,"y":9,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"10":{"x":7,"y":10,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0}},"8":{"0":{"x":8,"y":0,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"1":{"x":8,"y":1,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"2":{"x":8,"y":2,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"3":{"x":8,"y":3,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"4":{"x":8,"y":4,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"5":{"x":"8","y":"5","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":26},"6":{"x":8,"y":6,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"7":{"x":8,"y":7,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"8":{"x":8,"y":8,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"9":{"x":8,"y":9,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"10":{"x":8,"y":10,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0}},"9":{"0":{"x":"9","y":"0","decoration":"herbe.png","obstacle":"0","monster":"0","trigger":0},"1":{"x":"9","y":"1","decoration":"herbe.png","obstacle":"0","monster":"0","trigger":0},"2":{"x":"9","y":"2","decoration":"herbe.png","obstacle":"0","monster":"0","trigger":0},"3":{"x":"9","y":"3","decoration":"herbe.png","obstacle":"0","monster":"0","trigger":0},"4":{"x":"9","y":"4","decoration":"herbe.png","obstacle":"0","monster":"0","trigger":0},"5":{"x":"9","y":"5","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":1},"6":{"x":"9","y":"6","decoration":"herbe.png","obstacle":"0","monster":"0","trigger":0},"7":{"x":"9","y":"7","decoration":"herbe.png","obstacle":"0","monster":"0","trigger":0},"8":{"x":"9","y":"8","decoration":"herbe.png","obstacle":"0","monster":"0","trigger":0},"9":{"x":"9","y":"9","decoration":"herbe.png","obstacle":"0","monster":"0","trigger":0},"10":{"x":"9","y":"10","decoration":"herbe.png","obstacle":"0","monster":"0","trigger":0}}}', 2, '2018-05-08 10:04:43'),
+(13, 'Forêt Mystérieuse - part 2', 2, '5', '4', '{"0":{"0":{"x":0,"y":0,"decoration":"arbre_sombre.png","obstacle":"1","monster":0,"trigger":0},"1":{"x":0,"y":1,"decoration":"arbre_sombre.png","obstacle":"1","monster":0,"trigger":0},"2":{"x":0,"y":2,"decoration":"arbre_sombre.png","obstacle":"1","monster":0,"trigger":0},"3":{"x":"0","y":"3","decoration":"chemin_noir.png","obstacle":"0","monster":"0","trigger":38},"4":{"x":0,"y":4,"decoration":"arbre_sombre.png","obstacle":"1","monster":0,"trigger":0}},"1":{"0":{"x":1,"y":0,"decoration":"arbre_sombre.png","obstacle":"1","monster":0,"trigger":0},"1":{"x":1,"y":1,"decoration":"arbre_sombre.png","obstacle":"1","monster":0,"trigger":0},"2":{"x":1,"y":2,"decoration":"arbre_sombre.png","obstacle":"1","monster":0,"trigger":0},"3":{"x":"1","y":"3","decoration":"chemin_noir.png","obstacle":"0","monster":"0","trigger":0},"4":{"x":1,"y":4,"decoration":"arbre_sombre.png","obstacle":"1","monster":0,"trigger":0}},"2":{"0":{"x":"2","y":"0","decoration":"chemin_noir.png","obstacle":"0","monster":"0","trigger":1},"1":{"x":"2","y":"1","decoration":"chemin_noir.png","obstacle":"0","monster":"0","trigger":0},"2":{"x":"2","y":"2","decoration":"chemin_noir.png","obstacle":"0","monster":"0","trigger":0},"3":{"x":"2","y":"3","decoration":"chemin_noir.png","obstacle":"0","monster":"0","trigger":0},"4":{"x":2,"y":4,"decoration":"arbre_sombre.png","obstacle":"1","monster":0,"trigger":0}},"3":{"0":{"x":3,"y":0,"decoration":"arbre_sombre.png","obstacle":"1","monster":0,"trigger":0},"1":{"x":3,"y":1,"decoration":"arbre_sombre.png","obstacle":"1","monster":0,"trigger":0},"2":{"x":3,"y":2,"decoration":"arbre_sombre.png","obstacle":"1","monster":0,"trigger":0},"3":{"x":3,"y":3,"decoration":"arbre_sombre.png","obstacle":"1","monster":0,"trigger":0},"4":{"x":3,"y":4,"decoration":"arbre_sombre.png","obstacle":"1","monster":0,"trigger":0}}}', 2, '2018-05-08 10:26:25'),
+(14, 'Forêt Mystérieuse - part 3', 2, '7', '8', '{"0":{"0":{"x":0,"y":0,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"1":{"x":0,"y":1,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"2":{"x":0,"y":2,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"3":{"x":0,"y":3,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"4":{"x":0,"y":4,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"5":{"x":0,"y":5,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"6":{"x":0,"y":6,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0}},"1":{"0":{"x":1,"y":0,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"1":{"x":"1","y":"1","decoration":"herbe.png","obstacle":"0","monster":"0","trigger":0},"2":{"x":"1","y":"2","decoration":"herbe.png","obstacle":"0","monster":"\\/images\\/biche.jpg","trigger":0},"3":{"x":"1","y":"3","decoration":"herbe.png","obstacle":"0","monster":"\\/images\\/cerf.png","trigger":0},"4":{"x":"1","y":"4","decoration":"herbe.png","obstacle":"0","monster":"0","trigger":0},"5":{"x":1,"y":5,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"6":{"x":1,"y":6,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0}},"2":{"0":{"x":2,"y":0,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"1":{"x":"2","y":"1","decoration":"herbe.png","obstacle":"0","monster":"0","trigger":0},"2":{"x":"2","y":"2","decoration":"herbe.png","obstacle":"0","monster":"0","trigger":0},"3":{"x":"2","y":"3","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":0},"4":{"x":"2","y":"4","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":0},"5":{"x":"2","y":"5","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":0},"6":{"x":"2","y":"6","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":0}},"3":{"0":{"x":3,"y":0,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"1":{"x":3,"y":1,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"2":{"x":"3","y":"2","decoration":"herbe.png","obstacle":"0","monster":"0","trigger":0},"3":{"x":"3","y":"3","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":0},"4":{"x":"3","y":"4","decoration":"herbe.png","obstacle":"0","monster":"0","trigger":0},"5":{"x":3,"y":5,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"6":{"x":3,"y":6,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0}},"4":{"0":{"x":4,"y":0,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"1":{"x":4,"y":1,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"2":{"x":4,"y":2,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"3":{"x":"4","y":"3","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":0},"4":{"x":4,"y":4,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"5":{"x":4,"y":5,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"6":{"x":4,"y":6,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0}},"5":{"0":{"x":5,"y":0,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"1":{"x":5,"y":1,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"2":{"x":5,"y":2,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"3":{"x":"5","y":"3","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":0},"4":{"x":5,"y":4,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"5":{"x":5,"y":5,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"6":{"x":5,"y":6,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0}},"6":{"0":{"x":6,"y":0,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"1":{"x":6,"y":1,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"2":{"x":6,"y":2,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"3":{"x":"6","y":"3","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":0},"4":{"x":6,"y":4,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"5":{"x":6,"y":5,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"6":{"x":6,"y":6,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0}},"7":{"0":{"x":7,"y":0,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"1":{"x":7,"y":1,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"2":{"x":7,"y":2,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"3":{"x":"7","y":"3","decoration":"chemin.jpg","obstacle":"0","monster":"0","trigger":1},"4":{"x":7,"y":4,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"5":{"x":7,"y":5,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0},"6":{"x":7,"y":6,"decoration":"arbre.jpg","obstacle":"1","monster":0,"trigger":0}}}', 2, '2018-05-07 16:29:23');
 
 -- --------------------------------------------------------
 
@@ -653,7 +588,16 @@ CREATE TABLE IF NOT EXISTS `monsters` (
   `date_info` datetime DEFAULT NULL,
   `kill` int(11) DEFAULT NULL,
   `kill_title` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Contenu de la table `monsters`
+--
+
+INSERT INTO `monsters` (`id`, `name`, `type`, `health`, `energy`, `move`, `quickness`, `attack`, `defense`, `critical`, `level`, `description`, `date_info`, `kill`, `kill_title`) VALUES
+(1, 'Loup', 1, 5, 5, 6, 3, 4, 2, 1, 1, '/images/wolf.jpg', NULL, 0, 0),
+(3, 'Biche', 4, 1, 1, 6, 4, 1, 1, 0, 1, '/images/biche.jpg', NULL, 0, 0),
+(4, 'Cerf', 3, 5, 5, 6, 4, 4, 2, 1, 1, '/images/cerf.png', NULL, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -745,19 +689,21 @@ CREATE TABLE IF NOT EXISTS `quests` (
   `bonus_good` int(11) DEFAULT NULL,
   `bonus_evil` int(11) DEFAULT NULL,
   `level_min` int(11) DEFAULT NULL,
+  `starting_zone` int(11) NOT NULL,
   `date_info` datetime DEFAULT NULL,
   `placeId` int(11) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Contenu de la table `quests`
 --
 
-INSERT INTO `quests` (`id`, `title`, `description`, `chapter`, `difficulty_max`, `difficulty_min`, `glory_reward`, `gold_reward`, `xp_reward`, `bonus_law`, `bonus_chaos`, `bonus_good`, `bonus_evil`, `level_min`, `date_info`, `placeId`) VALUES
-(2, 'Enquête', '<p>Faire une enquête pour déterminer pourquoi plus de gibier</p>', 1, 1, 1, 100, 25, 100, 25, 0, 0, 0, 1, '2018-04-30 11:49:51', 2),
-(3, 'Chasse aux Loups', 'Tracter et chasser ces loups', 2, 3, 1, 100, 50, 100, 100, 0, 0, 0, 1, '2018-04-30 13:47:28', 2),
-(4, 'test', 'test', 3, 3, 1, 100, 100, 110, 0, 10, 0, 0, 1, '2018-04-30 14:26:08', 2),
-(5, 'test', 'test', 1, 1, 1, 100, 25, 100, 0, 0, 0, 0, 1, '2018-05-02 10:58:29', 1);
+INSERT INTO `quests` (`id`, `title`, `description`, `chapter`, `difficulty_max`, `difficulty_min`, `glory_reward`, `gold_reward`, `xp_reward`, `bonus_law`, `bonus_chaos`, `bonus_good`, `bonus_evil`, `level_min`, `starting_zone`, `date_info`, `placeId`) VALUES
+(2, 'Enquête', '<p>Faire une enquête pour déterminer pourquoi plus de gibier</p>', 1, 1, 1, 100, 25, 100, 25, 0, 0, 0, 1, 12, '2018-04-30 11:49:51', 2),
+(3, 'Chasse aux Loups', 'Tracter et chasser ces loups', 2, 3, 1, 100, 50, 100, 100, 0, 0, 0, 1, 0, '2018-04-30 13:47:28', 2),
+(4, 'test', 'test', 3, 3, 1, 100, 100, 110, 0, 10, 0, 0, 1, 0, '2018-04-30 14:26:08', 2),
+(5, 'test', 'test', 1, 1, 1, 100, 25, 100, 0, 0, 0, 0, 1, 0, '2018-05-02 10:58:29', 1),
+(6, 'test 2', 'dfsdf', 2, 3, 1, 100, 100, 100, 0, 0, 0, 0, 1, 0, '2018-05-02 11:28:09', 1);
 
 -- --------------------------------------------------------
 
@@ -818,7 +764,7 @@ CREATE TABLE IF NOT EXISTS `team` (
   `avalaible` int(11) DEFAULT NULL,
   `team_mate_id` int(11) DEFAULT NULL,
   `character_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=99 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1077,17 +1023,17 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 -- AUTO_INCREMENT pour la table `followers`
 --
 ALTER TABLE `followers`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT pour la table `followersByCharacter`
 --
 ALTER TABLE `followersByCharacter`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=213;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `FollowersItems`
 --
 ALTER TABLE `FollowersItems`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=76;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=163;
 --
 -- AUTO_INCREMENT pour la table `functionsByPlace`
 --
@@ -1097,12 +1043,12 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 -- AUTO_INCREMENT pour la table `Infos`
 --
 ALTER TABLE `Infos`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=39;
 --
 -- AUTO_INCREMENT pour la table `infosByCharacter`
 --
 ALTER TABLE `infosByCharacter`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=41;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=42;
 --
 -- AUTO_INCREMENT pour la table `items`
 --
@@ -1117,22 +1063,27 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT pour la table `itemsByFollowers`
 --
 ALTER TABLE `itemsByFollowers`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=93;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `map`
+--
+ALTER TABLE `map`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT pour la table `monsters`
 --
 ALTER TABLE `monsters`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT pour la table `quests`
 --
 ALTER TABLE `quests`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT pour la table `team`
 --
 ALTER TABLE `team`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=99;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `users`
 --
