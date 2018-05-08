@@ -2,16 +2,53 @@
 
 {% block main %}
 <div id="map" class="col-lg-8">
-	<h1><a href="javascript:history.go(-1)" class="btn btn-primary">Retour</a></h1>
-	<table id="zone" style="border:1px solid black;">
-		{% for lines in map %}
-		<tr>
-			{% for col in lines %}
-				<td style="height:40px;width:40px;background-image:url({{asset(null)}}images/{{col.0}});background-repeat:none;background-size:contain;" ></td>
-			{% endfor %}
-		</tr>
-		{% endfor %}
-		
-	</table>
+	<div class="col-lg-8">
+		<table id="zone" style="border:1px solid black;">
+			{% for lines in map %}
+			<tr>
+				{% for col in lines %}
+					<td obstacle="{{ col.obstacle }}" trigger="{{ col.trigger }}" monster='{{ col.monster}}' decor='{{ col.decoration }}' style="height:40px;width:40px;background-image:url({{asset(null)}}images/{{col.decoration}});background-repeat:none;background-size:contain;" >
+						{% if col.monster != "0" %}
+							<img src="{{asset(null)}}{{col.monster}}" width="40" heigth="40">
+						{% endif %}
+						{% if col.trigger == "1" %}
+							<img id="hero" line="{{col.x}}" col="{{col.y}}" src="{{asset(null)}}/images/tete.jpg" width="40" heigth="40">
+						
+						{% endif %}
+					</td>
+				{% endfor %}
+			</tr>
+			{% endfor %}		
+		</table>
+	</div>
+	<div class="col-lg-2">
+		<div id="dialog"></div>
+	</div>
 </div>
+<!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="display:none;">Open Modal</button>
+
+<!-- Modal -->
+{% for info in infos %}
+<div id="{{ info.id }}" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{{ info.title }}</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ info.infos|raw }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endfor %}
+
 {% endblock %}

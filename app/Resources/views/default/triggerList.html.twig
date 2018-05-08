@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+<div class="container">
+    <div class="row">
+    	<h1>Liste de Maps</h1>
+    	<ul>
+    		{% for trigger in triggers %}
+    		<li><a href="{{ path('admin_trigger_display', {'id' : trigger.id}) }}">{{ trigger.title }}</li>
+    		{% endfor %}
+    	</ul>
+    </div>
+</div>
+{% endblock %}

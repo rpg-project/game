@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+<div class="container">
+    <div class="row">
+    	<h1>Liste de Maps</h1>
+    	<ul>
+    		{% for map in maps %}
+    		<li><a href="{{ path('admin_map_display', {'id' : map.id}) }}">{{ map.mapName }}</li>
+    		{% endfor %}
+    	</ul>
+    </div>
+</div>
+{% endblock %}

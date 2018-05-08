@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <h1>Création nouvelle trigger</h1>
+            {{ form(form)}}
+
+        </div>
+        <div class="row">
+        	<h1>Ajout combat</h1>
+        	<ul>
+        		{% for monster in monsters %}
+        			<li><img class="monsterTrigger" monsterId="{{ monster.id }}" src="{{ asset(null)}}{{monster.description }}" width="40" heigth="40"></li>
+        		{% endfor %}
+        	</ul>
+        </div>
+        <div class="row">
+        	<h1>Ajout passage</h1>
+        	<ul>
+        		{% for map in maps %}
+        			<li><a href="#" class="mapTrigger" questId="{{ map.keyId }}" mapId="{{map.id}}">{{ map.mapName }}</a></li>
+        		{% endfor %}
+        	</ul>	
+        </div>
+    </div>
+
+{% endblock %}

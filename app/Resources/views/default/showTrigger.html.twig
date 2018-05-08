@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+<div id="map" class="col-lg-8">
+        <div class="row">
+            <h1>{{ trigger.title }}</h1>
+            {{ trigger.infos|raw }}
+        </div>
+</div>
+{% endblock %}

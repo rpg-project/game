@@ -8,9 +8,13 @@
 		{{ form_widget(form.decoration) }}
 		{% for key,image in dico %}
 			{% if image is not null %}
-				<a class="decoration" href="#" title="{{ image }}"><img src="{{asset(null)}}/images/{{image}}" width='40' height='40'></a>
+				<a class="decoration" href="#" title="{{ image.image }}" obstacle="{{ image.obstacle }}"><img src="{{asset(null)}}/images/{{image.image}}" width='40' height='40'></a>
 			{% endif %}
 		{% endfor %}
+	</div>
+	<div class="row">
+		{{ form_label(form.obstacle, "Obstacle") }}
+		{{ form_widget(form.obstacle) }}
 	</div>
     {{ form_widget(form) }}
     {{ form_end(form) }}

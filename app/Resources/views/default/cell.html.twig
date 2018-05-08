@@ -32,9 +32,13 @@
 			{% endfor %}
 			</table>
 
-			<a href="{{ path('admin_map_empty_cell') }}" class="btn btn-primary">Remplissage Case Vide</a> 	
+			<a href="{{ path('admin_map_fill_cell') }}" class="btn btn-primary">Remplissage Case Vide</a> 	
 			<a href="{{ path('admin_map_empty') }}" class="btn btn-primary">Vider les cases</a>
-			<a href="#" class="btn btn-warning">Générer map</a> 		
+			{% if state == 'new' %}
+				<a href="{{ path('admin_map_generate') }}" class="btn btn-warning">Générer map</a>
+			{% else %}
+				<a href="{{ path('admin_map_update', {'id' : mapid }) }}" class="btn btn-warning">Modifier map</a>  
+			{% endif %}		
 		</div>
 		<div class="col-lg-6">
 			{% block cell %}
