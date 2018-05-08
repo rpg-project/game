@@ -73,6 +73,11 @@
         <option name="unsigned"/>
       </options>
     </field>
+    <field name="startingZone" type="integer" column="starting_zone" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
     <field name="dateInfo" type="datetime" column="date_info" nullable="true"/>
     <many-to-one field="placeid" target-entity="Places" fetch="LAZY">
       <join-columns>

@@ -12,9 +12,9 @@
         <option name="fixed"/>
       </options>
     </field>
-    <field name="type" type="string" column="type" length="45" nullable="true">
+    <field name="type" type="integer" column="type" nullable="true">
       <options>
-        <option name="fixed"/>
+        <option name="unsigned"/>
       </options>
     </field>
     <field name="width" type="string" column="width" length="45" nullable="true">
@@ -27,5 +27,16 @@
         <option name="fixed"/>
       </options>
     </field>
+    <field name="mapContent" type="text" column="map_content" length="65535" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="keyId" type="integer" column="key_id" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="dateInfo" type="datetime" column="date_info" nullable="true"/>
   </entity>
 </doctrine-mapping>
