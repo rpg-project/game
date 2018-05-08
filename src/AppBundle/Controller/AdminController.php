@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\Entity\Zone;
 use AppBundle\Entity\Cell;
 use AppBundle\Entity\Dictionary;
+use AppBundle\Entity\Map;
 
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -35,14 +36,33 @@ class AdminController extends Controller
      */
     public function newMapAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
 
-    	$entity = new Zone();
+        $session = $this->get('session');
+
+    	$entity = new Map();
+
+        $dictionary = new Dictionary();
+
+        $quests = $em->getRepository('AppBundle:Quests')->findAll();
+
+        $listQuests = array();
+        foreach ($quests as $key => $quest) {
+            $listQuests[$quest->getTitle()] = $quest->getId();
+        }
 
         $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $entity);
 
         $formBuilder
+            ->add('mapName', TextType::class)
+            ->add('type', ChoiceType::class, array(
+                'choices' => $dictionary->getLabelMapContent(),
+            ))
             ->add('width', TextType::class)
             ->add('height', TextType::class)
+            ->add('keyid', ChoiceType::class, array(
+                'choices' => $listQuests,
+            ))
             ->add('genener la carte', SubmitType::class, array('attr'=> array('class' => "btn btn-primary")));
 
         $form = $formBuilder->getForm();
@@ -51,9 +71,11 @@ class AdminController extends Controller
 
         if ($form->isValid()) {
 
+            $session->set('zone', $entity);
+
             return $this->redirect($this->generateUrl('admin_map_show', array(
             	'width' => $entity->getWidth(),
-            	'height' => $entity->getHeight()
+            	'height' => $entity->getHeight(),
             	)));
         }
 
@@ -76,6 +98,8 @@ class AdminController extends Controller
 
     	$session = $this->get('session');
 
+        $zone = $session->get('zone');
+
     	$map = array();
     	for($i=0;$i<$height;$i++){
     		$map[$i] = array();
@@ -85,11 +109,13 @@ class AdminController extends Controller
     	}
 
     	$session->set('map', $map);
-
-
+        $session->set('state', 'new');
+        $session->set('mapid', 0);
 
     	return $this->render('default/cell.html.twig', [
     		'map'=>$map,
+            'state'=>'new',
+            'mapid'=>0,
     		]);
     }
 
@@ -116,7 +142,8 @@ class AdminController extends Controller
             ]);
 
         $listTriggers = array();
-        $listTriggers['none'] = null;
+        $listTriggers['none'] = 0;
+        $listTriggers['departure'] = 1;
         foreach ($triggers as $key => $trigger) {
             $listTriggers[$trigger->getTitle()] = $trigger->getId();
         }
@@ -129,6 +156,7 @@ class AdminController extends Controller
         	->add('x', TextType::class, array('data' => $x))
         	->add('y', TextType::class, array('data' => $y))
             ->add('decoration', TextType::class)
+            ->add('obstacle', TextType::class)
             ->add('monster', TextType::class, array('data' => 0))
             ->add('trigger', ChoiceType::class, array(
                 'choices' => $listTriggers,
@@ -142,11 +170,18 @@ class AdminController extends Controller
         if ($form->isValid()) {
         	$map[$x][$y] = $entity;
         	$session->set('map', $map);
+            $state = $session->get('state');
+            $mapid = $session->get('mapid');
         	return $this->render('default/cell.html.twig', [
-    		'map'=>$map,
+        		'map'=>$map,
+                'state'=>$state,
+                'mapid'=>$mapid,
     		]);
 
         }
+
+        $state = $session->get('state');
+            $mapid = $session->get('mapid');
 
                  //echo '<pre>'.print_r($map, true).'</pre>';
 
@@ -156,16 +191,18 @@ class AdminController extends Controller
     		'form' => $form->createView(),
             'dico' => $dictionary->getLabelDecoration(),
             'monsters' => $monsters,
+            'state'=>$state,
+            'mapid'=>$mapid,
     		]);
 
     }
 
     /**
-     * @Route("/admin/map/emptyCell", name="admin_map_empty_cell")
+     * @Route("/admin/map/fillCell", name="admin_map_fill_cell")
      */
-    public function mapEmptyCellAction(Request $request){
+    public function mapFillCellAction(Request $request){
 
-         $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
         $session = $this->get('session');
 
@@ -181,6 +218,7 @@ class AdminController extends Controller
 
         $formBuilder
             ->add('decoration', TextType::class)
+            ->add('obstacle', TextType::class)
             ->add('Remplir', SubmitType::class, array('attr'=> array('class' => "btn btn-primary")));
 
         $form = $formBuilder->getForm();
@@ -197,6 +235,7 @@ class AdminController extends Controller
                         $cell->setX($i);
                         $cell->setY($j);
                         $cell->setDecoration($entity->getDecoration());
+                        $cell->setObstacle($entity->getObstacle());
                         $cell->setMonster(0);
                         $cell->setTrigger(0);
                         $map[$i][$j] = $cell;
@@ -204,17 +243,26 @@ class AdminController extends Controller
                 }    
             }
             $session->set('map', $map);
+            $state = $session->get('state');
+            $mapid = $session->get('mapid');
             return $this->render('default/cell.html.twig', [
-            'map'=>$map,
+                'map'   =>$map,
+                'state' => $state,
+                'mapid' =>$mapid,
             ]);
 
         }
+
+        $mapid = $session->get('mapid');
+        $state = $session->get('state');
 
         return $this->render('default/emptyCell.html.twig', [
             'map' => $map,
             'entity' => $entity,
             'form' => $form->createView(),
             'dico' => $dictionary->getLabelDecoration(),
+            'state' => $state,
+            'mapid'=>$mapid,
             ]);
 
     }
@@ -238,10 +286,137 @@ class AdminController extends Controller
                 }    
             }
             $session->set('map', $map);
+            $state = $session->get('state');
+            $mapid = $session->get('mapid');
             return $this->render('default/cell.html.twig', [
-            'map'=>$map,
+                'map'=>$map,
+                'state'=>$state,
+                'mapid'=>$mapid,
             ]);
 
     }
+
+    /**
+     * @Route("/admin/map/generate", name="admin_map_generate")
+     */
+    public function mapGenerateAction(){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $session = $this->get('session');
+
+        $zone = $session->get('zone');
+
+        $map = $session->get('map');
+
+        $content = json_encode($map, JSON_FORCE_OBJECT);
+
+        $zone->setMapContent($content);
+
+        $em->persist($zone);
+        $em->flush();
+
+        echo 'carte crée';
+
+
+
+        die;
+
+    }
+
+    /**
+     * @Route("/admin/map/list", name="admin_map_list")
+     */
+    public function mapListAction(){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $listMap = $em->getRepository('AppBundle:Map')->findBy([
+            'type'=> 2,
+            ]);
+
+        return $this->render('default/mapList.html.twig', [
+            'maps'=>$listMap,
+            ]);
+    }
+
+
+    /**
+     * @Route("/admin/map/display/{id}", name="admin_map_display")
+     */
+    public function mapDisplayAction($id){
+
+        $chemin = dirname(__FILE__).'/../../../web/Ressources/zones.txt';
+
+        
+        if(file_exists($chemin)){
+            $file = json_decode(file_get_contents($chemin));
+        }
+
+        $mapJSON = "";
+
+        foreach ($file as $key => $zone) {
+            if($zone->id == $id){
+                $mapJSON = json_decode($zone->mapContent);
+            }
+        }
+
+        $map = "";
+        foreach ($mapJSON as $key => $lines) {
+            foreach ($lines as $key => $cols) {
+                
+                $map[$cols->x][$cols->y]['x'] = $cols->x;
+                $map[$cols->x][$cols->y]['y'] = $cols->y;
+                $map[$cols->x][$cols->y]['decoration'] = $cols->decoration;
+                $map[$cols->x][$cols->y]['obstacle'] = $cols->obstacle;
+                $map[$cols->x][$cols->y]['monster'] = $cols->monster;
+                $map[$cols->x][$cols->y]['trigger'] = $cols->trigger;
+            }   
+        }
+
+        $session = $this->get('session');
+
+        $session->set('map', $map);
+        $session->set('state', 'update');
+        $session->set('mapid', $id);
+
+        return $this->render('default/cell.html.twig', [
+            'map'=>$map,
+            'state' => 'update',
+            'mapid' => $id,
+            ]);
+
+
+    }
+
+    /**
+     * @Route("/admin/map/update/{id}", name="admin_map_update")
+     */
+    public function mapUpdateAction($id){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $session = $this->get('session');
+
+        $zone = $em->getRepository('AppBundle:Map')->find($id);
+
+        $map = $session->get('map');
+
+        $content = json_encode($map, JSON_FORCE_OBJECT);
+
+        $zone->setMapContent($content);
+        $zone->setDateInfo(null);
+
+        $em->persist($zone);
+        $em->flush();
+
+        echo 'carte modifiée';
+
+
+
+        die;
+
+    }
+
 
 }

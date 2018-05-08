@@ -327,20 +327,65 @@ class PlaceController extends Controller
     }
 
     /**
-     * @Route("/quest/running/{id}", name="running_quest")
+     * @Route("/quest/running/{id}/{mapid}", name="running_quest")
      */
-    public function runningQuest($id){
+    public function runningQuest($id, $mapid){
 
-        $chemin = dirname(__FILE__).'/../../../web/Ressources/quest'.$id.'.txt';
+        $chemin = dirname(__FILE__).'/../../../web/Ressources/zones.txt';
 
-        $map = "";
+        
         if(file_exists($chemin)){
             $file = json_decode(file_get_contents($chemin));
-            $map = $file[0];
+        }
+
+        $mapJSON = "";
+
+        foreach ($file as $key => $zone) {
+            if($zone->id == $mapid){
+                $mapJSON = json_decode($zone->mapContent);
+            }
+        }
+
+        $map = "";
+        foreach ($mapJSON as $key => $lines) {
+            foreach ($lines as $key => $cols) {
+                
+                $map[$cols->x][$cols->y]['x'] = $cols->x;
+                $map[$cols->x][$cols->y]['y'] = $cols->y;
+                $map[$cols->x][$cols->y]['decoration'] = $cols->decoration;
+                $map[$cols->x][$cols->y]['obstacle'] = $cols->obstacle;
+                $map[$cols->x][$cols->y]['monster'] = $cols->monster;
+                $map[$cols->x][$cols->y]['trigger'] = $cols->trigger;
+            }   
+        }
+
+        $chemin = dirname(__FILE__).'/../../../web/Ressources/infos.txt';
+
+        if(file_exists($chemin)){
+            $file = json_decode(file_get_contents($chemin));
+
+            $infos = array();
+            foreach ($file as $info){
+                if($info->placeId == $id && $info->type == "4"){
+                    $new = new Infos();
+                    $new->setId($info->id);
+                    $new->setTitle($info->title);
+                    $new->setInfos($info->infos);
+                    $new->setPlaceId($info->placeId);
+                    $new->setType($info->type);
+                    $infos[] = $new;
+                }
+            }
+        } else {
+            $infos = $em->getRepository('AppBundle:Infos')->findBy([
+                'placeId'=>$id,
+                'type'=>4,
+            ]);
         }
 
         return $this->render('default/map.html.twig', [
             'map' => $map,
+            'infos' => $infos,
         ]);
     }
 
@@ -570,7 +615,7 @@ class PlaceController extends Controller
             $file = json_decode(file_get_contents($chemin));
             $infos = array();
             foreach ($file as $info){
-                if($info->placeId == $placeId){
+                if($info->placeId == $placeId && $info->type == "1"){
                     $new = new Infos();
                     $new->setId($info->id);
                     $new->setTitle($info->title);
@@ -583,6 +628,7 @@ class PlaceController extends Controller
         } else {
             $infos = $em->getRepository('AppBundle:Infos')->findBy([
                 'placeId'=>$placeId,
+                'type'=>1,
             ]);
         }
 

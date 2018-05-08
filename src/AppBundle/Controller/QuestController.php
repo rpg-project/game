@@ -38,7 +38,16 @@ class QuestController extends Controller
         if($countQuests >= 1){
             $newChapter = $quests[$countQuests-1]->getChapter()+1;    
         } 
-        
+
+        $zones = $em->getRepository('AppBundle:Map')->findBy([
+            'type' => 2,
+            ]);
+
+        $listZones = array();
+        foreach ($zones as $key => $zone) {
+            $listZones[$zone->getMapName()] = $zone->getId();
+        }
+                
 
         $entity = new Quests();
 
@@ -64,6 +73,9 @@ class QuestController extends Controller
             ->add('bonusGood', TextType::class)
             ->add('bonusEvil', TextType::class)
             ->add('level_min', TextType::class)
+            ->add('starting_zone', ChoiceType::class, array(
+                'choices' => $listZones,
+            ))
             ->add('save', SubmitType::class, array('attr'=> array('class' => "btn btn-primary")));
 
         $place = $em->getRepository('AppBundle:Places')->findOneBy([

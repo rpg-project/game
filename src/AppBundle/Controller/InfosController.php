@@ -102,5 +102,101 @@ class InfosController extends Controller
         ));
     }
 
+    /**
+     * @Route("/admin/info/triggers", name="admin_info_new_trigger")
+     */
+    public function addNewTriggerAction(Request $request){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = new Infos();
+
+        $quests = $em->getRepository('AppBundle:Quests')->findAll();
+        $listQuests = array();
+        foreach ($quests as $key => $quest) {
+            $listQuests[$quest->getTitle()] = $quest->getId();
+        }
+
+        $monsters = $em->getRepository('AppBundle:Monsters')->findAll();
+        
+        $maps = $em->getRepository('AppBundle:Map')->findBy([
+            'type' =>2,
+            ]);
+
+        $dictionary = new Dictionary();
+
+        $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $entity);
+
+        $formBuilder
+            ->add('type', TextType::class, array('data' => 4))
+            ->add('title', TextType::class)
+            ->add('infos', TextareaType::class)
+            ->add('placeid',ChoiceType::class, array(
+                'choices' => $listQuests
+                ))
+            ->add('save', SubmitType::class, array('attr'=> array('class' => "btn btn-primary")));
+
+        $form = $formBuilder->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('admin_trigger_show', array('id' => $entity->getId())));
+        }
+
+        return $this->render('default/newTrigger.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+            'monsters' => $monsters,
+            'maps' => $maps,
+        ));
+    }
+
+    /**
+     * @Route("/admin/trigger/show/{id}", name="admin_trigger_show")
+     */
+    public function triggerShowAction($id){
+        $em = $this->getDoctrine()->getManager();
+
+        $trigger = $em->getRepository('AppBundle:Infos')->findOneBy([
+            'id' => $id,
+        ]);
+
+        $dictionary = new Dictionary();
+
+        return $this->render('default/showTrigger.html.twig', array(
+            'trigger' => $trigger,
+        ));
+    }
+
+    /**
+     * @Route("/admin/info/list/triggers", name="admin_info_list_trigger")
+     */
+    public function listTriggerAction(){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $listTriggers = $em->getRepository('AppBundle:Infos')->findBy([
+            'type' => 4,
+            ]);
+
+        return $this->render('default/triggerList.html.twig', array(
+            'triggers' => $listTriggers,
+        ));
+
+    }
+
+    /**
+     * @Route("/admin/info/display/trigger/{id}", name="admin_trigger_display")
+     */
+    public function displayTriggerAction(){
+
+    }
+    
+
 
 }
