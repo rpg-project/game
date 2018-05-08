@@ -104,6 +104,13 @@ class Quests
     public $levelMin;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="starting_zone", type="integer", nullable=true)
+     */
+    public $startingZone;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_info", type="datetime", nullable=true)
@@ -335,6 +342,22 @@ class Quests
     public function setLevelMin($levelMin)
     {
         $this->levelMin = $levelMin;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStartingZone()
+    {
+        return $this->startingZone;
+    }
+
+    /**
+     * @param int $startingZone
+     */
+    public function setStartingZone($startingZone)
+    {
+        $this->startingZone = $startingZone;
     }
 
     /**

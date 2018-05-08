@@ -118,11 +118,21 @@ class Dictionary
     /** @var array */
     private static $LabelDecoration = array(
         'none' => null,
-        'arbre' => 'arbre.jpg',
-        'chemin' => 'chemin.jpg',
-        'herbe' => 'herbe.png',
-        'arbre sombre' => 'arbre_sombre.png',
-        'chemin noir' => 'chemin_noir.png',
+        'arbre' => array('image' => 'arbre.jpg', 'obstacle' => 1),
+        'chemin' => array('image' => 'chemin.jpg', 'obstacle' => 0),
+        'herbe' => array('image' => 'herbe.png', 'obstacle' => 0),
+        'arbre sombre' => array('image' => 'arbre_sombre.png', 'obstacle' => 1),
+        'chemin noir' => array('image' => 'chemin_noir.png', 'obstacle' => 0),
+        'souche' => array('image' => 'souche.jpeg', 'obstacle' => 0),
+        'hutte' => array('image' => 'hutte.jpg', 'obstacle' => 0),
+    );
+
+    /** @var array */
+    private static $mapType = array(
+        'Town' => 1,
+        'Zone' => 2, //carte de quete
+        'WarZone' => 3, //carte de la zone de combat
+        'Landscape' => 4, //carte du monde 
     );
 
 
@@ -332,6 +342,22 @@ class Dictionary
     public static function setLabelDecoration($LabelDecoration)
     {
         self::$LabelDecoration = $LabelDecoration;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getLabelMapContent()
+    {
+        return self::$mapType;
+    }
+
+    /**
+     * @param array $mapType
+     */
+    public static function setLabelMapContent($mapType)
+    {
+        self::$mapType = $mapType;
     }
 
 }

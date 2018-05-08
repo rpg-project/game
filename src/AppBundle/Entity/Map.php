@@ -17,28 +17,49 @@ class Map
      *
      * @ORM\Column(name="map_name", type="string", length=50, nullable=true)
      */
-    private $mapName;
+    public $mapName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=45, nullable=true)
+     * @ORM\Column(name="type", type="int", type="integer", nullable=true)
      */
-    private $type;
+    public $type;
 
     /**
      * @var string
      *
      * @ORM\Column(name="width", type="string", length=45, nullable=true)
      */
-    private $width;
+    public $width;
 
     /**
      * @var string
      *
      * @ORM\Column(name="height", type="string", length=45, nullable=true)
      */
-    private $height;
+    public $height;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="key_id", type="int", type="integer", nullable=true)
+     */
+    public $keyId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="map_content", type="text", length=65535, nullable=true)
+     */
+    public $mapContent;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_info", type="datetime", nullable=true)
+     */
+    public $dateInfo;
 
     /**
      * @var integer
@@ -47,7 +68,7 @@ class Map
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    public $id;
 
     /**
      * @return string
@@ -66,7 +87,7 @@ class Map
     }
 
     /**
-     * @return string
+     * @return int
      */
     public function getType()
     {
@@ -129,6 +150,53 @@ class Map
         $this->id = $id;
     }
 
+    /**
+     * @return int
+     */
+    public function getKeyid()
+    {
+        return $this->keyId;
+    }
+
+    /**
+     * @param int $keyId
+     */
+    public function setKeyid($keyId)
+    {
+        $this->keyId = $keyId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMapContent()
+    {
+        return $this->mapContent;
+    }
+
+    /**
+     * @param string $mapContent
+     */
+    public function setMapContent($mapContent)
+    {
+        $this->mapContent = $mapContent;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateInfo()
+    {
+        return $this->dateInfo;
+    }
+
+    /**
+     * @param \DateTime $dateInfo
+     */
+    public function setDateInfo($dateInfo)
+    {
+        $this->dateInfo = $dateInfo;
+    }
 
 }
 

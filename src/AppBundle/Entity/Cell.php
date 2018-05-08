@@ -13,27 +13,32 @@ class Cell
     /**
      * @var string
      */
-    private $x;
+    public $x;
 
     /**
      * @var string
      */
-    private $y;
+    public $y;
 
     /**
      * @var string
      */
-    private $decoration;
+    public $decoration;
 
     /**
      * @var string
      */
-    private $monster;
+    public $obstacle;
 
     /**
      * @var string
      */
-    private $trigger;
+    public $monster;
+
+    /**
+     * @var string
+     */
+    public $trigger;
 
     /**
      * @return string
@@ -81,6 +86,22 @@ class Cell
     public function setDecoration($decoration)
     {
         $this->decoration = $decoration;
+    }
+
+    /**
+     * @return string
+     */
+    public function getObstacle()
+    {
+        return $this->obstacle;
+    }
+
+    /**
+     * @param string $obstacle
+     */
+    public function setObstacle($obstacle)
+    {
+        $this->obstacle = $obstacle;
     }
 
     /**
