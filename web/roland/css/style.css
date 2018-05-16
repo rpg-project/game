@@ -15,3 +15,40 @@
     background-repeat: no-repeat;
     background-size: contain;
 }
+
+.war-fog{
+    height:40px;
+    width:40px;
+    background-image:url(/images/brume.jpg);background-repeat:no-repeat;background-size:cover;
+}
+
+.arbre {
+    height:40px;width:40px;background-image:url(/images/arbre.jpg);background-repeat:no-repeat;background-size:contain;
+}
+
+.herbe{
+    height:40px;width:40px;background-image:url(/images/herbe.png);background-repeat:no-repeat;background-size:contain;
+}
+
+.chemin{
+    background-image:url(/images/chemin.jpg);background-repeat:no-repeat;background-size:contain;
+}
+
+.arbre_sombre {
+    height:40px;width:40px;background-image:url(/images/arbre_sombre.png);background-repeat:no-repeat;background-size:contain;
+}
+
+.chemin_noir{
+    height:40px;width:40px;background-image:url(/images/chemin_noir.png);background-repeat:no-repeat;background-size:contain;
+}
+
+.souche {
+    height:40px;width:40px;background-image:url(/images/souche.jpg);background-repeat:no-repeat;background-size:contain;
+}
+
+.hutte{
+    height:40px;width:40px;background-image:url(/images/hutte.jpg);background-repeat:no-repeat;background-size:contain;
+}
+
+.invisible {filter:blur(100%);}
+.visible{filter:blur(0%);}

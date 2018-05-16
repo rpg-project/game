@@ -17,7 +17,7 @@
 		{{ form_widget(form.decoration) }}
 		{% for key,image in dico %}
 			{% if image is not null %}
-				<a class="decoration" href="#" title="{{ image.image }}" obstacle="{{ image.obstacle }}"><img src="{{asset(null)}}/images/{{image.image}}" width='40' height='40'></a>
+				<a class="decoration" href="#" title="{{ image.image }}" obstacle="{{ image.obstacle }}"><img src="/images/{{image.image}}" width='40' height='40'></a>
 			{% endif %}
 		{% endfor %}
 	</div>
@@ -29,7 +29,7 @@
 		{{ form_label(form.monster, "Monstre") }}
 		{{ form_widget(form.monster) }}
 		{% for monster in monsters %}
-				<a class="monster" href="#" id="{{ monster.id }} "title="{{ monster.description }}"><img src="{{asset(null)}}{{monster.description}}" width='40' height='40'></a>
+				<a class="monster" href="#" id="{{ monster.id }} "title="{{ monster.description }}"><img src="{{monster.description}}" width='40' height='40'></a>
 		{% endfor %}
 	</div>
 	<div class="row">

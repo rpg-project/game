@@ -123,7 +123,7 @@ class Dictionary
         'herbe' => array('image' => 'herbe.png', 'obstacle' => 0),
         'arbre sombre' => array('image' => 'arbre_sombre.png', 'obstacle' => 1),
         'chemin noir' => array('image' => 'chemin_noir.png', 'obstacle' => 0),
-        'souche' => array('image' => 'souche.jpeg', 'obstacle' => 0),
+        'souche' => array('image' => 'souche.jpg', 'obstacle' => 0),
         'hutte' => array('image' => 'hutte.jpg', 'obstacle' => 0),
     );
 

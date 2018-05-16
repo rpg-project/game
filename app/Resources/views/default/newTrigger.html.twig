@@ -11,7 +11,7 @@
         	<h1>Ajout combat</h1>
         	<ul>
         		{% for monster in monsters %}
-        			<li><img class="monsterTrigger" monsterId="{{ monster.id }}" src="{{ asset(null)}}{{monster.description }}" width="40" heigth="40"></li>
+        			<li><img class="monsterTrigger" monsterId="{{ monster.id }}" src="{{monster.description }}" width="40" heigth="40"></li>
         		{% endfor %}
         	</ul>
         </div>

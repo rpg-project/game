@@ -8,6 +8,7 @@ function Hero(X,Y,map)
 	this.X=X;
 	this.Y=Y;
 	this.map=map;
+	this.range=1;
 }
 Hero.prototype=
 {
@@ -20,6 +21,10 @@ Hero.prototype=
 	{
 		this.map=map;
 	},
+    setRange: function(range)
+    {
+        this.range=range;
+    },
 	setPv:function(montant)
 	{
 		this.pv=montant;
@@ -60,6 +65,10 @@ Hero.prototype=
 	{
 		return this.map;
 	},
+    getRange: function()
+    {
+        return this.range;
+    },
 	gauche: function(){
 		var map = this.getMap();
 		if(map[this.getY()][this.getX()-1] != undefined){
@@ -75,6 +84,7 @@ Hero.prototype=
 		if(map[this.getY()][this.getX()]['trigger'] != "0"){
 			this.trigger(map[this.getY()][this.getX()]['trigger']);
 		}
+        viewHero(this.getY(),this.getX(), this.getRange());
 				
 	},
 	droite: function(){
@@ -93,6 +103,7 @@ Hero.prototype=
 		if(map[this.getY()][this.getX()]['trigger'] != "0" ){
 			this.trigger(map[this.getY()][this.getX()]['trigger']);
 		}
+        viewHero(this.getY(),this.getX(), this.getRange());
 				
 	},
 	haut: function(){
@@ -111,6 +122,7 @@ Hero.prototype=
 		if(map[this.getY()][this.getX()]['trigger'] != "0" ){
 			this.trigger(map[this.getY()][this.getX()]['trigger']);
 		}
+        viewHero(this.getY(),this.getX(), this.getRange());
 				
 	}
 	,
@@ -130,6 +142,7 @@ Hero.prototype=
 		if(map[this.getY()][this.getX()]['trigger'] != "0" ){
 			this.trigger(map[this.getY()][this.getX()]['trigger']);
 		}
+        viewHero(this.getY(),this.getX(), this.getRange());
 				
 	},
 	crier:function(phrase)

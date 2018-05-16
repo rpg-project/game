@@ -7,13 +7,13 @@
 			{% for lines in map %}
 			<tr>
 				{% for col in lines %}
-					<td obstacle="{{ col.obstacle }}" trigger="{{ col.trigger }}" monster='{{ col.monster}}' decor='{{ col.decoration }}' style="height:40px;width:40px;background-image:url({{asset(null)}}images/{{col.decoration}});background-repeat:none;background-size:contain;" >
+					<td obstacle="{{ col.obstacle }}" trigger="{{ col.trigger }}" monster='{{ col.monster}}' decor='{{ col.decoration[:-4] }}'>
+                        <!-- style="background-image:url({{asset(null)}}images/{{col.decoration}});background-repeat:no-repeat;background-size:contain;" -->
 						{% if col.monster != "0" %}
-							<img src="{{asset(null)}}{{col.monster}}" width="40" heigth="40">
+							<img src="{{col.monster}}" class="invisible" width="40" heigth="40">
 						{% endif %}
 						{% if col.trigger == "1" %}
-							<img id="hero" line="{{col.x}}" col="{{col.y}}" src="{{asset(null)}}/images/tete.jpg" width="40" heigth="40">
-						
+							<img id="hero" line="{{col.x}}" col="{{col.y}}" src="{{asset(null)}}images/tete.jpg" width="40" heigth="40"  >
 						{% endif %}
 					</td>
 				{% endfor %}
