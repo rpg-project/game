@@ -17,98 +17,98 @@ class Monsters
      *
      * @ORM\Column(name="name", type="string", length=45, nullable=true)
      */
-    public $name;
+    private $name;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="type", type="integer", nullable=true)
      */
-    public $type;
+    private $type;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="health", type="integer", nullable=true)
      */
-    public $health;
+    private $health;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="energy", type="integer", nullable=true)
      */
-    public $energy;
+    private $energy;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="move", type="integer", nullable=true)
      */
-    public $move;
+    private $move;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="quickness", type="integer", nullable=true)
      */
-    public $quickness;
+    private $quickness;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="attack", type="integer", nullable=true)
      */
-    public $attack;
+    private $attack;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="defense", type="integer", nullable=true)
      */
-    public $defense;
+    private $defense;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="critical", type="integer", nullable=true)
      */
-    public $critical;
+    private $critical;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="level", type="integer", nullable=true)
      */
-    public $level;
+    private $level;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", length=65535, nullable=true)
      */
-    public $description;
+    private $description;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_info", type="datetime", nullable=true)
      */
-    public $dateInfo;
+    private $dateInfo;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="kill", type="integer", nullable=true)
      */
-    public $kill;
+    private $kill;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="kill_title", type="integer", nullable=true)
      */
-    public $killTitle;
+    private $killTitle;
 
     /**
      * @var integer
@@ -117,7 +117,7 @@ class Monsters
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    public $id;
+    private $id;
 
     /**
      * @return string

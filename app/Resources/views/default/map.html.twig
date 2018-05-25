@@ -3,6 +3,7 @@
 {% block main %}
 <div id="map" class="col-lg-8">
 	<div class="col-lg-8">
+        {% if map is not empty %}
 		<table id="zone" style="border:1px solid black;">
 			{% for lines in map %}
 			<tr>
@@ -20,13 +21,16 @@
 			</tr>
 			{% endfor %}		
 		</table>
+        {% else %}
+            Pas de carte : en construction
+        {% endif %}
 	</div>
 	<div class="col-lg-2">
 		<div id="dialog"></div>
 	</div>
 </div>
 <!-- Trigger the modal with a button -->
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="display:none;">Open Modal</button>
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#quest" style="display:none;">Open Modal</button>
 
 <!-- Modal -->
 {% for info in infos %}

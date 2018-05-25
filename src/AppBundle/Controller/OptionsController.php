@@ -97,7 +97,9 @@ class OptionsController extends Controller
 
                 /** @var Followersbycharacter $follower  */
                 if($follower->getGoal() === 3){
-                    $goldMin += $follower->getLevel() * $follower->getFollowerid()->getLevelMin();
+                    $goldMin += $follower->getLevel()
+                         //* $follower->getFollowerid()->getLevelMin()
+                        ;
                     $session->set('goldMin', $goldMin);
                 }
                 $avalaible = $this->goal($follower->getGoal());

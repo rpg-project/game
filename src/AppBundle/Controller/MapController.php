@@ -323,9 +323,11 @@ class MapController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $listMap = $em->getRepository('AppBundle:Map')->findBy([
-            'type'=> 2,
-            ]);
+        $listMap = $em->getRepository('AppBundle:Map')->findAll();
+
+//        $listMap = $em->getRepository('AppBundle:Map')->findBy([
+//            'type'=> 2,
+//            ]);
 
         return $this->render('default/mapList.html.twig', [
             'maps'=>$listMap,
@@ -340,7 +342,6 @@ class MapController extends Controller
 
         $chemin = dirname(__FILE__).'/../../../web/Ressources/zones.txt';
 
-        
         if(file_exists($chemin)){
             $file = json_decode(file_get_contents($chemin));
         }

@@ -29,6 +29,13 @@ class Quests
     /**
      * @var integer
      *
+     * @ORM\Column(name="team", type="integer", nullable=true)
+     */
+    public $team;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="chapter", type="integer", nullable=true)
      */
     public $chapter;
@@ -36,14 +43,14 @@ class Quests
     /**
      * @var integer
      *
-     * @ORM\Column(name="difficulty_max", type="integer", nullable=true)
+     * @ORM\Column(name="difficulty_max", type="integer", nullable=false)
      */
     public $difficultyMax;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="difficulty_min", type="integer", nullable=true)
+     * @ORM\Column(name="difficulty_min", type="integer", nullable=false)
      */
     public $difficultyMin;
 
@@ -106,7 +113,7 @@ class Quests
     /**
      * @var integer
      *
-     * @ORM\Column(name="starting_zone", type="integer", nullable=true)
+     * @ORM\Column(name="starting_zone", type="integer", nullable=false)
      */
     public $startingZone;
 
@@ -166,6 +173,22 @@ class Quests
     public function setDescription($description)
     {
         $this->description = $description;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTeam()
+    {
+        return $this->team;
+    }
+
+    /**
+     * @param int $team
+     */
+    public function setTeam($team)
+    {
+        $this->team = $team;
     }
 
     /**

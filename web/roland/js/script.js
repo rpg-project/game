@@ -39,6 +39,8 @@ $(document).ready(function()
 		hero.setMap(map);
 		bouton();
 	}
+
+    $(".btn-info").click();
 	
 });
 

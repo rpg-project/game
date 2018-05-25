@@ -125,6 +125,7 @@ class Dictionary
         'chemin noir' => array('image' => 'chemin_noir.png', 'obstacle' => 0),
         'souche' => array('image' => 'souche.jpg', 'obstacle' => 0),
         'hutte' => array('image' => 'hutte.jpg', 'obstacle' => 0),
+        'vide' => array('image' => 'vide.jpg', 'obstacle' => 0),
     );
 
     /** @var array */
@@ -132,7 +133,8 @@ class Dictionary
         'Town' => 1,
         'Zone' => 2, //carte de quete
         'WarZone' => 3, //carte de la zone de combat
-        'Landscape' => 4, //carte du monde 
+        'Landscape' => 4, //carte du monde
+        'Strategy' => 5, //carte des stratégies de combat
     );
 
 

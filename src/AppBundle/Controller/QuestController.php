@@ -142,5 +142,4 @@ class QuestController extends Controller
         ));
     }
 
-
 }

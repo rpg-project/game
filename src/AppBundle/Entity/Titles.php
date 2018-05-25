@@ -17,28 +17,28 @@ class Titles
      *
      * @ORM\Column(name="title", type="string", length=45, nullable=true)
      */
-    public $title;
+    private $title;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=45, nullable=true)
      */
-    public $description;
+    private $description;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_info", type="datetime", nullable=true)
      */
-    public $dateInfo;
+    private $dateInfo;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="number", type="integer", nullable=true)
      */
-    public $number;
+    private $number;
 
     /**
      * @var integer
@@ -47,7 +47,7 @@ class Titles
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    public $id;
+    private $id;
 
     /**
      * @var \AppBundle\Entity\Monsters
@@ -57,7 +57,7 @@ class Titles
      *   @ORM\JoinColumn(name="monsterId", referencedColumnName="id")
      * })
      */
-    public $monsterid;
+    private $monsterid;
 
     /**
      * @return string

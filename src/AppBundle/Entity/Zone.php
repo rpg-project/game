@@ -13,22 +13,22 @@ class Zone
     /**
      * @var string
      */
-    private $mapName;
+    public $mapName;
 
     /**
      * @var string
      */
-    private $questId;
+    public $questId;
 
     /**
      * @var string
      */
-    private $width;
+    public $width;
 
     /**
      * @var string
      */
-    private $height;
+    public $height;
 
     /**
      * @return string

@@ -1,0 +1,35 @@
+{% extends 'default/playerPage.html.twig' %}
+
+{% block main %}
+<div id="control" class="col-lg-8">
+    <h4>{{ quest.title }}</h4>
+    <p>{{ quest.description|raw }}</p>
+    {% if quest.team == 1 %}
+        <p>Nécessite une équipe</p>
+        <table>
+            <tr>
+            {% for mate in team %}
+                <td class="text-center">
+                    <p>{{ mate.teammate.name }}</p>
+
+                    <img src="{{ mate.teammate.image }}" width=50 height="50">
+
+                    {% if mate.teammate.goal == 3 %}
+                        <p>{{ mate.teammate.level }} gold </p>
+                    {% else %}
+                        <p>0 gold</p>
+                    {% endif %}
+                </td>
+            {% endfor %}
+            </tr>
+        </table>
+    {% else %}
+        <p>aventure solo</p>
+    {% endif %}
+    {% if gold != 0 %}
+        Vous devez payer {{ gold }} gold pour cette équipe
+    {% endif %}
+    <button type="button" class="btn btn-default"><a href="{{ path('running_quest', {'id' : quest.id, 'mapid': quest.startingZone})}}">Jouer</a></button>
+    <button type="button" class="btn btn-default"><a href="{{ path('quest', {'placeId' : quest.placeid.id }) }}">Annuler</a></button>
+</div>
+{% endblock %}

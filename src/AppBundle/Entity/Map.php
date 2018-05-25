@@ -20,9 +20,9 @@ class Map
     public $mapName;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="type", type="int", type="integer", nullable=true)
+     * @ORM\Column(name="type", type="integer", nullable=true)
      */
     public $type;
 
@@ -43,16 +43,16 @@ class Map
     /**
      * @var string
      *
-     * @ORM\Column(name="key_id", type="int", type="integer", nullable=true)
-     */
-    public $keyId;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="map_content", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="map_content", type="text", length=65535, nullable=false)
      */
     public $mapContent;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="key_id", type="integer", nullable=false)
+     */
+    public $keyId;
 
     /**
      * @var \DateTime
@@ -95,7 +95,7 @@ class Map
     }
 
     /**
-     * @param string $type
+     * @param int $type
      */
     public function setType($type)
     {
@@ -135,38 +135,6 @@ class Map
     }
 
     /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return int
-     */
-    public function getKeyid()
-    {
-        return $this->keyId;
-    }
-
-    /**
-     * @param int $keyId
-     */
-    public function setKeyid($keyId)
-    {
-        $this->keyId = $keyId;
-    }
-
-    /**
      * @return string
      */
     public function getMapContent()
@@ -180,6 +148,22 @@ class Map
     public function setMapContent($mapContent)
     {
         $this->mapContent = $mapContent;
+    }
+
+    /**
+     * @return int
+     */
+    public function getKeyId()
+    {
+        return $this->keyId;
+    }
+
+    /**
+     * @param int $keyId
+     */
+    public function setKeyId($keyId)
+    {
+        $this->keyId = $keyId;
     }
 
     /**
@@ -197,6 +181,23 @@ class Map
     {
         $this->dateInfo = $dateInfo;
     }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
 
 }
 

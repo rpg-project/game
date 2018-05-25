@@ -327,13 +327,69 @@ class PlaceController extends Controller
     }
 
     /**
+     * * @Route("/quest/control/{id}", name="control_quest")
+     */
+    public function Acxtion($id){
+        $em = $this->getDoctrine()->getManager();
+
+        $session = $this->get('session');
+
+        $character = $session->get('character');
+
+        $quest = $em->getRepository('AppBundle:Quests')->find($id);
+
+        $team = array();
+        if($quest->getTeam() === 1){
+            $team = $em->getRepository('AppBundle:Team')->findBy([
+                'character' => $character,
+            ]);
+        }
+
+        $goldToBePayed = 0;
+        foreach ($team as $mate){
+            if($mate->getTeamMate()->getGoal() === 3){
+                $goldToBePayed = $goldToBePayed + $mate->getTeamMate()->getLevel();
+            }
+        }
+
+        return $this->render('default/questControl.html.twig', [
+            'quest' => $quest,
+            'team' => $team,
+            'gold' => $goldToBePayed,
+            'placeId' => $id,
+        ]);
+    }
+
+
+    /**
      * @Route("/quest/running/{id}/{mapid}", name="running_quest")
      */
     public function runningQuest($id, $mapid){
 
+        $em = $this->getDoctrine()->getManager();
+
+        $session = $this->get('session');
+
+        $character = $session->get('character');
+
+        $quest = $em->getRepository('AppBundle:Quests')->find($id);
+
+        $team = array();
+        if($quest->getTeam() === 1){
+            $team = $em->getRepository('AppBundle:Team')->findBy([
+                'character' => $character,
+            ]);
+        }
+
+        $goldToBePayed = 0;
+        foreach ($team as $mate){
+            if($mate->getTeamMate()->getGoal() === 3){
+                $goldToBePayed = $goldToBePayed + $mate->getTeamMate()->getLevel();
+            }
+        }
+
         $chemin = dirname(__FILE__).'/../../../web/Ressources/zones.txt';
 
-        
         if(file_exists($chemin)){
             $file = json_decode(file_get_contents($chemin));
         }
@@ -347,17 +403,20 @@ class PlaceController extends Controller
         }
 
         $map = "";
-        foreach ($mapJSON as $key => $lines) {
-            foreach ($lines as $key => $cols) {
-                
-                $map[$cols->x][$cols->y]['x'] = $cols->x;
-                $map[$cols->x][$cols->y]['y'] = $cols->y;
-                $map[$cols->x][$cols->y]['decoration'] = $cols->decoration;
-                $map[$cols->x][$cols->y]['obstacle'] = $cols->obstacle;
-                $map[$cols->x][$cols->y]['monster'] = $cols->monster;
-                $map[$cols->x][$cols->y]['trigger'] = $cols->trigger;
-            }   
+        if(!empty($mapJSON)){
+            foreach ($mapJSON as $key => $lines) {
+                foreach ($lines as $key => $cols) {
+
+                    $map[$cols->x][$cols->y]['x'] = $cols->x;
+                    $map[$cols->x][$cols->y]['y'] = $cols->y;
+                    $map[$cols->x][$cols->y]['decoration'] = $cols->decoration;
+                    $map[$cols->x][$cols->y]['obstacle'] = $cols->obstacle;
+                    $map[$cols->x][$cols->y]['monster'] = $cols->monster;
+                    $map[$cols->x][$cols->y]['trigger'] = $cols->trigger;
+                }
+            }
         }
+
 
         $chemin = dirname(__FILE__).'/../../../web/Ressources/infos.txt';
 
@@ -386,6 +445,10 @@ class PlaceController extends Controller
         return $this->render('default/map.html.twig', [
             'map' => $map,
             'infos' => $infos,
+            'quest' => $quest,
+            'team' => $team,
+            'gold' => $goldToBePayed,
+            'placeId' => $id,
         ]);
     }
 

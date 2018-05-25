@@ -290,6 +290,5 @@ class Capacities
         $this->id = $id;
     }
 
-
 }
 
