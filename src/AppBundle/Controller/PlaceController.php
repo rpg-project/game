@@ -155,6 +155,7 @@ class PlaceController extends Controller
                 $newFollower->setDefense($summonTable[$i]->getDefense());
                 $newFollower->setCritical($summonTable[$i]->getCritical());
                 $newFollower->setLevel($summonTable[$i]->getLevel());
+                $newFollower->setLevelMin($summonTable[$i]->getLevelMin());
                 $newFollower->setXp($summonTable[$i]->getXp());
                 $newFollower->setImage($summonTable[$i]->getImage());
                 $newFollower->setGoal($summonTable[$i]->getGoal());
@@ -348,7 +349,7 @@ class PlaceController extends Controller
         $goldToBePayed = 0;
         foreach ($team as $mate){
             if($mate->getTeamMate()->getGoal() === 3){
-                $goldToBePayed = $goldToBePayed + $mate->getTeamMate()->getLevel();
+                $goldToBePayed = $goldToBePayed + $mate->getTeamMate()->getLevel() * $mate->getTeamMate()->getLevelMin();
             }
         }
 
@@ -357,6 +358,7 @@ class PlaceController extends Controller
             'team' => $team,
             'gold' => $goldToBePayed,
             'placeId' => $id,
+            'character' => $character,
         ]);
     }
 
@@ -373,20 +375,6 @@ class PlaceController extends Controller
         $character = $session->get('character');
 
         $quest = $em->getRepository('AppBundle:Quests')->find($id);
-
-        $team = array();
-        if($quest->getTeam() === 1){
-            $team = $em->getRepository('AppBundle:Team')->findBy([
-                'character' => $character,
-            ]);
-        }
-
-        $goldToBePayed = 0;
-        foreach ($team as $mate){
-            if($mate->getTeamMate()->getGoal() === 3){
-                $goldToBePayed = $goldToBePayed + $mate->getTeamMate()->getLevel();
-            }
-        }
 
         $chemin = dirname(__FILE__).'/../../../web/Ressources/zones.txt';
 
@@ -446,9 +434,8 @@ class PlaceController extends Controller
             'map' => $map,
             'infos' => $infos,
             'quest' => $quest,
-            'team' => $team,
-            'gold' => $goldToBePayed,
             'placeId' => $id,
+            'character' => $character,
         ]);
     }
 

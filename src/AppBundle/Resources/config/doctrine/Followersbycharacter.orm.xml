@@ -72,6 +72,11 @@
         <option name="unsigned"/>
       </options>
     </field>
+    <field name="levelMin" type="integer" column="level_min" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
     <field name="xp" type="integer" column="xp" nullable="true">
       <options>
         <option name="unsigned"/>

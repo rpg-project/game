@@ -106,6 +106,13 @@ class Followersbycharacter
     /**
      * @var integer
      *
+     * @ORM\Column(name="level_min", type="integer", nullable=true)
+     */
+    private $levelMin;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="xp", type="integer", nullable=true)
      */
     private $xp;
@@ -419,6 +426,22 @@ class Followersbycharacter
     public function setLevel($level)
     {
         $this->level = $level;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLevelMin()
+    {
+        return $this->levelMin;
+    }
+
+    /**
+     * @param int $levelMin
+     */
+    public function setLevelMin($levelMin)
+    {
+        $this->levelMin = $levelMin;
     }
 
     /**

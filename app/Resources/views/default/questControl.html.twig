@@ -15,12 +15,13 @@
                     <img src="{{ mate.teammate.image }}" width=50 height="50">
 
                     {% if mate.teammate.goal == 3 %}
-                        <p>{{ mate.teammate.level }} gold </p>
+                        <p>{{ mate.teammate.level * mate.teammate.levelMin}} gold </p>
                     {% else %}
                         <p>0 gold</p>
                     {% endif %}
                 </td>
             {% endfor %}
+                <td><a href="{{ path("options_team", {'id': character.id}) }}" class="btn btn-primary">Changer Equipe</a></td>
             </tr>
         </table>
     {% else %}

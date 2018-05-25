@@ -302,7 +302,7 @@ CREATE TABLE `characters` (
 
 LOCK TABLES `characters` WRITE;
 /*!40000 ALTER TABLE `characters` DISABLE KEYS */;
-INSERT INTO `characters` VALUES (24,'hhh',0,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,310,0,0,0,0,0,0,0,0,0,10,NULL,1,1,10),(27,'ddddddddd',30,5,5,5,5,5,5,3,3,3,3,1,2,0,'/images/tete.jpg',1,1,260,0,0,0,0,0,5,0,0,10,10,NULL,2,1,10);
+INSERT INTO `characters` VALUES (24,'hhh',0,5,5,5,5,5,5,3,3,3,3,1,1,0,'/images/tete.jpg',1,1,310,0,0,0,0,0,0,0,0,0,10,NULL,1,1,10),(27,'ddddddddd',30,5,5,5,5,5,5,3,3,3,3,1,2,0,'/images/tete.jpg',1,1,250,0,0,0,0,0,5,0,0,11,10,NULL,2,1,10);
 /*!40000 ALTER TABLE `characters` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -433,6 +433,7 @@ CREATE TABLE `followersByCharacter` (
   `defense` int(11) DEFAULT NULL,
   `critical` int(11) DEFAULT NULL,
   `level` int(11) DEFAULT NULL,
+  `level_min` int(11) DEFAULT NULL,
   `xp` int(11) DEFAULT NULL,
   `image` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `goal` int(11) DEFAULT NULL,
@@ -450,7 +451,7 @@ CREATE TABLE `followersByCharacter` (
   PRIMARY KEY (`id`),
   KEY `characterId_idx` (`characterId`),
   CONSTRAINT `FK_492018735AF690F3` FOREIGN KEY (`characterId`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -459,7 +460,7 @@ CREATE TABLE `followersByCharacter` (
 
 LOCK TABLES `followersByCharacter` WRITE;
 /*!40000 ALTER TABLE `followersByCharacter` DISABLE KEYS */;
-INSERT INTO `followersByCharacter` VALUES (1,1,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,'/images/aventurier.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(2,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(3,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(4,1,'Priest',1,3,3,3,3,3,3,3,3,0,1,0,'/images/merc.jpg',0,'R',0,3,12,27,0,0,0,0,10,NULL),(5,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(6,1,'Merc',1,3,3,3,3,3,3,4,3,0,1,0,'/images/merc.jpg',3,'R',0,3,8,27,0,0,0,0,10,NULL),(7,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(8,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(9,1,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(10,1,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL);
+INSERT INTO `followersByCharacter` VALUES (1,1,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/aventurier.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(2,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(3,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(4,1,'Priest',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/merc.jpg',0,'R',0,3,12,27,0,0,0,0,10,NULL),(5,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(6,1,'Merc',1,3,3,3,3,3,3,4,3,0,1,1,0,'/images/merc.jpg',3,'R',0,3,8,27,0,0,0,0,10,NULL),(7,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(8,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(9,1,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(10,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(11,1,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10,NULL);
 /*!40000 ALTER TABLE `followersByCharacter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -998,7 +999,7 @@ CREATE TABLE `team` (
   KEY `mate_idx` (`team_mate_id`),
   CONSTRAINT `charactr` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `mate` FOREIGN KEY (`team_mate_id`) REFERENCES `followersByCharacter` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1007,7 +1008,7 @@ CREATE TABLE `team` (
 
 LOCK TABLES `team` WRITE;
 /*!40000 ALTER TABLE `team` DISABLE KEYS */;
-INSERT INTO `team` VALUES (1,1,0,1,27),(2,2,0,4,27),(6,5,0,10,27),(7,3,0,9,27),(8,4,0,6,27);
+INSERT INTO `team` VALUES (1,1,0,1,27),(2,2,0,4,27),(7,3,0,9,27),(10,4,0,6,27),(11,5,0,11,27);
 /*!40000 ALTER TABLE `team` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1053,4 +1054,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-25 11:33:36
+-- Dump completed on 2018-05-25 16:32:16
