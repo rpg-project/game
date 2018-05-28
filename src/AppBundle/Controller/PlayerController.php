@@ -45,7 +45,7 @@ class PlayerController extends Controller
             $x++;
         }
 
-        return $this->render('default/playerPage.html.twig', [
+        return $this->render('default/players/playerPage.html.twig', [
             'character' => $character,
             'map' => $map,
             'places' => $placesByMap,
@@ -61,7 +61,7 @@ class PlayerController extends Controller
 
         $character = $session->get('character');
 
-        return $this->render('default/stats.html.twig', [
+        return $this->render('default/followers/stats.html.twig', [
             'stats' => $character,
             'admin' => false,
         ]);
@@ -122,7 +122,7 @@ class PlayerController extends Controller
 
         $character = $session->get('character');
 
-        return $this->render('default/optionsBar.html.twig', [
+        return $this->render('default/players/optionsBar.html.twig', [
             'character' => $character,
             
         ]);
@@ -140,7 +140,7 @@ class PlayerController extends Controller
         $balance = $session->get('balance');
         $goodness = $session->get('goodness');
 
-        return $this->render('default/rightBar.html.twig', [
+        return $this->render('default/players/rightBar.html.twig', [
             'character' => $character,
             'balance' => $balance,
             'goodness' => $goodness,
@@ -210,7 +210,7 @@ class PlayerController extends Controller
         $session->set('balance', $balance);
         $session->set('goodness', $goodness);
 
-        return $this->render('default/teamBar.html.twig', [
+        return $this->render('default/players/teamBar.html.twig', [
             'character' => $character,
             //'map' => $map,
             //'capacities' => $characterCapacities,

@@ -71,7 +71,7 @@ class MapController extends Controller
                 )));
         }
 
-        return $this->render('default/adminMap.html.twig', array(
+        return $this->render('default/admin/adminMap.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -104,7 +104,7 @@ class MapController extends Controller
         $session->set('state', 'new');
         $session->set('mapid', 0);
 
-        return $this->render('default/cell.html.twig', [
+        return $this->render('default/admin/cell.html.twig', [
             'map'=>$map,
             'state'=>'new',
             'mapid'=>0,
@@ -164,7 +164,7 @@ class MapController extends Controller
             $session->set('map', $map);
             $state = $session->get('state');
             $mapid = $session->get('mapid');
-            return $this->render('default/cell.html.twig', [
+            return $this->render('default/admin/cell.html.twig', [
                 'map'=>$map,
                 'state'=>$state,
                 'mapid'=>$mapid,
@@ -177,7 +177,7 @@ class MapController extends Controller
 
                  //echo '<pre>'.print_r($map, true).'</pre>';
 
-        return $this->render('default/cellContent.html.twig', [
+        return $this->render('default/admin/cellContent.html.twig', [
             'map' => $map,
             'entity' => $entity,
             'form' => $form->createView(),
@@ -237,7 +237,7 @@ class MapController extends Controller
             $session->set('map', $map);
             $state = $session->get('state');
             $mapid = $session->get('mapid');
-            return $this->render('default/cell.html.twig', [
+            return $this->render('default/admin/cell.html.twig', [
                 'map'   =>$map,
                 'state' => $state,
                 'mapid' =>$mapid,
@@ -248,7 +248,7 @@ class MapController extends Controller
         $mapid = $session->get('mapid');
         $state = $session->get('state');
 
-        return $this->render('default/emptyCell.html.twig', [
+        return $this->render('default/admin/emptyCell.html.twig', [
             'map' => $map,
             'entity' => $entity,
             'form' => $form->createView(),
@@ -280,7 +280,7 @@ class MapController extends Controller
             $session->set('map', $map);
             $state = $session->get('state');
             $mapid = $session->get('mapid');
-            return $this->render('default/cell.html.twig', [
+            return $this->render('default/admin/cell.html.twig', [
                 'map'=>$map,
                 'state'=>$state,
                 'mapid'=>$mapid,
@@ -329,7 +329,7 @@ class MapController extends Controller
 //            'type'=> 2,
 //            ]);
 
-        return $this->render('default/mapList.html.twig', [
+        return $this->render('default/admin/mapList.html.twig', [
             'maps'=>$listMap,
             ]);
     }
@@ -373,7 +373,7 @@ class MapController extends Controller
         $session->set('state', 'update');
         $session->set('mapid', $id);
 
-        return $this->render('default/cell.html.twig', [
+        return $this->render('default/admin/cell.html.twig', [
             'map'=>$map,
             'state' => 'update',
             'mapid' => $id,
@@ -448,7 +448,7 @@ class MapController extends Controller
                 )));
         }
 
-        return $this->render('default/adminMainMapNew.html.twig', array(
+        return $this->render('default/admin/adminMainMapNew.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -465,7 +465,7 @@ class MapController extends Controller
             'id' => $id,
             ]);
 
-        return $this->render('default/adminMainMapShow.html.twig', [
+        return $this->render('default/admin/adminMainMapShow.html.twig', [
             'map'=>$map,
             ]);
     }

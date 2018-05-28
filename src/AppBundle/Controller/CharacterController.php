@@ -83,7 +83,7 @@ class CharacterController extends Controller
             ]);
         }
 
-        return $this->render('default/newCharacter.html.twig', [
+        return $this->render('default/characters/newCharacter.html.twig', [
             'form' => $form->createView(),
         ]);
 
@@ -106,7 +106,7 @@ class CharacterController extends Controller
 
         $session->set('map', $map);
 
-        return $this->render('default/successCharacter.html.twig', [
+        return $this->render('default/characters/successCharacter.html.twig', [
             'character' => $character,
             'map' => $map,
         ]);

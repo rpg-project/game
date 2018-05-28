@@ -31,7 +31,7 @@ class FollowerController extends Controller
 
         $follower = $em->getRepository('AppBundle:Followersbycharacter')->find($id);
 
-        return $this->render('default/stats.html.twig', [
+        return $this->render('default/followers/stats.html.twig', [
             'stats' => $follower,
             'admin' => false,
         ]);
@@ -46,7 +46,7 @@ class FollowerController extends Controller
 
         $follower = $em->getRepository('AppBundle:Followers')->find($id);
 
-        return $this->render('default/stats.html.twig', [
+        return $this->render('default/followers/stats.html.twig', [
             'stats' => $follower,
             'admin' => false,
         ]);
@@ -142,7 +142,7 @@ class FollowerController extends Controller
             return $this->redirect($this->generateUrl('admin_follower_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('default/newFollower.html.twig', array(
+        return $this->render('default/admin/newFollower.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -177,7 +177,7 @@ class FollowerController extends Controller
             ]);
         }
 
-           return $this->render('default/stats.html.twig', array(
+           return $this->render('default/followers/stats.html.twig', array(
             'stats' => $follower,
             'admin' => true,
             'items' => $items,
@@ -270,7 +270,7 @@ class FollowerController extends Controller
 
 //        var_dump($list);
 
-        return $this->render('default/followersList.html.twig', array(
+        return $this->render('default/admin/followersList.html.twig', array(
             'list' => $list,
         ));
     }

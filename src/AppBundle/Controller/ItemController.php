@@ -88,7 +88,7 @@ class ItemController extends Controller
             return $this->redirect($this->generateUrl('admin_item_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('default/newItem.html.twig', array(
+        return $this->render('default/admin/newItem.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -107,7 +107,7 @@ class ItemController extends Controller
 
         $dictionary = new Dictionary();
 
-        return $this->render('default/item.html.twig', array(
+        return $this->render('default/admin/item.html.twig', array(
             'item' => $item,
             'dico' => $dictionary,
         ));
@@ -123,7 +123,7 @@ class ItemController extends Controller
 
         $items = $em->getRepository('AppBundle:Items')->findAll();
 
-        return $this->render('default/itemList.html.twig', array(
+        return $this->render('default/admin/itemList.html.twig', array(
             'items' => $items,
         ));
 

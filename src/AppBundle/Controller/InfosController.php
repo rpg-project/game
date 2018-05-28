@@ -58,7 +58,7 @@ class InfosController extends Controller
             return $this->redirect($this->generateUrl('admin_places_information_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('default/newInformation.html.twig', array(
+        return $this->render('default/admin/newInformation.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -76,7 +76,7 @@ class InfosController extends Controller
 
         $dictionary = new Dictionary();
 
-        return $this->render('default/showInformation.html.twig', array(
+        return $this->render('default/admin/showInformation.html.twig', array(
             'info' => $info,
             'placeId' => null,
             'admin' => true,
@@ -95,7 +95,7 @@ class InfosController extends Controller
     		'placeId'=> $id,
     		]);
 
-    	return $this->render('default/listInformations.html.twig', array(
+    	return $this->render('default/admin/listInformations.html.twig', array(
             'infos' => $infos,
             'placeId' => $id,
             //'dico' => $dictionary->getTypeLabelInfo(),
@@ -148,7 +148,7 @@ class InfosController extends Controller
             return $this->redirect($this->generateUrl('admin_trigger_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('default/newTrigger.html.twig', array(
+        return $this->render('default/admin/newTrigger.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
             'monsters' => $monsters,
@@ -168,7 +168,7 @@ class InfosController extends Controller
 
         $dictionary = new Dictionary();
 
-        return $this->render('default/showTrigger.html.twig', array(
+        return $this->render('default/admin/showTrigger.html.twig', array(
             'trigger' => $trigger,
         ));
     }
@@ -184,7 +184,7 @@ class InfosController extends Controller
             'type' => 4,
             ]);
 
-        return $this->render('default/triggerList.html.twig', array(
+        return $this->render('default/admin/triggerList.html.twig', array(
             'triggers' => $listTriggers,
         ));
 

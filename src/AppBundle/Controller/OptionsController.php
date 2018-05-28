@@ -29,7 +29,7 @@ class OptionsController extends Controller
 
         $session->set('followersList',$followers);
 
-    	return $this->render('default/box.html.twig', [
+    	return $this->render('default/options/box.html.twig', [
             'followers' => $followers,
             'character' => $character,
         ]);
@@ -49,7 +49,7 @@ class OptionsController extends Controller
 
         $listOrder = $this->order($followers, $order);
 
-        return $this->render('default/box.html.twig', [
+        return $this->render('default/options/box.html.twig', [
             'followers' => $listOrder,
             'character' => $character,
         ]);
@@ -124,7 +124,7 @@ class OptionsController extends Controller
 
         $session->set('team', $teamFinal);
 
-        return $this->render('default/team.html.twig', [
+        return $this->render('default/options/team.html.twig', [
             'followers' => $followers,
             'character' => $character,
             'team' => $teamFinal,
@@ -159,7 +159,7 @@ class OptionsController extends Controller
         $session->set('teamChoiceList', $followers);
         $session->set('teamChoicePlace', $place);
 
-        return $this->render('default/teamChoices.html.twig', [
+        return $this->render('default/options/teamChoices.html.twig', [
             'followers' => $list,
             'place' => $place,
         ]);
@@ -194,7 +194,7 @@ class OptionsController extends Controller
             $list2[] = $list[$value->getId()];
         }
 
-        return $this->render('default/teamChoices.html.twig', [
+        return $this->render('default/options/teamChoices.html.twig', [
             'followers' => $list2,
             'place' => $place,
         ]);
@@ -323,7 +323,7 @@ class OptionsController extends Controller
      */
     public function optionsListAction(){
 
-        return $this->render('default/optionsList.html.twig');
+        return $this->render('default/options/optionsList.html.twig');
 
     }
 
@@ -378,7 +378,7 @@ class OptionsController extends Controller
 
         $session->set('followersLibrary', $followers);
 
-        return $this->render('default/followersLibrary.html.twig',[
+        return $this->render('default/options/followersLibrary.html.twig',[
             'followers'=>$followers,
             ]);
     }
@@ -396,7 +396,7 @@ class OptionsController extends Controller
 
 
 
-        return $this->render('default/followersLibrary.html.twig', [
+        return $this->render('default/options/followersLibrary.html.twig', [
             'followers' => $listOrder,
         ]);
     }
@@ -521,7 +521,7 @@ class OptionsController extends Controller
         $session->set('list', $listIn);
         $session->set('count', $count);
 
-        return $this->render('default/inventory.html.twig', [
+        return $this->render('default/options/inventory.html.twig', [
             'listEquiped' => $listEquiped,
             'listIn' => $listIn,
             'character' => $character,
@@ -575,7 +575,7 @@ class OptionsController extends Controller
         }
 
 
-        return $this->render('default/inventoryFollower.html.twig', [
+        return $this->render('default/options/inventoryFollower.html.twig', [
             'listEquiped' => $listEquiped,
             'listIn' => $listIn,
             'character' => $character,

@@ -52,11 +52,11 @@ class PlaceController extends Controller
 
 
         if($tutorial !== false){
-            return $this->render('default/tutorial.html.twig', [
+            return $this->render('default/places/tutorial.html.twig', [
                 'tutorial' => $tutorial,
             ]);
         } else {
-            return $this->render('default/place.html.twig', [
+            return $this->render('default/places/place.html.twig', [
                 'place' => $place,
                 'functions' => $functions,
             ]);
@@ -83,7 +83,7 @@ class PlaceController extends Controller
             }
         }
 
-        return $this->render('default/summons.html.twig', [
+        return $this->render('default/places/summons.html.twig', [
             'place' => $place,
             'function' => $function,
         ]);
@@ -227,7 +227,7 @@ class PlaceController extends Controller
 
         }
 
-        return $this->render('default/summon.html.twig', [
+        return $this->render('default/places/summon.html.twig', [
             'summonTitle' => $summonLabel,
             'summons' => $summonResult,
             'amountMoney' => $amountMoney,
@@ -286,7 +286,7 @@ class PlaceController extends Controller
 
         $dico = new Dictionary();
 
-        return $this->render('default/questsList.html.twig', [
+        return $this->render('default/places/questsList.html.twig', [
             'quests' => $listQuest,
             'function' => $function,
             'dico' => $dico,
@@ -322,7 +322,7 @@ class PlaceController extends Controller
             $done = "btn-success";
         }
 
-        return $this->render('default/questDone.html.twig', [
+        return $this->render('default/places/questDone.html.twig', [
             'done' => $done,
         ]);
     }
@@ -353,7 +353,7 @@ class PlaceController extends Controller
             }
         }
 
-        return $this->render('default/questControl.html.twig', [
+        return $this->render('default/places/questControl.html.twig', [
             'quest' => $quest,
             'team' => $team,
             'gold' => $goldToBePayed,
@@ -430,7 +430,7 @@ class PlaceController extends Controller
             ]);
         }
 
-        return $this->render('default/map.html.twig', [
+        return $this->render('default/places/map.html.twig', [
             'map' => $map,
             'infos' => $infos,
             'quest' => $quest,
@@ -478,7 +478,7 @@ class PlaceController extends Controller
 
         $session->set('items', $items);
 
-        return $this->render('default/sell.html.twig', [
+        return $this->render('default/places/sell.html.twig', [
             'items' => $items,
             'character' => $character,
         ]);
@@ -558,7 +558,7 @@ class PlaceController extends Controller
             $message = "Pas assez d'or";
         }
 
-        return $this->render('default/sellItem.html.twig', [
+        return $this->render('default/places/sellItem.html.twig', [
             'items' => $items,
             'character' => $character,
             'message' => $message,
@@ -581,7 +581,7 @@ class PlaceController extends Controller
             'characterid' => $character,
         ]);
 
-        return $this->render('default/buy.html.twig', [
+        return $this->render('default/places/buy.html.twig', [
             'items' => $items,
             'character' => $character,
             'message' => null,
@@ -620,7 +620,7 @@ class PlaceController extends Controller
             'characterid' => $character,
         ]);
 
-        return $this->render('default/buy.html.twig', [
+        return $this->render('default/places/buy.html.twig', [
             'items' => $items,
             'character' => $character,
             'message' => $message,
@@ -698,7 +698,7 @@ class PlaceController extends Controller
             }
         }
 
-        return $this->render('default/infosList.html.twig', [
+        return $this->render('default/places/infosList.html.twig', [
             'infos' => $infos,
             'infosRead' => $informationsRead,
             'function' => $function,
@@ -740,9 +740,10 @@ class PlaceController extends Controller
             $em->flush();
         }
 
-        return $this->render('default/showInformation.html.twig', array(
+        return $this->render('default/admin/showInformation.html.twig', array(
             'info' => $info,
             'placeId' => $placeId,
+            'admin' => false,
         ));
 
     }
@@ -759,7 +760,7 @@ class PlaceController extends Controller
 
         $dictionary = new Dictionary();
 
-        return $this->render('default/placesList.html.twig', [
+        return $this->render('default/places/placesList.html.twig', [
             'places' => $places,
             'dico' => $dictionary,
         ]);

@@ -96,7 +96,7 @@ class QuestController extends Controller
             return $this->redirect($this->generateUrl('admin_places_quest_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('default/newQuest.html.twig', array(
+        return $this->render('default/admin/newQuest.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -117,7 +117,7 @@ class QuestController extends Controller
 
         $dictionary = new Dictionary();
 
-        return $this->render('default/quest.html.twig', array(
+        return $this->render('default/admin/quest.html.twig', array(
             'quest' => $quest,
             'dico' => $dictionary,
         ));
@@ -135,7 +135,7 @@ class QuestController extends Controller
             'placeid'=> $id,
             ]);
 
-        return $this->render('default/listQuests.html.twig', array(
+        return $this->render('default/admin/listQuests.html.twig', array(
             'quests' => $quests,
             'placeId' => $id,
             //'dico' => $dictionary->getTypeLabelInfo(),
