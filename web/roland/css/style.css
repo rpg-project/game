@@ -23,6 +23,10 @@
     /*background-image:url(/images/brume.jpg);background-repeat:no-repeat;background-size:cover;*/
 }
 
+.no-war-fog{
+    background-color: unset;
+}
+
 .arbre {
     height:40px;width:40px;background-image:url(/images/arbre.jpg);background-repeat:no-repeat;background-size:contain;
 }

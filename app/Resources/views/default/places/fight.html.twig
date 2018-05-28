@@ -1,0 +1,33 @@
+{% extends 'default/players/playerPage.html.twig' %}
+
+{% block main %}
+<div id="map" class="col-lg-8">
+    <div class="col-lg-8">
+        {{ dump(character) }}
+        {% if map is not empty %}
+            <table id="zone" fight="1" style="border:1px solid black;">
+                {% for lines in map %}
+                    <tr>
+                        {% for col in lines %}
+                            <td obstacle="{{ col.obstacle }}" trigger="{{ col.trigger }}" monster='{{ col.monster}}' decor='{{ col.decoration[:-4] }}'
+                                class="{{ col.decoration[:-4] }} no-war-fog" width="40" height="40">
+                                {% if col.monster != "0" %}
+                                    <img src="{{col.monster}}" width="40" heigth="40">
+                                {% endif %}
+                                {% if col.trigger == "1" %}
+                                    <img id="hero" line="{{col.x}}" col="{{col.y}}" src="{{asset(null)}}images/tete.jpg" width="40" heigth="40"  >
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            Pas de carte : en construction
+        {% endif %}
+    </div>
+    <div class="col-lg-2">
+        <div id="dialog"></div>
+    </div>
+</div>
+{% endblock %}

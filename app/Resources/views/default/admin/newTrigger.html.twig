@@ -9,17 +9,26 @@
         </div>
         <div class="row">
         	<h1>Ajout combat</h1>
-        	<ul>
-        		{% for monster in monsters %}
-        			<li><img class="monsterTrigger" monsterId="{{ monster.id }}" src="{{monster.description }}" width="40" heigth="40"></li>
-        		{% endfor %}
-        	</ul>
+            <div class="col-lg-6">
+                <ul>
+                    {% for fight in fights %}
+                        <li><a href="#" class="mapFight" fightId="{{ fight.id }}">
+                                {{ fight.name }}
+                            </a></li>
+                    {% endfor %}
+                </ul>
+
+            </div>
         </div>
         <div class="row">
         	<h1>Ajout passage</h1>
         	<ul>
         		{% for map in maps %}
-        			<li><a href="#" class="mapTrigger" questId="{{ map.keyId }}" mapId="{{map.id}}">{{ map.mapName }}</a></li>
+        			<li><a href="#" class="mapTrigger" questId="{{ map.keyId }}" mapId="{{map.id}}">
+                            {{ map.mapName }}
+                        </a>
+                        Quete : {{ map.keyid }}
+                    </li>
         		{% endfor %}
         	</ul>	
         </div>

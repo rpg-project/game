@@ -4,7 +4,11 @@
 <div id="map" class="col-lg-8">
         <div class="row">
             <h1>{{ trigger.title }}</h1>
-            {{ trigger.infos|raw }}
+            {% if admin == false %}
+                {{ trigger.infos|raw }}
+            {% else %}
+                {{ trigger.infos }}
+            {% endif %}
         </div>
 </div>
 {% endblock %}

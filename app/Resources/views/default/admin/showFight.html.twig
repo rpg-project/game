@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <h1>Création nouveau Combat</h1>
+            <p>{{ fight.name }}</p>
+            <p>{{  fight.quest.title }}</p>
+            <p>{{  fight.fightzone.mapname }}</p>
+
+            <div class="col-lg-6">
+                <ul>
+                    {% for monster in monsters %}
+                        <li>{{ monster.name }}  <a href="{{ path('admin_fight_add_monster', {'fightId' : fight.id, 'monsterId' : monster.id}) }}" class="btn btn-primary">Ajouter</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-lg-6">
+            {% block monsters %}
+                <ul>
+                    {% for monster in monsterByFight %}
+                        <li>{{ monster.monster.name }} <a href="{{ path('admin_fight_delete_monster', {'id' : monster.id}) }}" class="btn btn-primary">Supprimer</a></li>
+                    {% endfor %}
+                </ul>
+            {% endblock %}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

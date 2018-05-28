@@ -14,17 +14,18 @@ $(document).ready(function()
 		$('#form_monster').val(monster);
 	});
 
-	/*$(".monsterTrigger").click(function(){
-		var monster = $(this).attr('title');
-		$('#form_monster').val(monster);
-	});*/
+    $(".mapFight").click(function(e){
+        e.preventDefault();
+        var fightId = $(this).attr('fightid');
+        var link = "<a href='"+window.location+"/../../../quest/fight/"+fightId+"' class='btn btn-primary'>^Combat</a>";
+        $('#form_infos').val(link);
+
+    });
 
 	$(".mapTrigger").click(function(e){
 		e.preventDefault();
 		var mapId = $(this).attr('mapId');
 		var questId = $(this).attr('questId');
-		//alert(window.location);
-		//rajouter questId
 		var link = "<a href='"+window.location+"/../../../quest/running/"+questId+"/"+mapId+"' class='btn btn-primary'>Passage</a>";
 		$('#form_infos').val(link);
 	});
@@ -104,7 +105,7 @@ function mapping(map){
 	var limitX = map.length;
 	var limitY = map[0].length;
 	var path = window.location+"/../../../../../";
-	//alert(path);
+
 	var plan="<table style='border:1px solid black;'>";
 
 	while (x<limitX)
@@ -114,10 +115,19 @@ function mapping(map){
 
 		while (y<limitY)
 		{
-            var classCell ="war-fog";
+			if($('#zone').attr('fight') == undefined){
+                var classCell ="war-fog";
+			} else {
+                var classCell = map[x][y]['decor'] + " no-war-fog";
+			}
+
 			var image = "</td>";
 			if(map[x][y]['monster'] != 0){
-				image = "<img src='"+path+map[x][y]['monster']+"' class='invisible' heigth='40' width='40'></td>";
+                var class_monster="";
+				if($('#zone').attr('fight') == undefined) {
+                    class_monster = 'invisible'
+                }
+				image = "<img src='"+path+map[x][y]['monster']+"' class='"+class_monster+"' heigth='40' width='40'></td>";
 			}
 			if(map[x][y]['hero'] != 0){
 				classCell = map[x][y]['decor'];
@@ -151,13 +161,17 @@ function mapping(map){
 
 function viewHero(i, j, range){
 
-    var arrayLignes = document.getElementById("zone").rows; //on récupère les lignes du tableau
-    var longueur = arrayLignes.length;//on peut donc appliquer la propriété length
-    for(var x=(i-range); x<=(i+range); x++){
-    	if(x >= 0 && x < longueur ){
-            view(x, j, range);
-		}
-    }
+	var fight = $("#zone").attr('fight');
+	if(fight == undefined){
+        var arrayLignes = document.getElementById("zone").rows; //on récupère les lignes du tableau
+        var longueur = arrayLignes.length;//on peut donc appliquer la propriété length
+        for(var x=(i-range); x<=(i+range); x++){
+            if(x >= 0 && x < longueur ){
+                view(x, j, range);
+            }
+        }
+	}
+
 }
 
 function view(i, j, range){

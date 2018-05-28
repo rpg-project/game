@@ -117,7 +117,7 @@ class InfosController extends Controller
             $listQuests[$quest->getTitle()] = $quest->getId();
         }
 
-        $monsters = $em->getRepository('AppBundle:Monsters')->findAll();
+        $fights = $em->getRepository('AppBundle:Fights')->findAll();
         
         $maps = $em->getRepository('AppBundle:Map')->findBy([
             'type' =>2,
@@ -151,7 +151,7 @@ class InfosController extends Controller
         return $this->render('default/admin/newTrigger.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
-            'monsters' => $monsters,
+            'fights' => $fights,
             'maps' => $maps,
         ));
     }
@@ -170,6 +170,7 @@ class InfosController extends Controller
 
         return $this->render('default/admin/showTrigger.html.twig', array(
             'trigger' => $trigger,
+            'admin' => false,
         ));
     }
 
@@ -193,8 +194,16 @@ class InfosController extends Controller
     /**
      * @Route("/admin/info/display/trigger/{id}", name="admin_trigger_display")
      */
-    public function displayTriggerAction(){
+    public function displayTriggerAction($id){
 
+        $em = $this->getDoctrine()->getManager();
+
+        $trigger = $em->getRepository('AppBundle:Infos')->find($id);
+
+        return $this->render('default/admin/showTrigger.html.twig', array(
+            'trigger' => $trigger,
+            'admin' => true,
+        ));
     }
     
 
