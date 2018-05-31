@@ -195,9 +195,8 @@ class FightController extends Controller
         $heroCapacities = $em->getRepository('AppBundle:Capacitiesbycharacter')->findBy([
             'characterid'=> $character,
         ]);
-//        var_dump($heroCapacities);
         foreach ($heroCapacities as $capacity){
-            $listCapacities['hero'][] = $capacity->getCapacityid();
+            $listCapacities['hero'.$character->getId()][] = $capacity->getCapacityid();
         }
 
 
@@ -211,7 +210,7 @@ class FightController extends Controller
                     'followerid'=> $mate->getTeamMate(),
                 ]);
                 foreach ($teamCapacities as $capacity){
-                    $listCapacities['team'][$mate->getTeamMate()->getId()][] = $capacity->getCapacityid()->getId();
+                    $listCapacities['team'.$mate->getTeamMate()->getId()][] = $capacity->getCapacityid()->getId();
                 }
             }
         }
@@ -226,11 +225,10 @@ class FightController extends Controller
                     'monsterid'=> $mob,
                 ]);
                 foreach ($mobCapacities as $capacity){
-                    $listCapacities['monster'][$mob->getId()][] = $capacity->getCapacityid()->getId();
+                    $listCapacities['monster'.$mob->getId()][] = $capacity->getCapacityid()->getId();
                 }
         }
 
-        var_dump($listCapacities);die;
 
         $order = array();
         foreach ($listOpponents as $key => $type){
@@ -245,6 +243,7 @@ class FightController extends Controller
             'map' => $map,
             'character' => $character,
             'order' => $order,
+            'capacities' => $listCapacities,
         ]);
     }
 }

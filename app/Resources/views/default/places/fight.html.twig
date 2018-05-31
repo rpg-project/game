@@ -36,16 +36,41 @@
     {% for quickness in order  %}
         {% for key, type in quickness %}
             {% for opponent in type %}
-                <div type ="{{ key }}" id="{{ opponent.id }}"
+                <div type ="{{ key }}" opponentid="{{ opponent.id }}"
                      name = "{{ opponent.name }}"
                      health = "{{ opponent.health }}"
                      energy = "{{ opponent.energy }}"
                      move = "{{ opponent.move }}" quickness = "{{ opponent.quickness }}"
                      attack = "{{ opponent.attack }}" defense = "{{ opponent.defense }}"
-                     critical = "{{ opponent.critical }}" level = "{{ opponent.level }}"></div>
+                     critical = "{{ opponent.critical }}" level = "{{ opponent.level }}">
+               </div>
             {% endfor %}
         {% endfor %}
     {% endfor %}
 </div>
+<div id="capacities">
+    {% for key,type in capacities %}
+        <div id ="{{ key }}" nbcap ="{{ type|length }}"
+            {% for key, capacity in type %}
+                cap{{ key+1 }} = "{{ capacity }}"
+            {% endfor %}
+            >
+        </div>
+    {% endfor %}
+
+
+    {#{% for key,type in capacities %}#}
+        {#<div type="{{ key }}"#}
+        {#{% for key,opponent in type %}#}
+            {#opponentid = "{{ key }}"#}
+            {#{% for key, capacities in opponent %}#}
+                {#cap{{ key+1 }} = "{{ capacities }}"#}
+            {#{% endfor %}#}
+        {#{% endfor %}#}
+        {#></div>#}
+    {#{% endfor %}#}
+
+</div>
+    {{ dump(capacities) }}
 </div>
 {% endblock %}

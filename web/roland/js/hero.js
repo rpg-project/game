@@ -19,6 +19,7 @@ function Hero(X,Y,map)
 	this.fight=0;
 	this.type="";
 	this.id="";
+	this.capacities = "";
 
 }
 Hero.prototype=
@@ -281,13 +282,24 @@ Hero.prototype=
         var critical = element.attr('critical');this.setCritical(critical);
         var level = element.attr('level');this.setLevel(level);
         var type = element.attr('type');this.setType(type);
-        var id = element.attr('id');this.setLevel(id);
+        var id = element.attr('opponentid');this.setId(id);
         var fight = $('#zone').attr('fight');this.setFight(fight);
 
         console.dir(this);
 	},
     play:function()
     {
+        var caps = new Array;
+        var nb = parseInt($("#"+this.type+this.id).attr('nbcap'));
+        var x=1;
+        while(x<(nb+1)){
+            var attribut = 'cap'+x;
+            caps.push($("#"+this.type+this.id).attr(attribut));
+            x++;
+        }
+
+
+        console.log(caps);
         alert(this.getName()+ ': grrr');
     },
     toPlay:function()
