@@ -1,4 +1,6 @@
 var hero = new Hero(0,0,null);
+hero.init($('#hero_stats'));
+
 
 $(document).ready(function()
 {
@@ -42,6 +44,8 @@ $(document).ready(function()
 	}
 
     $(".btn-info").click();
+
+	init_fight();
 	
 });
 
@@ -204,4 +208,28 @@ function view(i, j, range){
             }
         }
     }
+}
+
+function init_fight(){
+	if($('#zone').attr('fight')=== undefined){
+		return;
+	} else {
+		var opponents = $('#opponents');
+		opponents.find('div').each(function(){
+			var opponent = new Hero();
+			opponent.init($(this));
+			play(opponent);
+		})
+	}
+}
+
+function play(opponent){
+	switch(opponent.getType())
+	{
+		case 'monster': opponent.play();
+		                break;
+		default : opponent.toPlay()
+				  break;
+
+	}
 }

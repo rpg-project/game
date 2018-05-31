@@ -36,6 +36,13 @@ class Capacities
     /**
      * @var integer
      *
+     * @ORM\Column(name="repeat", type="integer", nullable=true)
+     */
+    public $repeat;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="range", type="integer", nullable=true)
      */
     public $range;
@@ -144,6 +151,22 @@ class Capacities
     public function setType($type)
     {
         $this->type = $type;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRepeat()
+    {
+        return $this->repeat;
+    }
+
+    /**
+     * @param int $repeat
+     */
+    public function setRepeat($repeat)
+    {
+        $this->repeat = $repeat;
     }
 
     /**
@@ -289,6 +312,7 @@ class Capacities
     {
         $this->id = $id;
     }
+
 
 }
 

@@ -19,6 +19,11 @@
         <option name="unsigned"/>
       </options>
     </field>
+    <field name="repeat" type="integer" column="repeat" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
     <field name="range" type="integer" column="range" nullable="true">
       <options>
         <option name="unsigned"/>

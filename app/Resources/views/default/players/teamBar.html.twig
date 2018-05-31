@@ -15,7 +15,14 @@
                     <th  class="gold"></th>
                     <td>{{ character.gold }}</td>
                 </tr>
-                {% for mate in team %}
+                <div id="hero_stats"
+                     name = "{{ character.name }}" image = "{{ character.image }}"
+                     health = "{{ character.health }}" maxHealth = "{{ character.maxHealth }}"
+                     energy = "{{ character.energy }}" maxEnergy = "{{ character.maxEnergy }}"
+                     move = "{{ character.move }}" quickness = "{{ character.quickness }}"
+                     attack = "{{ character.attack }}" defense = "{{ character.defense }}"
+                     critical = "{{ character.critical }}" level = "{{ character.level }}"></div>
+                {% for key, mate in team %}
                     {% if mate == false %}
                         <tr>
                             <td>vide</td>
@@ -35,6 +42,13 @@
                             <th class="health"></th>
                             <td>{{ mate.teammate.health }} / {{ mate.teammate.maxHealth }}</td>
                         </tr>
+                        <div id="team_stats_{{ key + 1 }}"
+                             name = "{{ mate.teammate.name }}" image = "{{ mate.teammate.image }}"
+                             health = "{{ mate.teammate.health }}" maxHealth = "{{ mate.teammate.maxHealth }}"
+                             energy = "{{ mate.teammate.energy }}" maxEnergy = "{{ mate.teammate.maxEnergy }}"
+                             move = "{{ mate.teammate.move }}" quickness = "{{ mate.teammate.quickness }}"
+                             attack = "{{ mate.teammate.attack }}" defense = "{{ mate.teammate.defense }}"
+                             critical = "{{ mate.teammate.critical }}" level = "{{ mate.teammate.level }}"></div>
                     {% endif %}
                 {% endfor %}
             </table>

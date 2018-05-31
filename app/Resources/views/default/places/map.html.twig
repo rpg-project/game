@@ -9,7 +9,6 @@
 			<tr>
 				{% for col in lines %}
 					<td obstacle="{{ col.obstacle }}" trigger="{{ col.trigger }}" monster='{{ col.monster}}' decor='{{ col.decoration[:-4] }}'>
-                        <!-- style="background-image:url({{asset(null)}}images/{{col.decoration}});background-repeat:no-repeat;background-size:contain;" -->
 						{% if col.monster != "0" %}
 							<img src="{{col.monster}}" class="invisible" width="40" heigth="40">
 						{% endif %}
@@ -29,6 +28,7 @@
 		<div id="dialog"></div>
 	</div>
 </div>
+
 <!-- Trigger the modal with a button -->
 <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#quest" style="display:none;">Open Modal</button>
 

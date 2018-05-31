@@ -32,7 +32,7 @@ CREATE TABLE `FollowersItems` (
   KEY `items_idx` (`ItemId`),
   CONSTRAINT `followers` FOREIGN KEY (`FollowersId`) REFERENCES `followers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `items` FOREIGN KEY (`ItemId`) REFERENCES `items` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=165 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=163 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -140,6 +140,7 @@ CREATE TABLE `capacities` (
   `name` varchar(45) DEFAULT NULL,
   `description` text,
   `type` int(11) DEFAULT NULL,
+  `repeat` int(11) DEFAULT NULL,
   `range` int(11) DEFAULT NULL,
   `attack` int(11) DEFAULT NULL,
   `defense` int(11) DEFAULT NULL,
@@ -149,7 +150,7 @@ CREATE TABLE `capacities` (
   `energy` int(11) DEFAULT NULL,
   `date_info` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,7 +159,7 @@ CREATE TABLE `capacities` (
 
 LOCK TABLES `capacities` WRITE;
 /*!40000 ALTER TABLE `capacities` DISABLE KEYS */;
-INSERT INTO `capacities` VALUES (1,NULL,'/images/epee.jpg',1,1,0,0,0,0,0,0,'2018-04-26 14:59:06'),(2,NULL,'/images/heal.jpg',2,1,0,0,0,0,4,-2,'2018-04-26 14:59:06'),(3,NULL,'/images/charge.jpg',1,1,3,-3,4,NULL,NULL,-3,'2018-04-26 14:59:06'),(4,NULL,NULL,1,5,0,0,0,0,0,0,'2018-04-26 14:59:06');
+INSERT INTO `capacities` VALUES (1,'Attaque','/images/epee.jpg',1,1,1,0,0,0,0,0,-1,'2018-04-26 14:59:06'),(2,'Soins','/images/heal.jpg',2,1,1,0,0,0,0,4,-2,'2018-04-26 14:59:06'),(3,'Charge','/images/charge.jpg',1,1,1,3,-3,4,NULL,NULL,-4,'2018-04-26 14:59:06'),(4,'Tir à l\'Arc',NULL,1,1,5,0,0,0,0,0,-1,'2018-04-26 14:59:06'),(5,'Hurlement',NULL,1,0,0,-1,-1,0,0,0,-1,NULL);
 /*!40000 ALTER TABLE `capacities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -377,7 +378,7 @@ CREATE TABLE `fights` (
   KEY `fightzone_id_idx` (`fight_zone_id`),
   CONSTRAINT `fightzone_id` FOREIGN KEY (`fight_zone_id`) REFERENCES `map` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `quest_Id` FOREIGN KEY (`quest_id`) REFERENCES `quests` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -490,7 +491,7 @@ CREATE TABLE `followersByCharacter` (
 
 LOCK TABLES `followersByCharacter` WRITE;
 /*!40000 ALTER TABLE `followersByCharacter` DISABLE KEYS */;
-INSERT INTO `followersByCharacter` VALUES (1,1,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/aventurier.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(2,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(3,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(4,1,'Priest',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/merc.jpg',0,'R',0,3,12,27,0,0,0,0,10,NULL),(5,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(6,1,'Merc',1,3,3,3,3,3,3,4,3,0,1,1,0,'/images/merc.jpg',3,'R',0,3,8,27,0,0,0,0,10,NULL),(7,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(8,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(9,1,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(10,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(11,1,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10,NULL);
+INSERT INTO `followersByCharacter` VALUES (1,1,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/aventurier.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(2,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(3,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(4,1,'Priest',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/merc.jpg',0,'R',0,3,12,27,0,0,0,0,10,NULL),(5,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(6,1,'Merc',1,3,3,3,3,3,7,4,3,0,1,1,0,'/images/merc.jpg',3,'R',0,3,8,27,0,0,0,0,10,NULL),(7,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(8,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(9,1,'Aventurer',1,3,3,3,3,3,2,3,3,0,1,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(10,0,'Aventurer',1,3,3,3,3,3,3,3,3,0,1,1,0,'/images/merc.jpg',0,'R',0,3,9,27,0,0,0,0,10,NULL),(11,1,'Aventurer',1,3,3,3,3,3,5,3,3,0,1,1,0,' ',0,'R',0,3,9,27,0,0,0,0,10,NULL);
 /*!40000 ALTER TABLE `followersByCharacter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -827,7 +828,7 @@ CREATE TABLE `monsters` (
 
 LOCK TABLES `monsters` WRITE;
 /*!40000 ALTER TABLE `monsters` DISABLE KEYS */;
-INSERT INTO `monsters` VALUES (1,'Loup',1,5,5,6,3,4,2,1,1,'/images/wolf.jpg',NULL,0,0),(3,'Biche',4,1,1,6,4,1,1,0,1,'/images/biche.jpg',NULL,0,0),(4,'Cerf',3,5,5,6,4,4,2,1,1,'/images/cerf.png',NULL,0,0);
+INSERT INTO `monsters` VALUES (1,'Loup',1,5,5,6,4,4,2,1,1,'/images/wolf.jpg',NULL,0,0),(3,'Biche',4,1,1,6,4,1,1,0,1,'/images/biche.jpg',NULL,0,0),(4,'Cerf',3,5,5,6,4,4,2,1,1,'/images/cerf.png',NULL,0,0);
 /*!40000 ALTER TABLE `monsters` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -980,7 +981,7 @@ CREATE TABLE `quests` (
 
 LOCK TABLES `quests` WRITE;
 /*!40000 ALTER TABLE `quests` DISABLE KEYS */;
-INSERT INTO `quests` VALUES (2,'Enquête','<p>Faire une enquête pour déterminer pourquoi plus de gibier</p>',0,1,1,1,100,25,100,25,0,0,0,1,12,'2018-04-30 11:49:51',2),(3,'Chasse aux Loups','Tracter et chasser ces loups',1,2,3,1,100,50,100,100,0,0,0,1,0,'2018-04-30 13:47:28',2),(4,'test','test',1,3,3,1,100,100,110,0,10,0,0,1,0,'2018-04-30 14:26:08',2),(5,'test','test',1,1,1,1,100,25,100,0,0,0,0,1,0,'2018-05-02 10:58:29',1),(6,'test 2','dfsdf',1,2,3,1,100,100,100,0,0,0,0,1,0,'2018-05-02 11:28:09',1);
+INSERT INTO `quests` VALUES (2,'Enquête','<p>Faire une enquête pour déterminer pourquoi plus de gibier</p>',1,1,1,1,100,25,100,25,0,0,0,1,12,'2018-04-30 11:49:51',2),(3,'Chasse aux Loups','Tracter et chasser ces loups',1,2,3,1,100,50,100,100,0,0,0,1,0,'2018-04-30 13:47:28',2),(4,'test','test',1,3,3,1,100,100,110,0,10,0,0,1,0,'2018-04-30 14:26:08',2),(5,'test','test',1,1,1,1,100,25,100,0,0,0,0,1,0,'2018-05-02 10:58:29',1),(6,'test 2','dfsdf',1,2,3,1,100,100,100,0,0,0,0,1,0,'2018-05-02 11:28:09',1);
 /*!40000 ALTER TABLE `quests` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1114,4 +1115,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-28 16:46:50
+-- Dump completed on 2018-05-30  9:13:04

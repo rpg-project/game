@@ -1,14 +1,25 @@
 function Hero(X,Y,map)
 {
-	this.nom="Chevalier";
-	this.pv=100;
-	this.pvmax=100;
-	this.ppv=100;
-	this.image="chevalier_big.png";
+	this.name="";
+	this.health=0;
+	this.maxHealth=0;
+	this.energy=0;
+    this.maxEnergy=0;
+    this.move=0;
+    this.quickness=0;
+    this.attack=0;
+    this.defense=0;
+    this.critical=0;
+    this.level=0;
+	this.image="";
 	this.X=X;
 	this.Y=Y;
 	this.map=map;
 	this.range=1;
+	this.fight=0;
+	this.type="";
+	this.id="";
+
 }
 Hero.prototype=
 {
@@ -25,34 +36,66 @@ Hero.prototype=
     {
         this.range=range;
     },
-	setPv:function(montant)
+    setName:function(name)
+    {
+        this.name=name;
+    },
+	setHealth:function(health)
 	{
-		this.pv=montant;
+		this.health=health;
 	},
-	setPpv:function(montant)
-	{
-		this.ppv=montant;
-	},
-	setPos:function(pos)
-	{
-		this.pos=pos;
-	},
-	getPos:function()
-	{
-		return this.pos;
-	},
-	getPv:function()
-	{
-		return this.pv;
-	},
-	getPvmax:function()
-	{
-		return this.pvmax;
-	},
-	getPpv:function()
-	{
-		return this.ppv;
-	},
+    setMaxHealth:function(maxHealth)
+    {
+        this.maxHealth=maxHealth;
+    },
+    setEnergy:function(energy)
+    {
+        this.energy=energy;
+    },
+    setMaxEnergy:function(maxEnergy)
+    {
+        this.maxEnergy=maxEnergy;
+    },
+    setMove:function(move)
+    {
+        this.move=move;
+    },
+    setQuickness:function(quickness)
+    {
+        this.quickness=quickness;
+    },
+    setAttack:function(attack)
+    {
+        this.attack=attack;
+    },
+    setDefense:function(defense)
+    {
+        this.defense=defense;
+    },
+    setCritical:function(critical)
+    {
+        this.critical=critical;
+    },
+    setLevel:function(level)
+    {
+        this.level=level;
+    },
+    setImage:function(image)
+    {
+        this.image=image;
+    },
+    setFight:function(fight)
+    {
+        this.fight=fight;
+    },
+    setType:function(type)
+    {
+        this.type=type;
+    },
+    setId:function(id)
+    {
+        this.id=id;
+    },
 	getX : function()
 	{
 		return this.X;
@@ -69,80 +112,149 @@ Hero.prototype=
     {
         return this.range;
     },
+    getName:function()
+    {
+        return this.name;
+    },
+    getHealth:function()
+    {
+        return this.health;
+    },
+    getMaxHealth:function()
+    {
+        return this.maxHealth;
+    },
+    getEnergy:function()
+    {
+        return this.energy;
+    },
+    getMaxEnergy:function()
+    {
+        return this.maxEnergy;
+    },
+    getMove:function()
+    {
+        return this.move;
+    },
+    getQuickness:function()
+    {
+        return this.quickness;
+    },
+    getAttack:function()
+    {
+        return this.attack;
+    },
+    getDefense:function()
+    {
+        return this.defense;
+    },
+    getCritical:function()
+    {
+        return this.critical;
+    },
+    getLevel:function()
+    {
+        return this.level;
+    },
+    getImage:function()
+    {
+        return this.image;
+    },
+    getFight:function()
+    {
+        return this.fight;
+    },
+    getType:function()
+    {
+        return this.type;
+    },
+    getId:function()
+    {
+        return this.id;
+    },
 	gauche: function(){
-		var map = this.getMap();
-		if(map[this.getY()][this.getX()-1] != undefined){
-			if(map[this.getY()][this.getX()-1]['obstacle'] == "1" ){
-				this.crier('aie');
-			} else {
-				map[this.getY()][this.getX()-1]['hero'] = 1;
-				map[this.getY()][this.getX()]['hero'] = 0; 
-				map[this.getY()][this.getX()]['trigger'] = 0;
-				var plan=mapping(map);
-			}
-		}
-		if(map[this.getY()][this.getX()]['trigger'] != "0"){
-			this.trigger(map[this.getY()][this.getX()]['trigger']);
-		}
-        viewHero(this.getY(),this.getX(), this.getRange());
+        if(this.fight == undefined){
+            var map = this.getMap();
+            if(map[this.getY()][this.getX()-1] != undefined){
+                if(map[this.getY()][this.getX()-1]['obstacle'] == "1" ){
+                    this.crier('aie');
+                } else {
+                    map[this.getY()][this.getX()-1]['hero'] = 1;
+                    map[this.getY()][this.getX()]['hero'] = 0;
+                    map[this.getY()][this.getX()]['trigger'] = 0;
+                    var plan=mapping(map);
+                }
+            }
+            if(map[this.getY()][this.getX()]['trigger'] != "0"){
+                this.trigger(map[this.getY()][this.getX()]['trigger']);
+            }
+            viewHero(this.getY(),this.getX(), this.getRange());
+        }
+
 				
 	},
 	droite: function(){
-		var map = this.getMap();
+        if(this.fight == undefined) {
+            var map = this.getMap();
 
-		if(map[this.getY()][this.getX()+1] != undefined){
-			if(map[this.getY()][this.getX()+1]['obstacle'] == "1" ){
-				this.crier('aie');
-			} else {
-				map[this.getY()][this.getX()+1]['hero'] = 1;
-				map[this.getY()][this.getX()]['hero'] = 0; 
-				map[this.getY()][this.getX()]['trigger'] = 0;
-				var plan=mapping(map);
-			}
-		}
-		if(map[this.getY()][this.getX()]['trigger'] != "0" ){
-			this.trigger(map[this.getY()][this.getX()]['trigger']);
-		}
-        viewHero(this.getY(),this.getX(), this.getRange());
+            if (map[this.getY()][this.getX() + 1] != undefined) {
+                if (map[this.getY()][this.getX() + 1]['obstacle'] == "1") {
+                    this.crier('aie');
+                } else {
+                    map[this.getY()][this.getX() + 1]['hero'] = 1;
+                    map[this.getY()][this.getX()]['hero'] = 0;
+                    map[this.getY()][this.getX()]['trigger'] = 0;
+                    var plan = mapping(map);
+                }
+            }
+            if (map[this.getY()][this.getX()]['trigger'] != "0") {
+                this.trigger(map[this.getY()][this.getX()]['trigger']);
+            }
+            viewHero(this.getY(), this.getX(), this.getRange());
+        }
 				
 	},
 	haut: function(){
-		var map = this.getMap();
+        if(this.fight == undefined) {
+            var map = this.getMap();
 
-		if(map[this.getY()-1][this.getX()] != undefined){
-			if(map[this.getY()-1][this.getX()]['obstacle'] == "1"){
-				this.crier('aie');
-			} else {
-				map[this.getY()-1][this.getX()]['hero'] = 1;
-				map[this.getY()][this.getX()]['hero'] = 0; 
-				map[this.getY()][this.getX()]['trigger'] = 0;
-				var plan=mapping(map);
-			}
-		}
-		if(map[this.getY()][this.getX()]['trigger'] != "0" ){
-			this.trigger(map[this.getY()][this.getX()]['trigger']);
-		}
-        viewHero(this.getY(),this.getX(), this.getRange());
+            if (map[this.getY() - 1][this.getX()] != undefined) {
+                if (map[this.getY() - 1][this.getX()]['obstacle'] == "1") {
+                    this.crier('aie');
+                } else {
+                    map[this.getY() - 1][this.getX()]['hero'] = 1;
+                    map[this.getY()][this.getX()]['hero'] = 0;
+                    map[this.getY()][this.getX()]['trigger'] = 0;
+                    var plan = mapping(map);
+                }
+            }
+            if (map[this.getY()][this.getX()]['trigger'] != "0") {
+                this.trigger(map[this.getY()][this.getX()]['trigger']);
+            }
+            viewHero(this.getY(), this.getX(), this.getRange());
+        }
 				
 	}
 	,
 	bas: function(){
-		var map = this.getMap();
+        if(this.fight == undefined) {
+            var map = this.getMap();
 
-		if(map[this.getY()+1][this.getX()] != undefined){
-			if(map[this.getY()+1][this.getX()]['obstacle'] == "1"){
-				this.crier('aie');
-			} else {
-				map[this.getY()+1][this.getX()]['hero'] = 1;
-				map[this.getY()][this.getX()]['hero'] = 0; 
-				map[this.getY()][this.getX()]['trigger'] = 0;
-				var plan=mapping(map);
-			}
-		}
-		if(map[this.getY()][this.getX()]['trigger'] != "0" ){
-			this.trigger(map[this.getY()][this.getX()]['trigger']);
-		}
-        viewHero(this.getY(),this.getX(), this.getRange());
+            if (map[this.getY() + 1][this.getX()] != undefined) {
+                if (map[this.getY() + 1][this.getX()]['obstacle'] == "1") {
+                    this.crier('aie');
+                } else {
+                    map[this.getY() + 1][this.getX()]['hero'] = 1;
+                    map[this.getY()][this.getX()]['hero'] = 0;
+                    map[this.getY()][this.getX()]['trigger'] = 0;
+                    var plan = mapping(map);
+                }
+            }
+            if (map[this.getY()][this.getX()]['trigger'] != "0") {
+                this.trigger(map[this.getY()][this.getX()]['trigger']);
+            }
+            viewHero(this.getY(), this.getX(), this.getRange());
+        }
 				
 	},
 	crier:function(phrase)
@@ -153,5 +265,33 @@ Hero.prototype=
 	{
 		$(".btn-info").attr("data-target", "#"+trigger);
 		$(".btn-info").click();
-	}
+	},
+	init:function(element)
+	{
+		var name = element.attr('name');this.setName(name);
+        var image = element.attr('image');this.setImage(image);
+        var health = element.attr('health');this.setHealth(health);
+        var maxHealth = element.attr('maxHealth');this.setMaxHealth(maxHealth);
+        var energy = element.attr('energy');this.setEnergy(energy);
+        var maxEnergy = element.attr('maxEnergy');this.setMaxEnergy(maxEnergy);
+        var move = element.attr('move');this.setMove(move);
+        var quickness = element.attr('quickness');this.setQuickness(quickness);
+        var attack = element.attr('attack');this.setAttack(attack);
+        var defense = element.attr('defense');this.setDefense(defense);
+        var critical = element.attr('critical');this.setCritical(critical);
+        var level = element.attr('level');this.setLevel(level);
+        var type = element.attr('type');this.setType(type);
+        var id = element.attr('id');this.setLevel(id);
+        var fight = $('#zone').attr('fight');this.setFight(fight);
+
+        console.dir(this);
+	},
+    play:function()
+    {
+        alert(this.getName()+ ': grrr');
+    },
+    toPlay:function()
+    {
+        alert(this.getName()+': paf');
+    }
 }

@@ -3,7 +3,6 @@
 {% block main %}
 <div id="map" class="col-lg-8">
     <div class="col-lg-8">
-        {{ dump(character) }}
         {% if map is not empty %}
             <table id="zone" fight="1" style="border:1px solid black;">
                 {% for lines in map %}
@@ -29,5 +28,24 @@
     <div class="col-lg-2">
         <div id="dialog"></div>
     </div>
+</div>
+<div id="interface">
+
+</div>
+<div id="opponents">
+    {% for quickness in order  %}
+        {% for key, type in quickness %}
+            {% for opponent in type %}
+                <div type ="{{ key }}" id="{{ opponent.id }}"
+                     name = "{{ opponent.name }}"
+                     health = "{{ opponent.health }}"
+                     energy = "{{ opponent.energy }}"
+                     move = "{{ opponent.move }}" quickness = "{{ opponent.quickness }}"
+                     attack = "{{ opponent.attack }}" defense = "{{ opponent.defense }}"
+                     critical = "{{ opponent.critical }}" level = "{{ opponent.level }}"></div>
+            {% endfor %}
+        {% endfor %}
+    {% endfor %}
+</div>
 </div>
 {% endblock %}

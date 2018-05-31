@@ -156,6 +156,7 @@ class FightController extends Controller
 
         $fight = $em->getRepository('AppBundle:Fights')->find($id);
 
+        //affichage de la carte de combat
         $chemin = dirname(__FILE__).'/../../../web/Ressources/zones.txt';
 
         if(file_exists($chemin)){
@@ -185,9 +186,65 @@ class FightController extends Controller
             }
         }
 
+        //gestion des adversaires
+        $quest = $em->getRepository('AppBundle:Quests')->find($fight->getQuest()->getId());
+
+        $listOpponents = array();
+        $listCapacities = array();
+        $listOpponents['hero'][] = $character;
+        $heroCapacities = $em->getRepository('AppBundle:Capacitiesbycharacter')->findBy([
+            'characterid'=> $character,
+        ]);
+//        var_dump($heroCapacities);
+        foreach ($heroCapacities as $capacity){
+            $listCapacities['hero'][] = $capacity->getCapacityid();
+        }
+
+
+        if($quest->getTeam() !== 0) {
+            $team = $em->getRepository('AppBundle:Team')->findBy([
+                'character' => $character,
+            ]);
+            foreach ($team as $mate) {
+                $listOpponents['team'][] = $mate->getTeamMate();
+                $teamCapacities = $em->getRepository('AppBundle:Capacitiesbyfollower')->findBy([
+                    'followerid'=> $mate->getTeamMate(),
+                ]);
+                foreach ($teamCapacities as $capacity){
+                    $listCapacities['team'][$mate->getTeamMate()->getId()][] = $capacity->getCapacityid()->getId();
+                }
+            }
+        }
+        //gestion des monstres
+        $monsters = $em->getRepository('AppBundle:Monstersbyfight')->findBy([
+            'fight' => $id,
+        ]);
+        foreach ($monsters as $monster){
+                $mob = $em->getRepository('AppBundle:Monsters')->find($monster->getMonster());
+                $listOpponents['monster'][] = $mob;
+                $mobCapacities = $em->getRepository('AppBundle:Capacitiesbymonster')->findBy([
+                    'monsterid'=> $mob,
+                ]);
+                foreach ($mobCapacities as $capacity){
+                    $listCapacities['monster'][$mob->getId()][] = $capacity->getCapacityid()->getId();
+                }
+        }
+
+        var_dump($listCapacities);die;
+
+        $order = array();
+        foreach ($listOpponents as $key => $type){
+            foreach ($type as $opponent ){
+                $order[$opponent->getQuickness()][$key][] = $opponent;
+            }
+        }
+
+        krsort($order);
+
         return $this->render('default/places/fight.html.twig', [
             'map' => $map,
             'character' => $character,
+            'order' => $order,
         ]);
     }
 }
