@@ -23,6 +23,7 @@
         {% else %}
             Pas de carte : en construction
         {% endif %}
+        <canvas id="game" width="{% for key,lines in map %}{% if key == 0 %}{{ lines | length * 40 }}{% endif %}{% endfor %}" height="{{ map | length * 40 }}"></canvas>
 	</div>
 	<div class="col-lg-2">
 		<div id="dialog"></div>

@@ -46,6 +46,8 @@ $(document).ready(function()
     $(".btn-info").click();
 
 	init_fight();
+
+	init_game();
 	
 });
 
@@ -232,4 +234,69 @@ function play(opponent){
 				  break;
 
 	}
+}
+
+function init_game(){
+	var ctx = null;
+	var tileW = 40, tileH = 40;
+
+	var keysDown = {
+		37: false,
+		38: false,
+		39: false,
+		40: false
+	}
+
+	function Character(){
+		this.tileFrom = [1,1];
+		this.tileTo   = [1,1];
+		this.tileMoved = 0;
+		this.dimensions = [30,30];
+		this.position = [45,45];
+		this.delayMove = 700;
+	}
+
+	Character.prototype.placeAt = function(x, y){
+		this.tileFrom = [x, y];
+		this.tileTo = [x, y];
+		
+	};
+
+	var map = mapBuilding();
+
+	console.log(map);
+
+	var mapW = map.length;
+	var mapH = map[0].length;
+
+	window.onload  = function(){
+
+		ctx = document.getElementById('game').getContext('2d');
+		requestAnimationFrame(drawGame);
+	}
+
+	function drawGame(){
+
+		if(ctx == null){ return; }
+
+		for (var x = 0; x < mapW; x++){
+			for (var y = 0; y < mapH; y++){
+				switch(map[x][y]['decor']){
+					case "arbre" : ctx.fillStyle = "#4caf50";
+						       break;
+                    case "herbe" : ctx.fillStyle = "#8bc34a";
+                        		   break;
+                    case "arbre_sombre" : ctx.fillStyle = "#795548";
+                        break;
+                    case "chemin_noir" : ctx.fillStyle = "#9e9e9e";
+                        break;
+					default: ctx.fillStyle = "#ddcd9d";
+				}
+                ctx.fillRect(y*tileW, x*tileH, tileW, tileH);
+			}
+		}
+
+	}
+
+
 }
