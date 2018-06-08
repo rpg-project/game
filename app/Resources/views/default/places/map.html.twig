@@ -4,7 +4,7 @@
 <div id="map" class="col-lg-8">
 	<div class="col-lg-8">
         {% if map is not empty %}
-		<table id="zone" style="border:1px solid black;">
+		<table id="zone" style="border:1px solid black;display:none;">
 			{% for lines in map %}
 			<tr>
 				{% for col in lines %}
@@ -18,8 +18,9 @@
 					</td>
 				{% endfor %}
 			</tr>
-			{% endfor %}		
-		</table>
+			{% endfor %}
+		</table><canvas id="game" width="440" height="400"></canvas>
+
         {% else %}
             Pas de carte : en construction
         {% endif %}
