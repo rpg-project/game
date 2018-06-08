@@ -40,7 +40,7 @@ $(document).ready(function()
 		hero.setXY(x,y);
 		map[y][x]['trigger'] = 0;
 		hero.setMap(map);
-		//bouton();
+		bouton();
 	}
 
     $(".btn-info").click();
@@ -240,6 +240,8 @@ function init_game(){
     var ctx = null;
     var tileW = 40, tileH = 40;
     var map = mapBuilding();
+
+    console.log(map);
     var mapW = map[0].length, mapH = map.length;
 
     var gameMap = new Array;
@@ -273,6 +275,7 @@ function init_game(){
             }
         }
     }
+    var warFogMap = warMap(map,2);
     var currentSecond = 0, frameCount = 0, framesLastSecond = 0, lastFrameTime = 0;
     var tileset = null, tilesetURL = "/images/tileset.png", tilesetLoaded = false;
     var floorTypes = {
@@ -287,7 +290,8 @@ function init_game(){
         0 : { colour:"#286625", floor:floorTypes.solid,	sprite:[{x:120,y:0,w:40,h:40}]	},
         4 : { colour:"#678fd9", floor:floorTypes.water,	sprite:[{x:160,y:0,w:40,h:40}]	},
         5 : { colour:"#e8bd7a", floor:floorTypes.path,	sprite:[{x:200,y:40,w:40,h:40}]	},
-        6 : { colour:"#e8bd7a", floor:floorTypes.path,	sprite:[{x:160,y:80,w:40,h:40}]	} ,
+        6 : { colour:"#e8bd7a", floor:floorTypes.path,	sprite:[{x:160,y:80,w:40,h:40}]	},
+        7 : { colour:"#685b48", floor:floorTypes.solid,	sprite:[{x:0,y:0,w:40,h:40}]    },
         "/images/wolf.jpg" : { colour:"#e8bd7a", floor:floorTypes.path,	sprite:[{x:200,y:0,w:40,h:40}]  },
         "/images/biche.jpg" : { colour:"#e8bd7a", floor:floorTypes.path,	sprite:[{x:160,y:40,w:40,h:40}]  },
         "/images/cerf.png" : { colour:"#e8bd7a", floor:floorTypes.path,	sprite:[{x:200,y:80,w:40,h:40}]  }
@@ -325,6 +329,8 @@ function init_game(){
         this.sprites[directions.down]	= [{x:0,y:180,w:30,h:30}];
         this.sprites[directions.left]	= [{x:0,y:210,w:30,h:30}];
     }
+
+    //console.dir(player);
 
     Character.prototype.placeAt = function(x, y)
     {
@@ -375,7 +381,7 @@ function init_game(){
     Character.prototype.canMoveTo = function(x, y)
     {
         if(x < 0 || x >= mapW || y < 0 || y >= mapH) { return false; }
-        if(tileTypes[gameMap[toIndex(x,y)]].floor!=floorTypes.path) { return false; }
+        if(tileTypes[warFogMap[toIndex(x,y)]].floor!=floorTypes.path) { return false; }
         return true;
     };
     Character.prototype.canMoveUp		= function() { return this.canMoveTo(this.tileFrom[0], this.tileFrom[1]-1); };
@@ -383,10 +389,10 @@ function init_game(){
     Character.prototype.canMoveLeft 	= function() { return this.canMoveTo(this.tileFrom[0]-1, this.tileFrom[1]); };
     Character.prototype.canMoveRight 	= function() { return this.canMoveTo(this.tileFrom[0]+1, this.tileFrom[1]); };
 
-    Character.prototype.moveLeft	= function(t) { this.tileTo[0]-=1; this.timeMoved = t; };
-    Character.prototype.moveRight	= function(t) { this.tileTo[0]+=1; this.timeMoved = t; };
-    Character.prototype.moveUp	    = function(t) { this.tileTo[1]-=1; this.timeMoved = t; };
-    Character.prototype.moveDown	= function(t) { this.tileTo[1]+=1; this.timeMoved = t; };
+    // Character.prototype.moveLeft	= function(t) { this.tileTo[0]-=1; this.timeMoved = t; };
+    // Character.prototype.moveRight	= function(t) { this.tileTo[0]+=1; this.timeMoved = t; };
+    // Character.prototype.moveUp	    = function(t) { alert('ici');this.tileTo[1]-=1; this.timeMoved = t; };
+    // Character.prototype.moveDown	= function(t) { this.tileTo[1]+=1; this.timeMoved = t; };
 
     Character.prototype.moveLeft	= function(t) { this.tileTo[0]-=1; this.timeMoved = t; this.direction = directions.left; };
     Character.prototype.moveRight	= function(t) { this.tileTo[0]+=1; this.timeMoved = t; this.direction = directions.right; };
@@ -449,7 +455,7 @@ function init_game(){
         {
             for(var x = 0; x < mapW; ++x)
             {
-                var tile = tileTypes[gameMap[toIndex(x,y)]];
+                var tile = tileTypes[warFogMap[toIndex(x,y)]];
                 ctx.drawImage(tileset,
                     tile.sprite[0].x, tile.sprite[0].y, tile.sprite[0].w, tile.sprite[0].h,
                     (x*tileW),(y*tileH),
@@ -464,6 +470,9 @@ function init_game(){
             player.dimensions[0], player.dimensions[1]);
 
         lastFrameTime = currentFrameTime;
+        map = mapBuilding();
+        // console.log(map);
+        warFogMap = warMap(map,2);
         requestAnimationFrame(drawGame);
     }
 //     var ctx = null;
@@ -1048,5 +1057,92 @@ function init_game(){
 //         lastFrameTime = currentFrameTime;
 //         requestAnimationFrame(drawGame);
 //     }
+
+}
+
+function warMap(map, view){
+
+    var heroView = view-1;
+    var warFogMap = new Array;
+    var mapW = map[0].length, mapH = map.length;
+    for(var i=0; i<mapH; i++){
+        for(var j=0; j<mapW; j++){
+            if(map[i][j]['hero'] == 1){
+                warFogMap.push(1);
+                var x = i;
+                var y = j;
+            } else {
+                warFogMap.push(7);
+            }
+        }
+    }
+
+    // j colonne
+    // i ligne
+
+    //gestion de la vue du hero
+    //côtés
+    for(var v = 0;v <= heroView; v++) {
+        if (y - v >= 0 && map[x][y - v] != undefined) {
+            warFogMap[(x * mapW) + y - v] = tileMatch(map, x, y - v);//map[x][y-heroView];
+        }
+        if (y + v <= mapW && map[x][y + v] != undefined) {
+            warFogMap[(x * mapW) + y + v] = tileMatch(map, x, y + v);//map[x][y+heroView];
+        }
+    }
+    //devant
+    for(var v = 0;v <=heroView; v++){
+        if(x-v >=0 && y-v >=0 && map[x-v][y-v] != undefined){
+            warFogMap[((x-v) * mapW) + y - v] = tileMatch(map,x-v,y-v);//map[x-1][y-heroView];
+        }
+        if(x-v >=0 && map[x-v][y] != undefined){
+            warFogMap[((x-v) * mapW) + y ] = tileMatch(map,x-v,y);//map[x-1][y];
+        }
+        if(x-v >=0 && y + v < mapW && map[x-v][y+v] != undefined){
+            warFogMap[((x-v) * mapW) + y + v] = tileMatch(map,x-v,y+v);//map[x][y+heroView];
+        }
+    }
+
+
+    //derrière
+    if(x+1 < mapH && y-heroView >=0 && map[x+1][y-heroView] != undefined){
+        warFogMap[((x+1) * mapW) + y - heroView] = tileMatch(map,x+1,y-heroView);//map[x-1][y-heroView];
+    }
+    if(x+1 < mapH && map[x+1][y] != undefined){
+        warFogMap[((x+1) * mapW) + y ] = tileMatch(map,x+1,y);//map[x-1][y];
+    }
+    if(x+1 < mapH && y+heroView < mapW && map[x+1][y+heroView] != undefined){
+        warFogMap[((x+1) * mapW) + y + heroView] = tileMatch(map,x+1,y+heroView);//map[x][y+heroView];
+    }
+
+
+    console.log(warFogMap);
+
+
+    return warFogMap;
+}
+
+function tileMatch(map, x, y){
+
+    var ret = "";
+
+    switch(map[x][y]['decor']){
+        case 'arbre': ret = 0;
+            break;
+        case 'herbe': ret = 2;
+            break;
+        case 'arbre_sombre': ret = 3;
+            break;
+        case 'souche': ret = 6;
+            break;
+        case 'hutte': ret = 5;
+            break;
+        case 'chemin': ret = 1;
+            break;
+        default: ret = map[x][y]['monster'];
+    }
+
+    return ret;
+
 
 }
