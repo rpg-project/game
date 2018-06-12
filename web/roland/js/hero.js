@@ -216,6 +216,7 @@ Hero.prototype=
 				
 	},
 	haut: function(){
+	    alert('?');
         if(this.fight == undefined) {
             var map = this.getMap();
 
@@ -260,7 +261,7 @@ Hero.prototype=
 	},
 	crier:function(phrase)
 	{
-		$("#dialog").append('<p>'+phrase+'</p>');
+		$("#dialog").html('<p>'+phrase+'</p>');
 	},
 	trigger:function(trigger)
 	{

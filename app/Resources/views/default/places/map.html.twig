@@ -1,34 +1,53 @@
 {% extends 'default/players/playerPage.html.twig' %}
 
-{% block main %}
-<div id="map" class="col-lg-8">
-	<div class="col-lg-8">
-        {% if map is not empty %}
-		<table id="zone" style="border:1px solid black;display:none;">
-			{% for lines in map %}
-			<tr>
-				{% for col in lines %}
-					<td obstacle="{{ col.obstacle }}" trigger="{{ col.trigger }}" monster='{{ col.monster}}' decor='{{ col.decoration[:-4] }}'>
-						{% if col.monster != "0" %}
-							<img src="{{col.monster}}" class="invisible" width="40" heigth="40">
-						{% endif %}
-						{% if col.trigger == "1" %}
-							<img id="hero" line="{{col.x}}" col="{{col.y}}" src="{{asset(null)}}images/tete.jpg" width="40" heigth="40"  >
-						{% endif %}
-					</td>
-				{% endfor %}
-			</tr>
-			{% endfor %}
-		</table><canvas id="game" width="440" height="400"></canvas>
 
-        {% else %}
-            Pas de carte : en construction
-        {% endif %}
-        <canvas id="game" width="{% for key,lines in map %}{% if key == 0 %}{{ lines | length * 40 }}{% endif %}{% endfor %}" height="{{ map | length * 40 }}"></canvas>
-	</div>
-	<div class="col-lg-2">
-		<div id="dialog"></div>
-	</div>
+
+{% block main %}
+    <style>
+        canvas{
+            position:absolute;
+            top:0;
+            left:0;
+            z-index:100;
+        }
+    </style>
+<div id="map" class="col-lg-8">
+    <div class="row">
+        <div class="col-lg-8">
+            {% if map is not empty %}
+            <table id="zone" style="border:1px solid black;display:none;">
+                {% for lines in map %}
+                <tr>
+                    {% for col in lines %}
+                        <td obstacle="{{ col.obstacle }}" trigger="{{ col.trigger }}" monster='{{ col.monster}}' decor='{{ col.decoration[:-4] }}'>
+                            {% if col.monster != "0" %}
+                                <img src="{{col.monster}}" class="invisible" width="40" heigth="40">
+                            {% endif %}
+                            {% if col.trigger == "1" %}
+                                <img id="hero" line="{{col.x}}" col="{{col.y}}" src="{{asset(null)}}images/tete.jpg" width="40" heigth="40"  >
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+                    <canvas id="game" width="{{ map | first | length * 40}}" height="{{ map | length * 40 }}"></canvas>
+                    <canvas id="fog" width="{{ map | first | length * 40}}" height="{{ map | length * 40 }}"></canvas>
+            {% else %}
+                Pas de carte : en construction
+            {% endif %}
+            {#<canvas id="game" width="{% for key,lines in map %}{% if key == 0 %}{{ lines | length * 40 }}{% endif %}{% endfor %}" height="{{ map | length * 40 }}"></canvas>#}
+            {#<canvas id="main"></canvas>#}
+            {#<canvas id="fog"></canvas>#}
+            {#<canvas id="dark"></canvas>#}
+        </div>
+        <div class="col-lg-2">
+            <div id="dialog"></div>
+        </div>
+    </div>
+    <div class="row">
+
+    </div>
 </div>
 
 <!-- Trigger the modal with a button -->

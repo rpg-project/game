@@ -40,7 +40,7 @@ $(document).ready(function()
 		hero.setXY(x,y);
 		map[y][x]['trigger'] = 0;
 		hero.setMap(map);
-		bouton();
+		//bouton();
 	}
 
     $(".btn-info").click();
@@ -48,6 +48,10 @@ $(document).ready(function()
 	init_fight();
 
 	init_game();
+
+    //init_canvas();
+
+
 	
 });
 
@@ -162,7 +166,7 @@ function mapping(map){
 	var y = $('#hero').attr('line');
 	hero.setXY(x,y);
 	hero.setMap(map);
-	bouton();
+	//bouton();
 }
 
 function viewHero(i, j, range){
@@ -241,7 +245,7 @@ function init_game(){
     var tileW = 40, tileH = 40;
     var map = mapBuilding();
 
-    console.log(map);
+    //console.log(map);
     var mapW = map[0].length, mapH = map.length;
 
     var gameMap = new Array;
@@ -275,7 +279,7 @@ function init_game(){
             }
         }
     }
-    var warFogMap = warMap(map,2);
+    //var warFogMap = warMap(map,2);
     var currentSecond = 0, frameCount = 0, framesLastSecond = 0, lastFrameTime = 0;
     var tileset = null, tilesetURL = "/images/tileset.png", tilesetLoaded = false;
     var floorTypes = {
@@ -284,10 +288,10 @@ function init_game(){
         water	: 2
     };
     var tileTypes = {
-        3 : { colour:"#685b48", floor:floorTypes.solid, sprite:[{x:0,y:0,w:40,h:40}]	},
+        3 : { colour:"#685b48", floor:floorTypes.solid, sprite:[{x:40,y:40,w:40,h:40}]	},
         2 : { colour:"#5aa457", floor:floorTypes.path,	sprite:[{x:40,y:0,w:40,h:40}]	},
         1 : { colour:"#e8bd7a", floor:floorTypes.path,	sprite:[{x:80,y:0,w:40,h:40}]	},
-        0 : { colour:"#286625", floor:floorTypes.solid,	sprite:[{x:120,y:0,w:40,h:40}]	},
+        0 : { colour:"#286625", floor:floorTypes.solid,	sprite:[{x:0,y:40,w:40,h:40}]	},
         4 : { colour:"#678fd9", floor:floorTypes.water,	sprite:[{x:160,y:0,w:40,h:40}]	},
         5 : { colour:"#e8bd7a", floor:floorTypes.path,	sprite:[{x:200,y:40,w:40,h:40}]	},
         6 : { colour:"#e8bd7a", floor:floorTypes.path,	sprite:[{x:160,y:80,w:40,h:40}]	},
@@ -345,15 +349,28 @@ function init_game(){
 
         if((t-this.timeMoved)>=this.delayMove) {
             this.placeAt(this.tileTo[0], this.tileTo[1]);
+            //console.log(this.tileTo[0]+'/'+this.tileTo[1]);
+            var map = mapBuilding();
+            map[this.tileTo[1]][this.tileTo[0]]['hero'] = 1;
 
             if (typeof tileEvents[toIndex(this.tileTo[0], this.tileTo[1])] != 'undefined') {
                 // alert('event');
                 // alert(tileEvents[toIndex(this.tileTo[0], this.tileTo[1])]);
-                $(".btn-info").attr("data-target", "#"+tileEvents[toIndex(this.tileTo[0], this.tileTo[1])]);
-                $(".btn-info").click();
+                // $(".btn-info").attr("data-target", "#"+tileEvents[toIndex(this.tileTo[0], this.tileTo[1])]);
+                // $(".btn-info").click();
+                hero.crier($("#"+tileEvents[toIndex(this.tileTo[0], this.tileTo[1])]).find(".modal-body").html());
                 tileEvents[toIndex(this.tileTo[0], this.tileTo[1])] = undefined;
 
             }
+
+            var fog_gd = fogCtx.createRadialGradient(0,0,60,player.position[0],player.position[1],120);
+            fog_gd.addColorStop(0, 'rgba(0,0,0,0)');
+            fog_gd.addColorStop(1, 'rgba(0,0,0,1)');
+            fogCtx.fillStyle = fog_gd;
+            fogCtx.beginPath();
+            fogCtx.arc(player.position[0]+15, player.position[1]+20,80,0,2*Math.PI);
+            fogCtx.closePath();
+            fogCtx.fill();
         }
         else
         {
@@ -381,7 +398,8 @@ function init_game(){
     Character.prototype.canMoveTo = function(x, y)
     {
         if(x < 0 || x >= mapW || y < 0 || y >= mapH) { return false; }
-        if(tileTypes[warFogMap[toIndex(x,y)]].floor!=floorTypes.path) { return false; }
+        // if(tileTypes[warFogMap[toIndex(x,y)]].floor!=floorTypes.path) { return false; }
+        if(tileTypes[gameMap[toIndex(x,y)]].floor!=floorTypes.path) { return false; }
         return true;
     };
     Character.prototype.canMoveUp		= function() { return this.canMoveTo(this.tileFrom[0], this.tileFrom[1]-1); };
@@ -406,7 +424,27 @@ function init_game(){
 
     window.onload = function()
     {
+
         ctx = document.getElementById('game').getContext("2d");
+        fogCtx = document.getElementById('fog').getContext("2d");
+
+        fogCtx.globalAlpha = 1;
+        fogCtx.fillStyle = "black";
+        fogCtx.fillRect(0,0,mapW*tileW,mapH*tileH);
+        fogCtx.globalCompositeOperation = "destination-out";
+
+        var fog_gd = fogCtx.createRadialGradient(0,0,60,player.position[0],player.position[1],120);
+        fog_gd.addColorStop(0, 'rgba(0,0,0,0)');
+        fog_gd.addColorStop(1, 'rgba(0,0,0,1)');
+        fogCtx.fillStyle = fog_gd;
+        fogCtx.beginPath();
+        fogCtx.arc(player.position[0]+15, player.position[1]+20,80,0,2*Math.PI);
+        fogCtx.closePath();
+        fogCtx.fill();
+
+        console.log(player.position[0], player.position[1]);
+
+
         requestAnimationFrame(drawGame);
         ctx.font = "bold 10pt sans-serif";
 
@@ -455,7 +493,8 @@ function init_game(){
         {
             for(var x = 0; x < mapW; ++x)
             {
-                var tile = tileTypes[warFogMap[toIndex(x,y)]];
+                // var tile = tileTypes[warFogMap[toIndex(x,y)]];
+                var tile = tileTypes[gameMap[toIndex(x,y)]];
                 ctx.drawImage(tileset,
                     tile.sprite[0].x, tile.sprite[0].y, tile.sprite[0].w, tile.sprite[0].h,
                     (x*tileW),(y*tileH),
@@ -472,7 +511,7 @@ function init_game(){
         lastFrameTime = currentFrameTime;
         map = mapBuilding();
         // console.log(map);
-        warFogMap = warMap(map,2);
+        // warFogMap = warMap(map,2);
         requestAnimationFrame(drawGame);
     }
 //     var ctx = null;
@@ -1062,6 +1101,7 @@ function init_game(){
 
 function warMap(map, view){
 
+    console.log(map);
     var heroView = view-1;
     var warFogMap = new Array;
     var mapW = map[0].length, mapH = map.length;
@@ -1116,7 +1156,7 @@ function warMap(map, view){
     }
 
 
-    console.log(warFogMap);
+    //console.log(warFogMap);
 
 
     return warFogMap;
@@ -1146,3 +1186,93 @@ function tileMatch(map, x, y){
 
 
 }
+
+// function init_canvas(){
+//
+//     var darkness = 1
+//     var fogness = 0.5;
+//     var dark_color = "black";
+//     var fog_color = "black";
+//     var global_vision = new Array;
+//     var width = 700;
+//     var height = 700;
+//
+//     var entity_size = 20;
+//     var entities = new Array;
+//     var entity_color = "yellow";
+//     var entity_spacing = 100;
+//     var entity_vision_radius = 150;
+//
+//     for(var i=0; i<width/entity_size*entity_spacing; i++){
+//         for(var j=0; j<height/entity_size*entity_spacing; j++){
+//             entities.push({
+//                 x: i * (entity_size + entity_spacing)+entity_spacing/2 - entity_size/2,
+//                 y: j * (entity_size + entity_spacing)+entity_spacing/2 - entity_size/2
+//             })
+//         }
+//     }
+//
+//     var canvases = {
+//         main:document.getElementById('main'),
+//         fog:document.getElementById('fog'),
+//         dark:document.getElementById('dark')
+//     };
+//
+//     canvases.main.width = canvases.fog.width = canvases.dark.width = width;
+//     canvases.main.height = canvases.fog.height = canvases.dark.height = height;
+//
+//     var main = canvases.main.getContext("2d");
+//     var fog = canvases.fog.getContext("2d");
+//     var dark = canvases.dark.getContext("2d");
+//
+//
+//     var image = new Image();
+//     image.src = "http://www.gburri.org/bordel/Starcraft%202/Maps/1v1/Kulas_Ravine.jpg";
+//
+//     function draw(e){
+//         var pos = {x:e.clientX, y:e.clientY};
+//
+//         var x = pos.x;
+//         var y = pos.y;
+//
+//         var default_gco = main.globalCompositeOperation;
+//
+//         main.clearRect(0,0,width,height);
+//         fog.clearRect(0,0,width,height);
+//         dark.clearRect(0,0,width,height);
+//
+//         main.drawImage(image,0,0, width,height);
+//         main.fillStyle = entity_color;
+//         for(var i=0; i<entities.length;i++){
+//             var entity = entities[i];
+//             main.fillRect(entity.x, entity.y, entity_size,entity_size);
+//         }
+//
+//         fog.globalAlpha = fogness;
+//         fog.fillStyle = fog_color;
+//         fog.fillRect(0,0,width,height);
+//         fog.globalCompositeOperation = "destination-out";
+//         var fog_gd = fog.createRadialGradient(x,y, entity_vision_radius, x, y, entity_vision_radius/1.2);
+//         fog_gd.addColorStop(0, 'rgba(0,0,0,0)');
+//         fog_gd.addColorStop(1, 'rgba(0,0,0,1)');
+//         fog.fillStyle = fog_gd;
+//         fog.beginPath();
+//         //fog.arc(x,y,entity_vision_radius,0,2*Math.PI);
+//         fog.closePath();
+//         fog.fill();
+//
+//
+//         fog.globalCompositionOperation = dark.globalCompositeOperation = default_gco;
+//
+//     }
+//
+//
+//     canvases.dark.addEventListener("mousemove", draw);
+//
+//     function getDistance(pos1, pos2){
+//         var dx = pos1.x - pos2.x;
+//         var dy = pos1.y - pos2.y;
+//         return Math.sqrt(dx*dx*dy*dy);
+//     }
+//
+// }
