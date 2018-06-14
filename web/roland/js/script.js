@@ -45,10 +45,10 @@ $(document).ready(function()
 
     $(".btn-info").click();
 
-	init_fight();
 
-	init_game();
 
+	//init_game();
+    //
     //init_canvas();
 
 
@@ -221,516 +221,96 @@ function init_fight(){
 		return;
 	} else {
 		var opponents = $('#opponents');
+		var list = new Array;
 		opponents.find('div').each(function(){
 			var opponent = new Hero();
-			opponent.init($(this));
+            opponent.init($(this))
+			list.push(opponent);
 			play(opponent);
 		})
+        console.log(list);
+        //
+		// var fight = true;
+		// while(fight == true){
+        //
+        //
+		// 	fight = hero.fight();
+		// }
+
 	}
 }
 
 function play(opponent){
 	switch(opponent.getType())
 	{
+		case 'team':opponent.teamPlay();
+					break;
 		case 'monster': opponent.play();
 		                break;
-		default : opponent.toPlay()
+		default : opponent.toPlay();
 				  break;
-
 	}
 }
 
-function init_game(){
-    var ctx = null;
-    var tileW = 40, tileH = 40;
-    var map = mapBuilding();
-
-    //console.log(map);
-    var mapW = map[0].length, mapH = map.length;
-
-    var gameMap = new Array;
-    var heroPosition = new Array;
-    var tileEvents = new Array;
-    for(var i=0;i<mapH;i++){
-        for(var j=0;j<mapW;j++){
-            switch(map[i][j]['decor']){
-                case 'arbre': gameMap.push(0);
-                              break;
-                case 'herbe': gameMap.push(2);
-                              break;
-                case 'arbre_sombre': gameMap.push(3);
-                    break;
-                case 'souche': gameMap.push(6);
-                    break;
-                case 'hutte': gameMap.push(5);
-                    break;
-                default: gameMap.push(1);
-            }
-            if(map[i][j]['hero'] == 1){
-                heroPosition[1] = i;
-                heroPosition[0] = j;
-            }
-            if(map[i][j]['trigger'] != "0"){
-                tileEvents[toIndex(j, i)] = map[i][j]['trigger'];
-            }
-            if(map[i][j]['monster'] != "0"){
-                gameMap.pop();
-                gameMap.push(map[i][j]['monster']);
-            }
-        }
-    }
-    //var warFogMap = warMap(map,2);
-    var currentSecond = 0, frameCount = 0, framesLastSecond = 0, lastFrameTime = 0;
-    var tileset = null, tilesetURL = "/images/tileset.png", tilesetLoaded = false;
-    var floorTypes = {
-        solid	: 0,
-        path	: 1,
-        water	: 2
-    };
-    var tileTypes = {
-        3 : { colour:"#685b48", floor:floorTypes.solid, sprite:[{x:40,y:40,w:40,h:40}]	},
-        2 : { colour:"#5aa457", floor:floorTypes.path,	sprite:[{x:40,y:0,w:40,h:40}]	},
-        1 : { colour:"#e8bd7a", floor:floorTypes.path,	sprite:[{x:80,y:0,w:40,h:40}]	},
-        0 : { colour:"#286625", floor:floorTypes.solid,	sprite:[{x:0,y:40,w:40,h:40}]	},
-        4 : { colour:"#678fd9", floor:floorTypes.water,	sprite:[{x:160,y:0,w:40,h:40}]	},
-        5 : { colour:"#e8bd7a", floor:floorTypes.path,	sprite:[{x:200,y:40,w:40,h:40}]	},
-        6 : { colour:"#e8bd7a", floor:floorTypes.path,	sprite:[{x:160,y:80,w:40,h:40}]	},
-        7 : { colour:"#685b48", floor:floorTypes.solid,	sprite:[{x:0,y:0,w:40,h:40}]    },
-        "/images/wolf.jpg" : { colour:"#e8bd7a", floor:floorTypes.path,	sprite:[{x:200,y:0,w:40,h:40}]  },
-        "/images/biche.jpg" : { colour:"#e8bd7a", floor:floorTypes.path,	sprite:[{x:160,y:40,w:40,h:40}]  },
-        "/images/cerf.png" : { colour:"#e8bd7a", floor:floorTypes.path,	sprite:[{x:200,y:80,w:40,h:40}]  }
-    };
-
-    var directions = {
-        up		: 0,
-        right	: 1,
-        down	: 2,
-        left	: 3
-    };
-
-    var keysDown = {
-        37 : false,
-        38 : false,
-        39 : false,
-        40 : false
-    };
-
-    var player = new Character();
-
-    function Character()
-    {
-        this.tileFrom	= [heroPosition[0],heroPosition[1]];
-        this.tileTo		= [heroPosition[0],heroPosition[1]];
-        this.timeMoved	= 0;
-        this.dimensions	= [30,30];
-        this.position	= [(heroPosition[0]*tileH)+5,(heroPosition[1]*tileW)+5];
-        this.delayMove	= 700;
-
-        this.direction	= directions.up;
-        this.sprites = {};
-        this.sprites[directions.up]		= [{x:0,y:120,w:30,h:30}];
-        this.sprites[directions.right]	= [{x:0,y:150,w:30,h:30}];
-        this.sprites[directions.down]	= [{x:0,y:180,w:30,h:30}];
-        this.sprites[directions.left]	= [{x:0,y:210,w:30,h:30}];
-    }
-
-    //console.dir(player);
-
-    Character.prototype.placeAt = function(x, y)
-    {
-        this.tileFrom	= [x,y];
-        this.tileTo		= [x,y];
-        this.position	= [((tileW*x)+((tileW-this.dimensions[0])/2)),
-            ((tileH*y)+((tileH-this.dimensions[1])/2))];
-    };
-    Character.prototype.processMovement = function(t)
-    {
-        if(this.tileFrom[0]==this.tileTo[0] && this.tileFrom[1]==this.tileTo[1]) { return false; }
-
-        if((t-this.timeMoved)>=this.delayMove) {
-            this.placeAt(this.tileTo[0], this.tileTo[1]);
-            //console.log(this.tileTo[0]+'/'+this.tileTo[1]);
-            var map = mapBuilding();
-            map[this.tileTo[1]][this.tileTo[0]]['hero'] = 1;
-
-            if (typeof tileEvents[toIndex(this.tileTo[0], this.tileTo[1])] != 'undefined') {
-                // alert('event');
-                // alert(tileEvents[toIndex(this.tileTo[0], this.tileTo[1])]);
-                // $(".btn-info").attr("data-target", "#"+tileEvents[toIndex(this.tileTo[0], this.tileTo[1])]);
-                // $(".btn-info").click();
-                hero.crier($("#"+tileEvents[toIndex(this.tileTo[0], this.tileTo[1])]).find(".modal-body").html());
-                tileEvents[toIndex(this.tileTo[0], this.tileTo[1])] = undefined;
-
-            }
-
-            var fog_gd = fogCtx.createRadialGradient(0,0,60,player.position[0],player.position[1],120);
-            fog_gd.addColorStop(0, 'rgba(0,0,0,0)');
-            fog_gd.addColorStop(1, 'rgba(0,0,0,1)');
-            fogCtx.fillStyle = fog_gd;
-            fogCtx.beginPath();
-            fogCtx.arc(player.position[0]+15, player.position[1]+20,80,0,2*Math.PI);
-            fogCtx.closePath();
-            fogCtx.fill();
-        }
-        else
-        {
-            this.position[0] = (this.tileFrom[0] * tileW) + ((tileW-this.dimensions[0])/2);
-            this.position[1] = (this.tileFrom[1] * tileH) + ((tileH-this.dimensions[1])/2);
-
-            if(this.tileTo[0] != this.tileFrom[0])
-            {
-                var diff = (tileW / this.delayMove) * (t-this.timeMoved);
-                this.position[0]+= (this.tileTo[0]<this.tileFrom[0] ? 0 - diff : diff);
-            }
-            if(this.tileTo[1] != this.tileFrom[1])
-            {
-                var diff = (tileH / this.delayMove) * (t-this.timeMoved);
-                this.position[1]+= (this.tileTo[1]<this.tileFrom[1] ? 0 - diff : diff);
-            }
-
-            this.position[0] = Math.round(this.position[0]);
-            this.position[1] = Math.round(this.position[1]);
-        }
-
-        return true;
-    }
-
-    Character.prototype.canMoveTo = function(x, y)
-    {
-        if(x < 0 || x >= mapW || y < 0 || y >= mapH) { return false; }
-        // if(tileTypes[warFogMap[toIndex(x,y)]].floor!=floorTypes.path) { return false; }
-        if(tileTypes[gameMap[toIndex(x,y)]].floor!=floorTypes.path) { return false; }
-        return true;
-    };
-    Character.prototype.canMoveUp		= function() { return this.canMoveTo(this.tileFrom[0], this.tileFrom[1]-1); };
-    Character.prototype.canMoveDown 	= function() { return this.canMoveTo(this.tileFrom[0], this.tileFrom[1]+1); };
-    Character.prototype.canMoveLeft 	= function() { return this.canMoveTo(this.tileFrom[0]-1, this.tileFrom[1]); };
-    Character.prototype.canMoveRight 	= function() { return this.canMoveTo(this.tileFrom[0]+1, this.tileFrom[1]); };
-
-    // Character.prototype.moveLeft	= function(t) { this.tileTo[0]-=1; this.timeMoved = t; };
-    // Character.prototype.moveRight	= function(t) { this.tileTo[0]+=1; this.timeMoved = t; };
-    // Character.prototype.moveUp	    = function(t) { alert('ici');this.tileTo[1]-=1; this.timeMoved = t; };
-    // Character.prototype.moveDown	= function(t) { this.tileTo[1]+=1; this.timeMoved = t; };
-
-    Character.prototype.moveLeft	= function(t) { this.tileTo[0]-=1; this.timeMoved = t; this.direction = directions.left; };
-    Character.prototype.moveRight	= function(t) { this.tileTo[0]+=1; this.timeMoved = t; this.direction = directions.right; };
-    Character.prototype.moveUp		= function(t) { this.tileTo[1]-=1; this.timeMoved = t; this.direction = directions.up; };
-    Character.prototype.moveDown	= function(t) { this.tileTo[1]+=1; this.timeMoved = t; this.direction = directions.down; };
-
-    function toIndex(x, y)
-    {
-        return((y * mapW) + x);
-    }
-
-    window.onload = function()
-    {
-
-        ctx = document.getElementById('game').getContext("2d");
-        fogCtx = document.getElementById('fog').getContext("2d");
-
-        fogCtx.globalAlpha = 1;
-        fogCtx.fillStyle = "black";
-        fogCtx.fillRect(0,0,mapW*tileW,mapH*tileH);
-        fogCtx.globalCompositeOperation = "destination-out";
-
-        var fog_gd = fogCtx.createRadialGradient(0,0,60,player.position[0],player.position[1],120);
-        fog_gd.addColorStop(0, 'rgba(0,0,0,0)');
-        fog_gd.addColorStop(1, 'rgba(0,0,0,1)');
-        fogCtx.fillStyle = fog_gd;
-        fogCtx.beginPath();
-        fogCtx.arc(player.position[0]+15, player.position[1]+20,80,0,2*Math.PI);
-        fogCtx.closePath();
-        fogCtx.fill();
-
-        console.log(player.position[0], player.position[1]);
-
-
-        requestAnimationFrame(drawGame);
-        ctx.font = "bold 10pt sans-serif";
-
-        window.addEventListener("keydown", function(e) {
-            if(e.keyCode>=37 && e.keyCode<=40) { keysDown[e.keyCode] = true; }
-        });
-        window.addEventListener("keyup", function(e) {
-            if(e.keyCode>=37 && e.keyCode<=40) { keysDown[e.keyCode] = false; }
-        });
-
-        tileset = new Image();
-        tileset.onerror = function()
-        {
-            ctx = null;
-            alert("Failed loading tileset.");
-        };
-        tileset.onload = function() { tilesetLoaded = true; };
-        tileset.src = tilesetURL;
-    };
-
-    function drawGame()
-    {
-        if(ctx==null) { return; }
-        if(!tilesetLoaded) { requestAnimationFrame(drawGame); return; }
-
-        var currentFrameTime = Date.now();
-        var timeElapsed = currentFrameTime - lastFrameTime;
-
-        var sec = Math.floor(Date.now()/1000);
-        if(sec!=currentSecond)
-        {
-            currentSecond = sec;
-            framesLastSecond = frameCount;
-            frameCount = 1;
-        } else { frameCount++; }
-
-        if(!player.processMovement(currentFrameTime))
-        {
-            if(keysDown[38] && player.canMoveUp())		{ player.moveUp(currentFrameTime); }
-            else if(keysDown[40] && player.canMoveDown())	{ player.moveDown(currentFrameTime); }
-            else if(keysDown[37] && player.canMoveLeft())	{ player.moveLeft(currentFrameTime); }
-            else if(keysDown[39] && player.canMoveRight())	{ player.moveRight(currentFrameTime); }
-        }
-
-        for(var y = 0; y < mapH; ++y)
-        {
-            for(var x = 0; x < mapW; ++x)
-            {
-                // var tile = tileTypes[warFogMap[toIndex(x,y)]];
-                var tile = tileTypes[gameMap[toIndex(x,y)]];
-                ctx.drawImage(tileset,
-                    tile.sprite[0].x, tile.sprite[0].y, tile.sprite[0].w, tile.sprite[0].h,
-                    (x*tileW),(y*tileH),
-                    tileW, tileH);
-            }
-        }
-
-        var sprite = player.sprites[player.direction];
-        ctx.drawImage(tileset,
-            sprite[0].x, sprite[0].y, sprite[0].w, sprite[0].h,
-            player.position[0], player.position[1],
-            player.dimensions[0], player.dimensions[1]);
-
-        lastFrameTime = currentFrameTime;
-        map = mapBuilding();
-        // console.log(map);
-        // warFogMap = warMap(map,2);
-        requestAnimationFrame(drawGame);
-    }
+// function init_game(){
 //     var ctx = null;
-//     var gameMap = [
-//         0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//         0, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-//         0, 2, 2, 2, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-//         0, 1, 1, 2, 1, 0, 0, 0, 0, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-//         0, 1, 1, 2, 1, 0, 2, 2, 0, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-//         0, 1, 1, 2, 1, 0, 2, 2, 0, 4, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0,
-//         0, 1, 1, 2, 2, 2, 2, 2, 0, 4, 4, 4, 1, 1, 1, 0, 2, 2, 2, 0,
-//         0, 1, 1, 2, 1, 0, 2, 2, 0, 1, 1, 4, 1, 1, 1, 0, 2, 2, 2, 0,
-//         0, 1, 1, 2, 1, 0, 2, 2, 0, 1, 1, 4, 1, 1, 1, 0, 2, 2, 2, 0,
-//         0, 1, 1, 2, 1, 0, 0, 0, 0, 1, 1, 4, 1, 1, 0, 0, 0, 2, 0, 0,
-//         0, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 0, 2, 2, 2, 2, 0,
-//         0, 1, 1, 2, 2, 2, 2, 2, 2, 1, 4, 4, 1, 1, 0, 2, 2, 2, 2, 0,
-//         0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0,
-//         0, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 1, 1, 1, 0, 2, 2, 2, 2, 0,
-//         0, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 0, 2, 2, 2, 2, 0,
-//         0, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
-//         0, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-//         0, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-//         0, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-//         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-//     ];
-//     var mapTileData = new TileMap();
-//
-//     var roofList = [
-//         { x:5, y:3, w:4, h:7, data: [
-//             10, 10, 11, 11,
-//             10, 10, 11, 11,
-//             10, 10, 11, 11,
-//             10, 10, 11, 11,
-//             10, 10, 11, 11,
-//             10, 10, 11, 11,
-//             10, 10, 11, 11
-//         ]},
-//         { x:15, y:5, w:5, h:4, data: [
-//             10, 10, 11, 11, 11,
-//             10, 10, 11, 11, 11,
-//             10, 10, 11, 11, 11,
-//             10, 10, 11, 11, 11
-//         ]},
-//         { x:14, y:9, w:6, h:7, data: [
-//             10, 10, 10, 11, 11, 11,
-//             10, 10, 10, 11, 11, 11,
-//             10, 10, 10, 11, 11, 11,
-//             10, 10, 10, 11, 11, 11,
-//             10, 10, 10, 11, 11, 11,
-//             10, 10, 10, 11, 11, 11,
-//             10, 10, 10, 11, 11, 11
-//         ]}
-//     ];
-//
 //     var tileW = 40, tileH = 40;
-//     var mapW = 20, mapH = 20;
-//     var currentSecond = 0, frameCount = 0, framesLastSecond = 0, lastFrameTime = 0;
+//     var map = mapBuilding();
 //
-//     var tileset = null, tilesetURL = "/images/tileset.png", tilesetLoaded = false;
+//     //console.log(map);
+//     var mapW = map[0].length, mapH = map.length;
 //
-//     var gameTime = 0;
-//     var gameSpeeds = [
-//         {name:"Normal", mult:1},
-//         {name:"Slow", mult:0.3},
-//         {name:"Fast", mult:3},
-//         {name:"Paused", mult:0}
-//     ];
-//     var currentSpeed = 0;
-//
-//     var objectCollision = {
-//         none		: 0,
-//         solid		: 1
-//     };
-//     var objectTypes = {
-//         1 : {
-//             name : "Box",
-//             sprite : [{x:40,y:160,w:40,h:40}],
-//             offset : [0,0],
-//             collision : objectCollision.solid,
-//             zIndex : 1
-//         },
-//         2 : {
-//             name : "Broken Box",
-//             sprite : [{x:40,y:200,w:40,h:40}],
-//             offset : [0,0],
-//             collision : objectCollision.none,
-//             zIndex : 1
-//         },
-//         3 : {
-//             name : "Tree top",
-//             sprite : [{x:80,y:160,w:80,h:80}],
-//             offset : [-20,-20],
-//             collision : objectCollision.solid,
-//             zIndex : 3
+//     var gameMap = new Array;
+//     var heroPosition = new Array;
+//     var tileEvents = new Array;
+//     for(var i=0;i<mapH;i++){
+//         for(var j=0;j<mapW;j++){
+//             switch(map[i][j]['decor']){
+//                 case 'arbre': gameMap.push(0);
+//                               break;
+//                 case 'herbe': gameMap.push(2);
+//                               break;
+//                 case 'arbre_sombre': gameMap.push(3);
+//                     break;
+//                 case 'souche': gameMap.push(6);
+//                     break;
+//                 case 'hutte': gameMap.push(5);
+//                     break;
+//                 default: gameMap.push(1);
+//             }
+//             if(map[i][j]['hero'] == 1){
+//                 heroPosition[1] = i;
+//                 heroPosition[0] = j;
+//             }
+//             if(map[i][j]['trigger'] != "0"){
+//                 tileEvents[toIndex(j, i)] = map[i][j]['trigger'];
+//             }
+//             if(map[i][j]['monster'] != "0"){
+//                 gameMap.pop();
+//                 gameMap.push(map[i][j]['monster']);
+//             }
 //         }
-//     };
-//     function MapObject(nt)
-//     {
-//         this.x		= 0;
-//         this.y		= 0;
-//         this.type	= nt;
 //     }
-//     MapObject.prototype.placeAt = function(nx, ny)
-//     {
-//         if(mapTileData.map[toIndex(this.x, this.y)].object==this)
-//         {
-//             mapTileData.map[toIndex(this.x, this.y)].object = null;
-//         }
-//
-//         this.x = nx;
-//         this.y = ny;
-//
-//         mapTileData.map[toIndex(nx, ny)].object = this;
-//     };
-//
+//     //var warFogMap = warMap(map,2);
+//     var currentSecond = 0, frameCount = 0, framesLastSecond = 0, lastFrameTime = 0;
+//     var tileset = null, tilesetURL = "/images/tileset.png", tilesetLoaded = false;
 //     var floorTypes = {
 //         solid	: 0,
 //         path	: 1,
-//         water	: 2,
-//         ice		: 3,
-//         conveyorU	: 4,
-//         conveyorD	: 5,
-//         conveyorL	: 6,
-//         conveyorR	: 7,
-//         grass		: 8
+//         water	: 2
 //     };
 //     var tileTypes = {
-//         0 : { colour:"#685b48", floor:floorTypes.solid, sprite:[{x:0,y:0,w:40,h:40}]	},
-//         1 : { colour:"#5aa457", floor:floorTypes.grass,	sprite:[{x:40,y:0,w:40,h:40}]	},
-//         2 : { colour:"#e8bd7a", floor:floorTypes.path,	sprite:[{x:80,y:0,w:40,h:40}]	},
-//         3 : { colour:"#286625", floor:floorTypes.solid,	sprite:[{x:120,y:0,w:40,h:40}]	},
-//         4 : { colour:"#678fd9", floor:floorTypes.water,	sprite:[
-//             {x:160,y:0,w:40,h:40,d:200}, {x:200,y:0,w:40,h:40,d:200},
-//             {x:160,y:40,w:40,h:40,d:200}, {x:200,y:40,w:40,h:40,d:200},
-//             {x:160,y:40,w:40,h:40,d:200}, {x:200,y:0,w:40,h:40,d:200}
-//         ]},
-//         5 : { colour:"#eeeeff", floor:floorTypes.ice,	sprite:[{x:120,y:120,w:40,h:40}]},
-//         6 : { colour:"#cccccc", floor:floorTypes.conveyorL,	sprite:[
-//             {x:0,y:40,w:40,h:40,d:200}, {x:40,y:40,w:40,h:40,d:200},
-//             {x:80,y:40,w:40,h:40,d:200}, {x:120,y:40,w:40,h:40,d:200}
-//         ]},
-//         7 : { colour:"#cccccc", floor:floorTypes.conveyorR,	sprite:[
-//             {x:120,y:80,w:40,h:40,d:200}, {x:80,y:80,w:40,h:40,d:200},
-//             {x:40,y:80,w:40,h:40,d:200}, {x:0,y:80,w:40,h:40,d:200}
-//         ]},
-//         8 : { colour:"#cccccc", floor:floorTypes.conveyorD,	sprite:[
-//             {x:160,y:200,w:40,h:40,d:200}, {x:160,y:160,w:40,h:40,d:200},
-//             {x:160,y:120,w:40,h:40,d:200}, {x:160,y:80,w:40,h:40,d:200}
-//         ]},
-//         9 : { colour:"#cccccc", floor:floorTypes.conveyorU,	sprite:[
-//             {x:200,y:80,w:40,h:40,d:200}, {x:200,y:120,w:40,h:40,d:200},
-//             {x:200,y:160,w:40,h:40,d:200}, {x:200,y:200,w:40,h:40,d:200}
-//         ]},
-//
-//         10 : { colour:"#ccaa00", floor:floorTypes.solid, sprite:[{x:40,y:120,w:40,h:40}]},
-//         11 : { colour:"#ccaa00", floor:floorTypes.solid, sprite:[{x:80,y:120,w:40,h:40}]}
-//     };
-//
-//     function Tile(tx, ty, tt)
-//     {
-//         this.x			= tx;
-//         this.y			= ty;
-//         this.type		= tt;
-//         this.roof		= null;
-//         this.roofType	= 0;
-//         this.eventEnter	= null;
-//         this.object		= null;
-//     }
-//
-//     function TileMap()
-//     {
-//         this.map	= [];
-//         this.w		= 0;
-//         this.h		= 0;
-//         this.levels	= 4;
-//     }
-//     TileMap.prototype.buildMapFromData = function(d, w, h)
-//     {
-//         this.w		= w;
-//         this.h		= h;
-//
-//         if(d.length!=(w*h)) { return false; }
-//
-//         this.map.length	= 0;
-//
-//         for(var y = 0; y < h; y++)
-//         {
-//             for(var x = 0; x < w; x++)
-//             {
-//                 this.map.push( new Tile(x, y, d[((y*w)+x)]) );
-//             }
-//         }
-//
-//         return true;
-//     };
-//     TileMap.prototype.addRoofs = function(roofs)
-//     {
-//         for(var i in roofs)
-//         {
-//             var r = roofs[i];
-//
-//             if(r.x < 0 || r.y < 0 || r.x >= this.w || r.y >= this.h ||
-//                 (r.x+r.w)>this.w || (r.y+r.h)>this.h ||
-//                 r.data.length!=(r.w*r.h))
-//             {
-//                 continue;
-//             }
-//
-//             for(var y = 0; y < r.h; y++)
-//             {
-//                 for(var x = 0; x < r.w; x++)
-//                 {
-//                     var tileIdx = (((r.y+y)*this.w)+r.x+x);
-//
-//                     this.map[tileIdx].roof = r;
-//                     this.map[tileIdx].roofType = r.data[((y*r.w)+x)];
-//                 }
-//             }
-//         }
+//         3 : { colour:"#685b48", floor:floorTypes.solid, sprite:[{x:40,y:40,w:40,h:40}]	},
+//         2 : { colour:"#5aa457", floor:floorTypes.path,	sprite:[{x:40,y:0,w:40,h:40}]	},
+//         1 : { colour:"#e8bd7a", floor:floorTypes.path,	sprite:[{x:80,y:0,w:40,h:40}]	},
+//         0 : { colour:"#286625", floor:floorTypes.solid,	sprite:[{x:0,y:40,w:40,h:40}]	},
+//         4 : { colour:"#678fd9", floor:floorTypes.water,	sprite:[{x:160,y:0,w:40,h:40}]	},
+//         5 : { colour:"#e8bd7a", floor:floorTypes.path,	sprite:[{x:200,y:40,w:40,h:40}]	},
+//         6 : { colour:"#e8bd7a", floor:floorTypes.path,	sprite:[{x:160,y:80,w:40,h:40}]	},
+//         7 : { colour:"#685b48", floor:floorTypes.solid,	sprite:[{x:0,y:0,w:40,h:40}]    },
+//         "/images/wolf.jpg" : { colour:"#e8bd7a", floor:floorTypes.path,	sprite:[{x:200,y:0,w:40,h:40}]  },
+//         "/images/biche.jpg" : { colour:"#e8bd7a", floor:floorTypes.path,	sprite:[{x:160,y:40,w:40,h:40}]  },
+//         "/images/cerf.png" : { colour:"#e8bd7a", floor:floorTypes.path,	sprite:[{x:200,y:80,w:40,h:40}]  }
 //     };
 //
 //     var directions = {
@@ -747,49 +327,16 @@ function init_game(){
 //         40 : false
 //     };
 //
-//     var viewport = {
-//         screen		: [0,0],
-//         startTile	: [0,0],
-//         endTile		: [0,0],
-//         offset		: [0,0],
-//         update		: function(px, py) {
-//             this.offset[0] = Math.floor((this.screen[0]/2) - px);
-//             this.offset[1] = Math.floor((this.screen[1]/2) - py);
-//
-//             var tile = [ Math.floor(px/tileW), Math.floor(py/tileH) ];
-//
-//             this.startTile[0] = tile[0] - 1 - Math.ceil((this.screen[0]/2) / tileW);
-//             this.startTile[1] = tile[1] - 1 - Math.ceil((this.screen[1]/2) / tileH);
-//
-//             if(this.startTile[0] < 0) { this.startTile[0] = 0; }
-//             if(this.startTile[1] < 0) { this.startTile[1] = 0; }
-//
-//             this.endTile[0] = tile[0] + 1 + Math.ceil((this.screen[0]/2) / tileW);
-//             this.endTile[1] = tile[1] + 1 + Math.ceil((this.screen[1]/2) / tileH);
-//
-//             if(this.endTile[0] >= mapW) { this.endTile[0] = mapW-1; }
-//             if(this.endTile[1] >= mapH) { this.endTile[1] = mapH-1; }
-//         }
-//     };
-//
 //     var player = new Character();
 //
 //     function Character()
 //     {
-//         this.tileFrom	= [1,1];
-//         this.tileTo		= [1,1];
+//         this.tileFrom	= [heroPosition[0],heroPosition[1]];
+//         this.tileTo		= [heroPosition[0],heroPosition[1]];
 //         this.timeMoved	= 0;
 //         this.dimensions	= [30,30];
-//         this.position	= [45,45];
-//
-//         this.delayMove	= {};
-//         this.delayMove[floorTypes.path]			= 400;
-//         this.delayMove[floorTypes.grass]		= 800;
-//         this.delayMove[floorTypes.ice]			= 300;
-//         this.delayMove[floorTypes.conveyorU]	= 200;
-//         this.delayMove[floorTypes.conveyorD]	= 200;
-//         this.delayMove[floorTypes.conveyorL]	= 200;
-//         this.delayMove[floorTypes.conveyorR]	= 200;
+//         this.position	= [(heroPosition[0]*tileH)+5,(heroPosition[1]*tileW)+5];
+//         this.delayMove	= 700;
 //
 //         this.direction	= directions.up;
 //         this.sprites = {};
@@ -798,6 +345,9 @@ function init_game(){
 //         this.sprites[directions.down]	= [{x:0,y:180,w:30,h:30}];
 //         this.sprites[directions.left]	= [{x:0,y:210,w:30,h:30}];
 //     }
+//
+//     //console.dir(player);
+//
 //     Character.prototype.placeAt = function(x, y)
 //     {
 //         this.tileFrom	= [x,y];
@@ -809,30 +359,33 @@ function init_game(){
 //     {
 //         if(this.tileFrom[0]==this.tileTo[0] && this.tileFrom[1]==this.tileTo[1]) { return false; }
 //
-//         var moveSpeed = this.delayMove[tileTypes[mapTileData.map[toIndex(this.tileFrom[0],this.tileFrom[1])].type].floor];
-//
-//         if((t-this.timeMoved)>=moveSpeed)
-//         {
+//         if((t-this.timeMoved)>=this.delayMove) {
 //             this.placeAt(this.tileTo[0], this.tileTo[1]);
+//             //console.log(this.tileTo[0]+'/'+this.tileTo[1]);
+//             var map = mapBuilding();
+//             map[this.tileTo[1]][this.tileTo[0]]['hero'] = 1;
 //
-//             if(mapTileData.map[toIndex(this.tileTo[0], this.tileTo[1])].eventEnter!=null)
-//             {
-//                 mapTileData.map[toIndex(this.tileTo[0], this.tileTo[1])].eventEnter(this);
+//             if (typeof tileEvents[toIndex(this.tileTo[0], this.tileTo[1])] != 'undefined') {
+//                 // alert('event');
+//                 // alert(tileEvents[toIndex(this.tileTo[0], this.tileTo[1])]);
+//                 // $(".btn-info").attr("data-target", "#"+tileEvents[toIndex(this.tileTo[0], this.tileTo[1])]);
+//                 // $(".btn-info").click();
+//                 hero.crier($("#"+tileEvents[toIndex(this.tileTo[0], this.tileTo[1])]).find(".modal-body").html());
+//                 tileEvents[toIndex(this.tileTo[0], this.tileTo[1])] = undefined;
+//
 //             }
 //
-//             var tileFloor = tileTypes[mapTileData.map[toIndex(this.tileFrom[0], this.tileFrom[1])].type].floor;
-//
-//             if(tileFloor==floorTypes.ice)
-//             {
-//                 if(this.canMoveDirection(this.direction))
-//                 {
-//                     this.moveDirection(this.direction, t);
-//                 }
+//             if(fogCtx != null){
+//                 var fog_gd = fogCtx.createRadialGradient(0,0,60,player.position[0],player.position[1],120);
+//                 fog_gd.addColorStop(0, 'rgba(0,0,0,0)');
+//                 fog_gd.addColorStop(1, 'rgba(0,0,0,1)');
+//                 fogCtx.fillStyle = fog_gd;
+//                 fogCtx.beginPath();
+//                 fogCtx.arc(player.position[0]+15, player.position[1]+20,80,0,2*Math.PI);
+//                 fogCtx.closePath();
+//                 fogCtx.fill();
 //             }
-//             else if(tileFloor==floorTypes.conveyorL && this.canMoveLeft())	{ this.moveLeft(t); }
-//             else if(tileFloor==floorTypes.conveyorR && this.canMoveRight()) { this.moveRight(t); }
-//             else if(tileFloor==floorTypes.conveyorU && this.canMoveUp())	{ this.moveUp(t); }
-//             else if(tileFloor==floorTypes.conveyorD && this.canMoveDown())	{ this.moveDown(t); }
+//
 //         }
 //         else
 //         {
@@ -841,12 +394,12 @@ function init_game(){
 //
 //             if(this.tileTo[0] != this.tileFrom[0])
 //             {
-//                 var diff = (tileW / moveSpeed) * (t-this.timeMoved);
+//                 var diff = (tileW / this.delayMove) * (t-this.timeMoved);
 //                 this.position[0]+= (this.tileTo[0]<this.tileFrom[0] ? 0 - diff : diff);
 //             }
 //             if(this.tileTo[1] != this.tileFrom[1])
 //             {
-//                 var diff = (tileH / moveSpeed) * (t-this.timeMoved);
+//                 var diff = (tileH / this.delayMove) * (t-this.timeMoved);
 //                 this.position[1]+= (this.tileTo[1]<this.tileFrom[1] ? 0 - diff : diff);
 //             }
 //
@@ -856,91 +409,76 @@ function init_game(){
 //
 //         return true;
 //     }
+//
 //     Character.prototype.canMoveTo = function(x, y)
 //     {
 //         if(x < 0 || x >= mapW || y < 0 || y >= mapH) { return false; }
-//         if(typeof this.delayMove[tileTypes[mapTileData.map[toIndex(x,y)].type].floor]=='undefined') { return false; }
-//         if(mapTileData.map[toIndex(x,y)].object!=null)
-//         {
-//             var o = mapTileData.map[toIndex(x,y)].object;
-//             if(objectTypes[o.type].collision==objectCollision.solid)
-//             {
-//                 return false;
-//             }
-//         }
+//         // if(tileTypes[warFogMap[toIndex(x,y)]].floor!=floorTypes.path) { return false; }
+//         if(tileTypes[gameMap[toIndex(x,y)]].floor!=floorTypes.path) { return false; }
 //         return true;
 //     };
 //     Character.prototype.canMoveUp		= function() { return this.canMoveTo(this.tileFrom[0], this.tileFrom[1]-1); };
 //     Character.prototype.canMoveDown 	= function() { return this.canMoveTo(this.tileFrom[0], this.tileFrom[1]+1); };
 //     Character.prototype.canMoveLeft 	= function() { return this.canMoveTo(this.tileFrom[0]-1, this.tileFrom[1]); };
 //     Character.prototype.canMoveRight 	= function() { return this.canMoveTo(this.tileFrom[0]+1, this.tileFrom[1]); };
-//     Character.prototype.canMoveDirection = function(d) {
-//         switch(d)
-//         {
-//             case directions.up:
-//                 return this.canMoveUp();
-//             case directions.down:
-//                 return this.canMoveDown();
-//             case directions.left:
-//                 return this.canMoveLeft();
-//             default:
-//                 return this.canMoveRight();
-//         }
-//     };
+//
+//     // Character.prototype.moveLeft	= function(t) { this.tileTo[0]-=1; this.timeMoved = t; };
+//     // Character.prototype.moveRight	= function(t) { this.tileTo[0]+=1; this.timeMoved = t; };
+//     // Character.prototype.moveUp	    = function(t) { alert('ici');this.tileTo[1]-=1; this.timeMoved = t; };
+//     // Character.prototype.moveDown	= function(t) { this.tileTo[1]+=1; this.timeMoved = t; };
 //
 //     Character.prototype.moveLeft	= function(t) { this.tileTo[0]-=1; this.timeMoved = t; this.direction = directions.left; };
 //     Character.prototype.moveRight	= function(t) { this.tileTo[0]+=1; this.timeMoved = t; this.direction = directions.right; };
 //     Character.prototype.moveUp		= function(t) { this.tileTo[1]-=1; this.timeMoved = t; this.direction = directions.up; };
 //     Character.prototype.moveDown	= function(t) { this.tileTo[1]+=1; this.timeMoved = t; this.direction = directions.down; };
-//     Character.prototype.moveDirection = function(d, t) {
-//         switch(d)
-//         {
-//             case directions.up:
-//                 return this.moveUp(t);
-//             case directions.down:
-//                 return this.moveDown(t);
-//             case directions.left:
-//                 return this.moveLeft(t);
-//             default:
-//                 return this.moveRight(t);
-//         }
-//     };
 //
 //     function toIndex(x, y)
 //     {
 //         return((y * mapW) + x);
 //     }
 //
-//     function getFrame(sprite, duration, time, animated)
-//     {
-//         if(!animated) { return sprite[0]; }
-//         time = time % duration;
-//
-//         for(x in sprite)
-//         {
-//             if(sprite[x].end>=time) { return sprite[x]; }
-//         }
-//     }
-//
 //     window.onload = function()
 //     {
-//         ctx = document.getElementById('game').getContext("2d");
+//
+//         if($('#game').html() != undefined){
+//             ctx = document.getElementById('game').getContext("2d");
+//             fogCtx = document.getElementById('fog').getContext("2d");
+//
+//
+//             fogCtx.globalAlpha = 1;
+//             fogCtx.fillStyle = "black";
+//             fogCtx.fillRect(0,0,mapW*tileW,mapH*tileH);
+//             fogCtx.globalCompositeOperation = "destination-out";
+//
+//             var fog_gd = fogCtx.createRadialGradient(0,0,60,player.position[0],player.position[1],120);
+//             fog_gd.addColorStop(0, 'rgba(0,0,0,0)');
+//             fog_gd.addColorStop(1, 'rgba(0,0,0,1)');
+//             fogCtx.fillStyle = fog_gd;
+//             fogCtx.beginPath();
+//             fogCtx.arc(player.position[0]+15, player.position[1]+20,80,0,2*Math.PI);
+//             fogCtx.closePath();
+//             fogCtx.fill();
+//         }
+//         if(document.getElementById('fight') != undefined){
+//             ctx = document.getElementById('fight').getContext("2d");
+//             fogCtx = null;
+//         }
+//
+//
+//         console.log(player.position[0], player.position[1]);
+//
 //         requestAnimationFrame(drawGame);
 //         ctx.font = "bold 10pt sans-serif";
 //
 //         window.addEventListener("keydown", function(e) {
 //             if(e.keyCode>=37 && e.keyCode<=40) { keysDown[e.keyCode] = true; }
+//             else{
+//                 if(e.keyCode>=116 && e.keyCode<=123){ e.preventDefault(); return false;}
+//             }
 //         });
 //         window.addEventListener("keyup", function(e) {
 //             if(e.keyCode>=37 && e.keyCode<=40) { keysDown[e.keyCode] = false; }
-//             if(e.keyCode==83)
-//             {
-//                 currentSpeed = (currentSpeed>=(gameSpeeds.length-1) ? 0 : currentSpeed+1);
-//             }
 //         });
-//
-//         viewport.screen = [document.getElementById('game').width,
-//             document.getElementById('game').height];
 //
 //         tileset = new Image();
 //         tileset.onerror = function()
@@ -950,44 +488,6 @@ function init_game(){
 //         };
 //         tileset.onload = function() { tilesetLoaded = true; };
 //         tileset.src = tilesetURL;
-//
-//         for(x in tileTypes)
-//         {
-//             tileTypes[x]['animated'] = tileTypes[x].sprite.length > 1 ? true : false;
-//
-//             if(tileTypes[x].animated)
-//             {
-//                 var t = 0;
-//
-//                 for(s in tileTypes[x].sprite)
-//                 {
-//                     tileTypes[x].sprite[s]['start'] = t;
-//                     t+= tileTypes[x].sprite[s].d;
-//                     tileTypes[x].sprite[s]['end'] = t;
-//                 }
-//
-//                 tileTypes[x]['spriteDuration'] = t;
-//             }
-//         }
-//
-//         mapTileData.buildMapFromData(gameMap, mapW, mapH);
-//         mapTileData.addRoofs(roofList);
-//         mapTileData.map[((2*mapW)+2)].eventEnter = function()
-//         { console.log("Entered tile 2,2"); };
-//
-//         var mo1 = new MapObject(1); mo1.placeAt(2, 4);
-//         var mo2 = new MapObject(2); mo2.placeAt(2, 3);
-//
-//         var mo11 = new MapObject(1); mo11.placeAt(6, 4);
-//         var mo12 = new MapObject(2); mo12.placeAt(7, 4);
-//
-//         var mo4 = new MapObject(3); mo4.placeAt(4, 5);
-//         var mo5 = new MapObject(3); mo5.placeAt(4, 8);
-//         var mo6 = new MapObject(3); mo6.placeAt(4, 11);
-//
-//         var mo7 = new MapObject(3); mo7.placeAt(2, 6);
-//         var mo8 = new MapObject(3); mo8.placeAt(2, 9);
-//         var mo9 = new MapObject(3); mo9.placeAt(2, 12);
 //     };
 //
 //     function drawGame()
@@ -997,7 +497,6 @@ function init_game(){
 //
 //         var currentFrameTime = Date.now();
 //         var timeElapsed = currentFrameTime - lastFrameTime;
-//         gameTime+= Math.floor(timeElapsed * gameSpeeds[currentSpeed].mult);
 //
 //         var sec = Math.floor(Date.now()/1000);
 //         if(sec!=currentSecond)
@@ -1005,274 +504,824 @@ function init_game(){
 //             currentSecond = sec;
 //             framesLastSecond = frameCount;
 //             frameCount = 1;
-//         }
-//         else { frameCount++; }
+//         } else { frameCount++; }
 //
-//         if(!player.processMovement(gameTime) && gameSpeeds[currentSpeed].mult!=0)
+//         if(!player.processMovement(currentFrameTime))
 //         {
-//             if(keysDown[38] && player.canMoveUp())			{ player.moveUp(gameTime); }
-//             else if(keysDown[40] && player.canMoveDown())	{ player.moveDown(gameTime); }
-//             else if(keysDown[37] && player.canMoveLeft())	{ player.moveLeft(gameTime); }
-//             else if(keysDown[39] && player.canMoveRight())	{ player.moveRight(gameTime); }
+//             if(keysDown[38] && player.canMoveUp())		{ player.moveUp(currentFrameTime); }
+//             else if(keysDown[40] && player.canMoveDown())	{ player.moveDown(currentFrameTime); }
+//             else if(keysDown[37] && player.canMoveLeft())	{ player.moveLeft(currentFrameTime); }
+//             else if(keysDown[39] && player.canMoveRight())	{ player.moveRight(currentFrameTime); }
 //         }
 //
-//         viewport.update(player.position[0] + (player.dimensions[0]/2),
-//             player.position[1] + (player.dimensions[1]/2));
-//
-//         var playerRoof1 = mapTileData.map[toIndex(
-//             player.tileFrom[0], player.tileFrom[1])].roof;
-//         var playerRoof2 = mapTileData.map[toIndex(
-//             player.tileTo[0], player.tileTo[1])].roof;
-//
-//         ctx.fillStyle = "#000000";
-//         ctx.fillRect(0, 0, viewport.screen[0], viewport.screen[1]);
-//
-//         for(var z = 0; z < mapTileData.levels; z++)
+//         for(var y = 0; y < mapH; ++y)
 //         {
-//
-//             for(var y = viewport.startTile[1]; y <= viewport.endTile[1]; ++y)
+//             for(var x = 0; x < mapW; ++x)
 //             {
-//                 for(var x = viewport.startTile[0]; x <= viewport.endTile[0]; ++x)
-//                 {
-//                     if(z==0)
-//                     {
-//                         var tile = tileTypes[mapTileData.map[toIndex(x,y)].type];
-//
-//                         var sprite = getFrame(tile.sprite, tile.spriteDuration,
-//                             gameTime, tile.animated);
-//                         ctx.drawImage(tileset,
-//                             sprite.x, sprite.y, sprite.w, sprite.h,
-//                             viewport.offset[0] + (x*tileW), viewport.offset[1] + (y*tileH),
-//                             tileW, tileH);
-//                     }
-//
-//                     var o = mapTileData.map[toIndex(x,y)].object;
-//                     if(o!=null && objectTypes[o.type].zIndex==z)
-//                     {
-//                         var ot = objectTypes[o.type];
-//
-//                         ctx.drawImage(tileset,
-//                             ot.sprite[0].x, ot.sprite[0].y,
-//                             ot.sprite[0].w, ot.sprite[0].h,
-//                             viewport.offset[0] + (x*tileW) + ot.offset[0],
-//                             viewport.offset[1] + (y*tileH) + ot.offset[1],
-//                             ot.sprite[0].w, ot.sprite[0].h);
-//                     }
-//
-//                     if(z==2 &&
-//                         mapTileData.map[toIndex(x,y)].roofType!=0 &&
-//                         mapTileData.map[toIndex(x,y)].roof!=playerRoof1 &&
-//                         mapTileData.map[toIndex(x,y)].roof!=playerRoof2)
-//                     {
-//                         tile = tileTypes[mapTileData.map[toIndex(x,y)].roofType];
-//                         sprite = getFrame(tile.sprite, tile.spriteDuration,
-//                             gameTime, tile.animated);
-//                         ctx.drawImage(tileset,
-//                             sprite.x, sprite.y, sprite.w, sprite.h,
-//                             viewport.offset[0] + (x*tileW),
-//                             viewport.offset[1] + (y*tileH),
-//                             tileW, tileH);
-//                     }
-//                 }
-//             }
-//
-//             if(z==1)
-//             {
-//                 var sprite = player.sprites[player.direction];
+//                 // var tile = tileTypes[warFogMap[toIndex(x,y)]];
+//                 var tile = tileTypes[gameMap[toIndex(x,y)]];
 //                 ctx.drawImage(tileset,
-//                     sprite[0].x, sprite[0].y,
-//                     sprite[0].w, sprite[0].h,
-//                     viewport.offset[0] + player.position[0],
-//                     viewport.offset[1] + player.position[1],
-//                     player.dimensions[0], player.dimensions[1]);
+//                     tile.sprite[0].x, tile.sprite[0].y, tile.sprite[0].w, tile.sprite[0].h,
+//                     (x*tileW),(y*tileH),
+//                     tileW, tileH);
 //             }
-//
 //         }
 //
-//         ctx.fillStyle = "#ff0000";
-//         ctx.fillText("FPS: " + framesLastSecond, 10, 20);
-//         ctx.fillText("Game speed: " + gameSpeeds[currentSpeed].name, 10, 40);
+//         var sprite = player.sprites[player.direction];
+//         ctx.drawImage(tileset,
+//             sprite[0].x, sprite[0].y, sprite[0].w, sprite[0].h,
+//             player.position[0], player.position[1],
+//             player.dimensions[0], player.dimensions[1]);
 //
 //         lastFrameTime = currentFrameTime;
+//         map = mapBuilding();
+//         // console.log(map);
+//         // warFogMap = warMap(map,2);
 //         requestAnimationFrame(drawGame);
 //     }
+// //     var ctx = null;
+// //     var gameMap = [
+// //         0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+// //         0, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+// //         0, 2, 2, 2, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+// //         0, 1, 1, 2, 1, 0, 0, 0, 0, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+// //         0, 1, 1, 2, 1, 0, 2, 2, 0, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+// //         0, 1, 1, 2, 1, 0, 2, 2, 0, 4, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0,
+// //         0, 1, 1, 2, 2, 2, 2, 2, 0, 4, 4, 4, 1, 1, 1, 0, 2, 2, 2, 0,
+// //         0, 1, 1, 2, 1, 0, 2, 2, 0, 1, 1, 4, 1, 1, 1, 0, 2, 2, 2, 0,
+// //         0, 1, 1, 2, 1, 0, 2, 2, 0, 1, 1, 4, 1, 1, 1, 0, 2, 2, 2, 0,
+// //         0, 1, 1, 2, 1, 0, 0, 0, 0, 1, 1, 4, 1, 1, 0, 0, 0, 2, 0, 0,
+// //         0, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 0, 2, 2, 2, 2, 0,
+// //         0, 1, 1, 2, 2, 2, 2, 2, 2, 1, 4, 4, 1, 1, 0, 2, 2, 2, 2, 0,
+// //         0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0,
+// //         0, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 1, 1, 1, 0, 2, 2, 2, 2, 0,
+// //         0, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 0, 2, 2, 2, 2, 0,
+// //         0, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
+// //         0, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+// //         0, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+// //         0, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+// //         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+// //     ];
+// //     var mapTileData = new TileMap();
+// //
+// //     var roofList = [
+// //         { x:5, y:3, w:4, h:7, data: [
+// //             10, 10, 11, 11,
+// //             10, 10, 11, 11,
+// //             10, 10, 11, 11,
+// //             10, 10, 11, 11,
+// //             10, 10, 11, 11,
+// //             10, 10, 11, 11,
+// //             10, 10, 11, 11
+// //         ]},
+// //         { x:15, y:5, w:5, h:4, data: [
+// //             10, 10, 11, 11, 11,
+// //             10, 10, 11, 11, 11,
+// //             10, 10, 11, 11, 11,
+// //             10, 10, 11, 11, 11
+// //         ]},
+// //         { x:14, y:9, w:6, h:7, data: [
+// //             10, 10, 10, 11, 11, 11,
+// //             10, 10, 10, 11, 11, 11,
+// //             10, 10, 10, 11, 11, 11,
+// //             10, 10, 10, 11, 11, 11,
+// //             10, 10, 10, 11, 11, 11,
+// //             10, 10, 10, 11, 11, 11,
+// //             10, 10, 10, 11, 11, 11
+// //         ]}
+// //     ];
+// //
+// //     var tileW = 40, tileH = 40;
+// //     var mapW = 20, mapH = 20;
+// //     var currentSecond = 0, frameCount = 0, framesLastSecond = 0, lastFrameTime = 0;
+// //
+// //     var tileset = null, tilesetURL = "/images/tileset.png", tilesetLoaded = false;
+// //
+// //     var gameTime = 0;
+// //     var gameSpeeds = [
+// //         {name:"Normal", mult:1},
+// //         {name:"Slow", mult:0.3},
+// //         {name:"Fast", mult:3},
+// //         {name:"Paused", mult:0}
+// //     ];
+// //     var currentSpeed = 0;
+// //
+// //     var objectCollision = {
+// //         none		: 0,
+// //         solid		: 1
+// //     };
+// //     var objectTypes = {
+// //         1 : {
+// //             name : "Box",
+// //             sprite : [{x:40,y:160,w:40,h:40}],
+// //             offset : [0,0],
+// //             collision : objectCollision.solid,
+// //             zIndex : 1
+// //         },
+// //         2 : {
+// //             name : "Broken Box",
+// //             sprite : [{x:40,y:200,w:40,h:40}],
+// //             offset : [0,0],
+// //             collision : objectCollision.none,
+// //             zIndex : 1
+// //         },
+// //         3 : {
+// //             name : "Tree top",
+// //             sprite : [{x:80,y:160,w:80,h:80}],
+// //             offset : [-20,-20],
+// //             collision : objectCollision.solid,
+// //             zIndex : 3
+// //         }
+// //     };
+// //     function MapObject(nt)
+// //     {
+// //         this.x		= 0;
+// //         this.y		= 0;
+// //         this.type	= nt;
+// //     }
+// //     MapObject.prototype.placeAt = function(nx, ny)
+// //     {
+// //         if(mapTileData.map[toIndex(this.x, this.y)].object==this)
+// //         {
+// //             mapTileData.map[toIndex(this.x, this.y)].object = null;
+// //         }
+// //
+// //         this.x = nx;
+// //         this.y = ny;
+// //
+// //         mapTileData.map[toIndex(nx, ny)].object = this;
+// //     };
+// //
+// //     var floorTypes = {
+// //         solid	: 0,
+// //         path	: 1,
+// //         water	: 2,
+// //         ice		: 3,
+// //         conveyorU	: 4,
+// //         conveyorD	: 5,
+// //         conveyorL	: 6,
+// //         conveyorR	: 7,
+// //         grass		: 8
+// //     };
+// //     var tileTypes = {
+// //         0 : { colour:"#685b48", floor:floorTypes.solid, sprite:[{x:0,y:0,w:40,h:40}]	},
+// //         1 : { colour:"#5aa457", floor:floorTypes.grass,	sprite:[{x:40,y:0,w:40,h:40}]	},
+// //         2 : { colour:"#e8bd7a", floor:floorTypes.path,	sprite:[{x:80,y:0,w:40,h:40}]	},
+// //         3 : { colour:"#286625", floor:floorTypes.solid,	sprite:[{x:120,y:0,w:40,h:40}]	},
+// //         4 : { colour:"#678fd9", floor:floorTypes.water,	sprite:[
+// //             {x:160,y:0,w:40,h:40,d:200}, {x:200,y:0,w:40,h:40,d:200},
+// //             {x:160,y:40,w:40,h:40,d:200}, {x:200,y:40,w:40,h:40,d:200},
+// //             {x:160,y:40,w:40,h:40,d:200}, {x:200,y:0,w:40,h:40,d:200}
+// //         ]},
+// //         5 : { colour:"#eeeeff", floor:floorTypes.ice,	sprite:[{x:120,y:120,w:40,h:40}]},
+// //         6 : { colour:"#cccccc", floor:floorTypes.conveyorL,	sprite:[
+// //             {x:0,y:40,w:40,h:40,d:200}, {x:40,y:40,w:40,h:40,d:200},
+// //             {x:80,y:40,w:40,h:40,d:200}, {x:120,y:40,w:40,h:40,d:200}
+// //         ]},
+// //         7 : { colour:"#cccccc", floor:floorTypes.conveyorR,	sprite:[
+// //             {x:120,y:80,w:40,h:40,d:200}, {x:80,y:80,w:40,h:40,d:200},
+// //             {x:40,y:80,w:40,h:40,d:200}, {x:0,y:80,w:40,h:40,d:200}
+// //         ]},
+// //         8 : { colour:"#cccccc", floor:floorTypes.conveyorD,	sprite:[
+// //             {x:160,y:200,w:40,h:40,d:200}, {x:160,y:160,w:40,h:40,d:200},
+// //             {x:160,y:120,w:40,h:40,d:200}, {x:160,y:80,w:40,h:40,d:200}
+// //         ]},
+// //         9 : { colour:"#cccccc", floor:floorTypes.conveyorU,	sprite:[
+// //             {x:200,y:80,w:40,h:40,d:200}, {x:200,y:120,w:40,h:40,d:200},
+// //             {x:200,y:160,w:40,h:40,d:200}, {x:200,y:200,w:40,h:40,d:200}
+// //         ]},
+// //
+// //         10 : { colour:"#ccaa00", floor:floorTypes.solid, sprite:[{x:40,y:120,w:40,h:40}]},
+// //         11 : { colour:"#ccaa00", floor:floorTypes.solid, sprite:[{x:80,y:120,w:40,h:40}]}
+// //     };
+// //
+// //     function Tile(tx, ty, tt)
+// //     {
+// //         this.x			= tx;
+// //         this.y			= ty;
+// //         this.type		= tt;
+// //         this.roof		= null;
+// //         this.roofType	= 0;
+// //         this.eventEnter	= null;
+// //         this.object		= null;
+// //     }
+// //
+// //     function TileMap()
+// //     {
+// //         this.map	= [];
+// //         this.w		= 0;
+// //         this.h		= 0;
+// //         this.levels	= 4;
+// //     }
+// //     TileMap.prototype.buildMapFromData = function(d, w, h)
+// //     {
+// //         this.w		= w;
+// //         this.h		= h;
+// //
+// //         if(d.length!=(w*h)) { return false; }
+// //
+// //         this.map.length	= 0;
+// //
+// //         for(var y = 0; y < h; y++)
+// //         {
+// //             for(var x = 0; x < w; x++)
+// //             {
+// //                 this.map.push( new Tile(x, y, d[((y*w)+x)]) );
+// //             }
+// //         }
+// //
+// //         return true;
+// //     };
+// //     TileMap.prototype.addRoofs = function(roofs)
+// //     {
+// //         for(var i in roofs)
+// //         {
+// //             var r = roofs[i];
+// //
+// //             if(r.x < 0 || r.y < 0 || r.x >= this.w || r.y >= this.h ||
+// //                 (r.x+r.w)>this.w || (r.y+r.h)>this.h ||
+// //                 r.data.length!=(r.w*r.h))
+// //             {
+// //                 continue;
+// //             }
+// //
+// //             for(var y = 0; y < r.h; y++)
+// //             {
+// //                 for(var x = 0; x < r.w; x++)
+// //                 {
+// //                     var tileIdx = (((r.y+y)*this.w)+r.x+x);
+// //
+// //                     this.map[tileIdx].roof = r;
+// //                     this.map[tileIdx].roofType = r.data[((y*r.w)+x)];
+// //                 }
+// //             }
+// //         }
+// //     };
+// //
+// //     var directions = {
+// //         up		: 0,
+// //         right	: 1,
+// //         down	: 2,
+// //         left	: 3
+// //     };
+// //
+// //     var keysDown = {
+// //         37 : false,
+// //         38 : false,
+// //         39 : false,
+// //         40 : false
+// //     };
+// //
+// //     var viewport = {
+// //         screen		: [0,0],
+// //         startTile	: [0,0],
+// //         endTile		: [0,0],
+// //         offset		: [0,0],
+// //         update		: function(px, py) {
+// //             this.offset[0] = Math.floor((this.screen[0]/2) - px);
+// //             this.offset[1] = Math.floor((this.screen[1]/2) - py);
+// //
+// //             var tile = [ Math.floor(px/tileW), Math.floor(py/tileH) ];
+// //
+// //             this.startTile[0] = tile[0] - 1 - Math.ceil((this.screen[0]/2) / tileW);
+// //             this.startTile[1] = tile[1] - 1 - Math.ceil((this.screen[1]/2) / tileH);
+// //
+// //             if(this.startTile[0] < 0) { this.startTile[0] = 0; }
+// //             if(this.startTile[1] < 0) { this.startTile[1] = 0; }
+// //
+// //             this.endTile[0] = tile[0] + 1 + Math.ceil((this.screen[0]/2) / tileW);
+// //             this.endTile[1] = tile[1] + 1 + Math.ceil((this.screen[1]/2) / tileH);
+// //
+// //             if(this.endTile[0] >= mapW) { this.endTile[0] = mapW-1; }
+// //             if(this.endTile[1] >= mapH) { this.endTile[1] = mapH-1; }
+// //         }
+// //     };
+// //
+// //     var player = new Character();
+// //
+// //     function Character()
+// //     {
+// //         this.tileFrom	= [1,1];
+// //         this.tileTo		= [1,1];
+// //         this.timeMoved	= 0;
+// //         this.dimensions	= [30,30];
+// //         this.position	= [45,45];
+// //
+// //         this.delayMove	= {};
+// //         this.delayMove[floorTypes.path]			= 400;
+// //         this.delayMove[floorTypes.grass]		= 800;
+// //         this.delayMove[floorTypes.ice]			= 300;
+// //         this.delayMove[floorTypes.conveyorU]	= 200;
+// //         this.delayMove[floorTypes.conveyorD]	= 200;
+// //         this.delayMove[floorTypes.conveyorL]	= 200;
+// //         this.delayMove[floorTypes.conveyorR]	= 200;
+// //
+// //         this.direction	= directions.up;
+// //         this.sprites = {};
+// //         this.sprites[directions.up]		= [{x:0,y:120,w:30,h:30}];
+// //         this.sprites[directions.right]	= [{x:0,y:150,w:30,h:30}];
+// //         this.sprites[directions.down]	= [{x:0,y:180,w:30,h:30}];
+// //         this.sprites[directions.left]	= [{x:0,y:210,w:30,h:30}];
+// //     }
+// //     Character.prototype.placeAt = function(x, y)
+// //     {
+// //         this.tileFrom	= [x,y];
+// //         this.tileTo		= [x,y];
+// //         this.position	= [((tileW*x)+((tileW-this.dimensions[0])/2)),
+// //             ((tileH*y)+((tileH-this.dimensions[1])/2))];
+// //     };
+// //     Character.prototype.processMovement = function(t)
+// //     {
+// //         if(this.tileFrom[0]==this.tileTo[0] && this.tileFrom[1]==this.tileTo[1]) { return false; }
+// //
+// //         var moveSpeed = this.delayMove[tileTypes[mapTileData.map[toIndex(this.tileFrom[0],this.tileFrom[1])].type].floor];
+// //
+// //         if((t-this.timeMoved)>=moveSpeed)
+// //         {
+// //             this.placeAt(this.tileTo[0], this.tileTo[1]);
+// //
+// //             if(mapTileData.map[toIndex(this.tileTo[0], this.tileTo[1])].eventEnter!=null)
+// //             {
+// //                 mapTileData.map[toIndex(this.tileTo[0], this.tileTo[1])].eventEnter(this);
+// //             }
+// //
+// //             var tileFloor = tileTypes[mapTileData.map[toIndex(this.tileFrom[0], this.tileFrom[1])].type].floor;
+// //
+// //             if(tileFloor==floorTypes.ice)
+// //             {
+// //                 if(this.canMoveDirection(this.direction))
+// //                 {
+// //                     this.moveDirection(this.direction, t);
+// //                 }
+// //             }
+// //             else if(tileFloor==floorTypes.conveyorL && this.canMoveLeft())	{ this.moveLeft(t); }
+// //             else if(tileFloor==floorTypes.conveyorR && this.canMoveRight()) { this.moveRight(t); }
+// //             else if(tileFloor==floorTypes.conveyorU && this.canMoveUp())	{ this.moveUp(t); }
+// //             else if(tileFloor==floorTypes.conveyorD && this.canMoveDown())	{ this.moveDown(t); }
+// //         }
+// //         else
+// //         {
+// //             this.position[0] = (this.tileFrom[0] * tileW) + ((tileW-this.dimensions[0])/2);
+// //             this.position[1] = (this.tileFrom[1] * tileH) + ((tileH-this.dimensions[1])/2);
+// //
+// //             if(this.tileTo[0] != this.tileFrom[0])
+// //             {
+// //                 var diff = (tileW / moveSpeed) * (t-this.timeMoved);
+// //                 this.position[0]+= (this.tileTo[0]<this.tileFrom[0] ? 0 - diff : diff);
+// //             }
+// //             if(this.tileTo[1] != this.tileFrom[1])
+// //             {
+// //                 var diff = (tileH / moveSpeed) * (t-this.timeMoved);
+// //                 this.position[1]+= (this.tileTo[1]<this.tileFrom[1] ? 0 - diff : diff);
+// //             }
+// //
+// //             this.position[0] = Math.round(this.position[0]);
+// //             this.position[1] = Math.round(this.position[1]);
+// //         }
+// //
+// //         return true;
+// //     }
+// //     Character.prototype.canMoveTo = function(x, y)
+// //     {
+// //         if(x < 0 || x >= mapW || y < 0 || y >= mapH) { return false; }
+// //         if(typeof this.delayMove[tileTypes[mapTileData.map[toIndex(x,y)].type].floor]=='undefined') { return false; }
+// //         if(mapTileData.map[toIndex(x,y)].object!=null)
+// //         {
+// //             var o = mapTileData.map[toIndex(x,y)].object;
+// //             if(objectTypes[o.type].collision==objectCollision.solid)
+// //             {
+// //                 return false;
+// //             }
+// //         }
+// //         return true;
+// //     };
+// //     Character.prototype.canMoveUp		= function() { return this.canMoveTo(this.tileFrom[0], this.tileFrom[1]-1); };
+// //     Character.prototype.canMoveDown 	= function() { return this.canMoveTo(this.tileFrom[0], this.tileFrom[1]+1); };
+// //     Character.prototype.canMoveLeft 	= function() { return this.canMoveTo(this.tileFrom[0]-1, this.tileFrom[1]); };
+// //     Character.prototype.canMoveRight 	= function() { return this.canMoveTo(this.tileFrom[0]+1, this.tileFrom[1]); };
+// //     Character.prototype.canMoveDirection = function(d) {
+// //         switch(d)
+// //         {
+// //             case directions.up:
+// //                 return this.canMoveUp();
+// //             case directions.down:
+// //                 return this.canMoveDown();
+// //             case directions.left:
+// //                 return this.canMoveLeft();
+// //             default:
+// //                 return this.canMoveRight();
+// //         }
+// //     };
+// //
+// //     Character.prototype.moveLeft	= function(t) { this.tileTo[0]-=1; this.timeMoved = t; this.direction = directions.left; };
+// //     Character.prototype.moveRight	= function(t) { this.tileTo[0]+=1; this.timeMoved = t; this.direction = directions.right; };
+// //     Character.prototype.moveUp		= function(t) { this.tileTo[1]-=1; this.timeMoved = t; this.direction = directions.up; };
+// //     Character.prototype.moveDown	= function(t) { this.tileTo[1]+=1; this.timeMoved = t; this.direction = directions.down; };
+// //     Character.prototype.moveDirection = function(d, t) {
+// //         switch(d)
+// //         {
+// //             case directions.up:
+// //                 return this.moveUp(t);
+// //             case directions.down:
+// //                 return this.moveDown(t);
+// //             case directions.left:
+// //                 return this.moveLeft(t);
+// //             default:
+// //                 return this.moveRight(t);
+// //         }
+// //     };
+// //
+// //     function toIndex(x, y)
+// //     {
+// //         return((y * mapW) + x);
+// //     }
+// //
+// //     function getFrame(sprite, duration, time, animated)
+// //     {
+// //         if(!animated) { return sprite[0]; }
+// //         time = time % duration;
+// //
+// //         for(x in sprite)
+// //         {
+// //             if(sprite[x].end>=time) { return sprite[x]; }
+// //         }
+// //     }
+// //
+// //     window.onload = function()
+// //     {
+// //         ctx = document.getElementById('game').getContext("2d");
+// //         requestAnimationFrame(drawGame);
+// //         ctx.font = "bold 10pt sans-serif";
+// //
+// //         window.addEventListener("keydown", function(e) {
+// //             if(e.keyCode>=37 && e.keyCode<=40) { keysDown[e.keyCode] = true; }
+// //         });
+// //         window.addEventListener("keyup", function(e) {
+// //             if(e.keyCode>=37 && e.keyCode<=40) { keysDown[e.keyCode] = false; }
+// //             if(e.keyCode==83)
+// //             {
+// //                 currentSpeed = (currentSpeed>=(gameSpeeds.length-1) ? 0 : currentSpeed+1);
+// //             }
+// //         });
+// //
+// //         viewport.screen = [document.getElementById('game').width,
+// //             document.getElementById('game').height];
+// //
+// //         tileset = new Image();
+// //         tileset.onerror = function()
+// //         {
+// //             ctx = null;
+// //             alert("Failed loading tileset.");
+// //         };
+// //         tileset.onload = function() { tilesetLoaded = true; };
+// //         tileset.src = tilesetURL;
+// //
+// //         for(x in tileTypes)
+// //         {
+// //             tileTypes[x]['animated'] = tileTypes[x].sprite.length > 1 ? true : false;
+// //
+// //             if(tileTypes[x].animated)
+// //             {
+// //                 var t = 0;
+// //
+// //                 for(s in tileTypes[x].sprite)
+// //                 {
+// //                     tileTypes[x].sprite[s]['start'] = t;
+// //                     t+= tileTypes[x].sprite[s].d;
+// //                     tileTypes[x].sprite[s]['end'] = t;
+// //                 }
+// //
+// //                 tileTypes[x]['spriteDuration'] = t;
+// //             }
+// //         }
+// //
+// //         mapTileData.buildMapFromData(gameMap, mapW, mapH);
+// //         mapTileData.addRoofs(roofList);
+// //         mapTileData.map[((2*mapW)+2)].eventEnter = function()
+// //         { console.log("Entered tile 2,2"); };
+// //
+// //         var mo1 = new MapObject(1); mo1.placeAt(2, 4);
+// //         var mo2 = new MapObject(2); mo2.placeAt(2, 3);
+// //
+// //         var mo11 = new MapObject(1); mo11.placeAt(6, 4);
+// //         var mo12 = new MapObject(2); mo12.placeAt(7, 4);
+// //
+// //         var mo4 = new MapObject(3); mo4.placeAt(4, 5);
+// //         var mo5 = new MapObject(3); mo5.placeAt(4, 8);
+// //         var mo6 = new MapObject(3); mo6.placeAt(4, 11);
+// //
+// //         var mo7 = new MapObject(3); mo7.placeAt(2, 6);
+// //         var mo8 = new MapObject(3); mo8.placeAt(2, 9);
+// //         var mo9 = new MapObject(3); mo9.placeAt(2, 12);
+// //     };
+// //
+// //     function drawGame()
+// //     {
+// //         if(ctx==null) { return; }
+// //         if(!tilesetLoaded) { requestAnimationFrame(drawGame); return; }
+// //
+// //         var currentFrameTime = Date.now();
+// //         var timeElapsed = currentFrameTime - lastFrameTime;
+// //         gameTime+= Math.floor(timeElapsed * gameSpeeds[currentSpeed].mult);
+// //
+// //         var sec = Math.floor(Date.now()/1000);
+// //         if(sec!=currentSecond)
+// //         {
+// //             currentSecond = sec;
+// //             framesLastSecond = frameCount;
+// //             frameCount = 1;
+// //         }
+// //         else { frameCount++; }
+// //
+// //         if(!player.processMovement(gameTime) && gameSpeeds[currentSpeed].mult!=0)
+// //         {
+// //             if(keysDown[38] && player.canMoveUp())			{ player.moveUp(gameTime); }
+// //             else if(keysDown[40] && player.canMoveDown())	{ player.moveDown(gameTime); }
+// //             else if(keysDown[37] && player.canMoveLeft())	{ player.moveLeft(gameTime); }
+// //             else if(keysDown[39] && player.canMoveRight())	{ player.moveRight(gameTime); }
+// //         }
+// //
+// //         viewport.update(player.position[0] + (player.dimensions[0]/2),
+// //             player.position[1] + (player.dimensions[1]/2));
+// //
+// //         var playerRoof1 = mapTileData.map[toIndex(
+// //             player.tileFrom[0], player.tileFrom[1])].roof;
+// //         var playerRoof2 = mapTileData.map[toIndex(
+// //             player.tileTo[0], player.tileTo[1])].roof;
+// //
+// //         ctx.fillStyle = "#000000";
+// //         ctx.fillRect(0, 0, viewport.screen[0], viewport.screen[1]);
+// //
+// //         for(var z = 0; z < mapTileData.levels; z++)
+// //         {
+// //
+// //             for(var y = viewport.startTile[1]; y <= viewport.endTile[1]; ++y)
+// //             {
+// //                 for(var x = viewport.startTile[0]; x <= viewport.endTile[0]; ++x)
+// //                 {
+// //                     if(z==0)
+// //                     {
+// //                         var tile = tileTypes[mapTileData.map[toIndex(x,y)].type];
+// //
+// //                         var sprite = getFrame(tile.sprite, tile.spriteDuration,
+// //                             gameTime, tile.animated);
+// //                         ctx.drawImage(tileset,
+// //                             sprite.x, sprite.y, sprite.w, sprite.h,
+// //                             viewport.offset[0] + (x*tileW), viewport.offset[1] + (y*tileH),
+// //                             tileW, tileH);
+// //                     }
+// //
+// //                     var o = mapTileData.map[toIndex(x,y)].object;
+// //                     if(o!=null && objectTypes[o.type].zIndex==z)
+// //                     {
+// //                         var ot = objectTypes[o.type];
+// //
+// //                         ctx.drawImage(tileset,
+// //                             ot.sprite[0].x, ot.sprite[0].y,
+// //                             ot.sprite[0].w, ot.sprite[0].h,
+// //                             viewport.offset[0] + (x*tileW) + ot.offset[0],
+// //                             viewport.offset[1] + (y*tileH) + ot.offset[1],
+// //                             ot.sprite[0].w, ot.sprite[0].h);
+// //                     }
+// //
+// //                     if(z==2 &&
+// //                         mapTileData.map[toIndex(x,y)].roofType!=0 &&
+// //                         mapTileData.map[toIndex(x,y)].roof!=playerRoof1 &&
+// //                         mapTileData.map[toIndex(x,y)].roof!=playerRoof2)
+// //                     {
+// //                         tile = tileTypes[mapTileData.map[toIndex(x,y)].roofType];
+// //                         sprite = getFrame(tile.sprite, tile.spriteDuration,
+// //                             gameTime, tile.animated);
+// //                         ctx.drawImage(tileset,
+// //                             sprite.x, sprite.y, sprite.w, sprite.h,
+// //                             viewport.offset[0] + (x*tileW),
+// //                             viewport.offset[1] + (y*tileH),
+// //                             tileW, tileH);
+// //                     }
+// //                 }
+// //             }
+// //
+// //             if(z==1)
+// //             {
+// //                 var sprite = player.sprites[player.direction];
+// //                 ctx.drawImage(tileset,
+// //                     sprite[0].x, sprite[0].y,
+// //                     sprite[0].w, sprite[0].h,
+// //                     viewport.offset[0] + player.position[0],
+// //                     viewport.offset[1] + player.position[1],
+// //                     player.dimensions[0], player.dimensions[1]);
+// //             }
+// //
+// //         }
+// //
+// //         ctx.fillStyle = "#ff0000";
+// //         ctx.fillText("FPS: " + framesLastSecond, 10, 20);
+// //         ctx.fillText("Game speed: " + gameSpeeds[currentSpeed].name, 10, 40);
+// //
+// //         lastFrameTime = currentFrameTime;
+// //         requestAnimationFrame(drawGame);
+// //     }
+//
+// }
+//
+// function warMap(map, view){
+//
+//     console.log(map);
+//     var heroView = view-1;
+//     var warFogMap = new Array;
+//     var mapW = map[0].length, mapH = map.length;
+//     for(var i=0; i<mapH; i++){
+//         for(var j=0; j<mapW; j++){
+//             if(map[i][j]['hero'] == 1){
+//                 warFogMap.push(1);
+//                 var x = i;
+//                 var y = j;
+//             } else {
+//                 warFogMap.push(7);
+//             }
+//         }
+//     }
+//
+//     // j colonne
+//     // i ligne
+//
+//     //gestion de la vue du hero
+//     //côtés
+//     for(var v = 0;v <= heroView; v++) {
+//         if (y - v >= 0 && map[x][y - v] != undefined) {
+//             warFogMap[(x * mapW) + y - v] = tileMatch(map, x, y - v);//map[x][y-heroView];
+//         }
+//         if (y + v <= mapW && map[x][y + v] != undefined) {
+//             warFogMap[(x * mapW) + y + v] = tileMatch(map, x, y + v);//map[x][y+heroView];
+//         }
+//     }
+//     //devant
+//     for(var v = 0;v <=heroView; v++){
+//         if(x-v >=0 && y-v >=0 && map[x-v][y-v] != undefined){
+//             warFogMap[((x-v) * mapW) + y - v] = tileMatch(map,x-v,y-v);//map[x-1][y-heroView];
+//         }
+//         if(x-v >=0 && map[x-v][y] != undefined){
+//             warFogMap[((x-v) * mapW) + y ] = tileMatch(map,x-v,y);//map[x-1][y];
+//         }
+//         if(x-v >=0 && y + v < mapW && map[x-v][y+v] != undefined){
+//             warFogMap[((x-v) * mapW) + y + v] = tileMatch(map,x-v,y+v);//map[x][y+heroView];
+//         }
+//     }
+//
+//
+//     //derrière
+//     if(x+1 < mapH && y-heroView >=0 && map[x+1][y-heroView] != undefined){
+//         warFogMap[((x+1) * mapW) + y - heroView] = tileMatch(map,x+1,y-heroView);//map[x-1][y-heroView];
+//     }
+//     if(x+1 < mapH && map[x+1][y] != undefined){
+//         warFogMap[((x+1) * mapW) + y ] = tileMatch(map,x+1,y);//map[x-1][y];
+//     }
+//     if(x+1 < mapH && y+heroView < mapW && map[x+1][y+heroView] != undefined){
+//         warFogMap[((x+1) * mapW) + y + heroView] = tileMatch(map,x+1,y+heroView);//map[x][y+heroView];
+//     }
+//
+//
+//     //console.log(warFogMap);
+//
+//
+//     return warFogMap;
+// }
+//
+// function tileMatch(map, x, y){
+//
+//     var ret = "";
+//
+//     switch(map[x][y]['decor']){
+//         case 'arbre': ret = 0;
+//             break;
+//         case 'herbe': ret = 2;
+//             break;
+//         case 'arbre_sombre': ret = 3;
+//             break;
+//         case 'souche': ret = 6;
+//             break;
+//         case 'hutte': ret = 5;
+//             break;
+//         case 'chemin': ret = 1;
+//             break;
+//         default: ret = map[x][y]['monster'];
+//     }
+//
+//     return ret;
+//
+//
+// }
+//
+// // function init_canvas(){
+// //
+// //     var darkness = 1
+// //     var fogness = 0.5;
+// //     var dark_color = "black";
+// //     var fog_color = "black";
+// //     var global_vision = new Array;
+// //     var width = 700;
+// //     var height = 700;
+// //
+// //     var entity_size = 20;
+// //     var entities = new Array;
+// //     var entity_color = "yellow";
+// //     var entity_spacing = 100;
+// //     var entity_vision_radius = 150;
+// //
+// //     for(var i=0; i<width/entity_size*entity_spacing; i++){
+// //         for(var j=0; j<height/entity_size*entity_spacing; j++){
+// //             entities.push({
+// //                 x: i * (entity_size + entity_spacing)+entity_spacing/2 - entity_size/2,
+// //                 y: j * (entity_size + entity_spacing)+entity_spacing/2 - entity_size/2
+// //             })
+// //         }
+// //     }
+// //
+// //     var canvases = {
+// //         main:document.getElementById('main'),
+// //         fog:document.getElementById('fog'),
+// //         dark:document.getElementById('dark')
+// //     };
+// //
+// //     canvases.main.width = canvases.fog.width = canvases.dark.width = width;
+// //     canvases.main.height = canvases.fog.height = canvases.dark.height = height;
+// //
+// //     var main = canvases.main.getContext("2d");
+// //     var fog = canvases.fog.getContext("2d");
+// //     var dark = canvases.dark.getContext("2d");
+// //
+// //
+// //     var image = new Image();
+// //     image.src = "http://www.gburri.org/bordel/Starcraft%202/Maps/1v1/Kulas_Ravine.jpg";
+// //
+// //     function draw(e){
+// //         var pos = {x:e.clientX, y:e.clientY};
+// //
+// //         var x = pos.x;
+// //         var y = pos.y;
+// //
+// //         var default_gco = main.globalCompositeOperation;
+// //
+// //         main.clearRect(0,0,width,height);
+// //         fog.clearRect(0,0,width,height);
+// //         dark.clearRect(0,0,width,height);
+// //
+// //         main.drawImage(image,0,0, width,height);
+// //         main.fillStyle = entity_color;
+// //         for(var i=0; i<entities.length;i++){
+// //             var entity = entities[i];
+// //             main.fillRect(entity.x, entity.y, entity_size,entity_size);
+// //         }
+// //
+// //         fog.globalAlpha = fogness;
+// //         fog.fillStyle = fog_color;
+// //         fog.fillRect(0,0,width,height);
+// //         fog.globalCompositeOperation = "destination-out";
+// //         var fog_gd = fog.createRadialGradient(x,y, entity_vision_radius, x, y, entity_vision_radius/1.2);
+// //         fog_gd.addColorStop(0, 'rgba(0,0,0,0)');
+// //         fog_gd.addColorStop(1, 'rgba(0,0,0,1)');
+// //         fog.fillStyle = fog_gd;
+// //         fog.beginPath();
+// //         //fog.arc(x,y,entity_vision_radius,0,2*Math.PI);
+// //         fog.closePath();
+// //         fog.fill();
+// //
+// //
+// //         fog.globalCompositionOperation = dark.globalCompositeOperation = default_gco;
+// //
+// //     }
+// //
+// //
+// //     canvases.dark.addEventListener("mousemove", draw);
+// //
+// //     function getDistance(pos1, pos2){
+// //         var dx = pos1.x - pos2.x;
+// //         var dy = pos1.y - pos2.y;
+// //         return Math.sqrt(dx*dx*dy*dy);
+// //     }
+// //
+// // }
 
-}
 
-function warMap(map, view){
-
-    console.log(map);
-    var heroView = view-1;
-    var warFogMap = new Array;
-    var mapW = map[0].length, mapH = map.length;
-    for(var i=0; i<mapH; i++){
-        for(var j=0; j<mapW; j++){
-            if(map[i][j]['hero'] == 1){
-                warFogMap.push(1);
-                var x = i;
-                var y = j;
-            } else {
-                warFogMap.push(7);
+function read(fichier)
+{
+    //On lance la requête pour récupérer le fichier
+    var fichierBrut = new XMLHttpRequest();
+    fichierBrut.open("GET", fichier, false);
+    //On utilise une fonction sur l'événement "onreadystate"
+	var texteComplet;
+    fichierBrut.onreadystatechange = function ()
+    {
+        if(fichierBrut.readyState === 4)
+        {
+            //On contrôle bien quand le statut est égal à 0
+            if(fichierBrut.status === 200 || fichierBrut.status == 0)
+            {
+                //On peut récupérer puis traiter le texte du fichier
+                texteComplet = fichierBrut.responseText;
             }
         }
     }
-
-    // j colonne
-    // i ligne
-
-    //gestion de la vue du hero
-    //côtés
-    for(var v = 0;v <= heroView; v++) {
-        if (y - v >= 0 && map[x][y - v] != undefined) {
-            warFogMap[(x * mapW) + y - v] = tileMatch(map, x, y - v);//map[x][y-heroView];
-        }
-        if (y + v <= mapW && map[x][y + v] != undefined) {
-            warFogMap[(x * mapW) + y + v] = tileMatch(map, x, y + v);//map[x][y+heroView];
-        }
-    }
-    //devant
-    for(var v = 0;v <=heroView; v++){
-        if(x-v >=0 && y-v >=0 && map[x-v][y-v] != undefined){
-            warFogMap[((x-v) * mapW) + y - v] = tileMatch(map,x-v,y-v);//map[x-1][y-heroView];
-        }
-        if(x-v >=0 && map[x-v][y] != undefined){
-            warFogMap[((x-v) * mapW) + y ] = tileMatch(map,x-v,y);//map[x-1][y];
-        }
-        if(x-v >=0 && y + v < mapW && map[x-v][y+v] != undefined){
-            warFogMap[((x-v) * mapW) + y + v] = tileMatch(map,x-v,y+v);//map[x][y+heroView];
-        }
-    }
-
-
-    //derrière
-    if(x+1 < mapH && y-heroView >=0 && map[x+1][y-heroView] != undefined){
-        warFogMap[((x+1) * mapW) + y - heroView] = tileMatch(map,x+1,y-heroView);//map[x-1][y-heroView];
-    }
-    if(x+1 < mapH && map[x+1][y] != undefined){
-        warFogMap[((x+1) * mapW) + y ] = tileMatch(map,x+1,y);//map[x-1][y];
-    }
-    if(x+1 < mapH && y+heroView < mapW && map[x+1][y+heroView] != undefined){
-        warFogMap[((x+1) * mapW) + y + heroView] = tileMatch(map,x+1,y+heroView);//map[x][y+heroView];
-    }
-
-
-    //console.log(warFogMap);
-
-
-    return warFogMap;
+    fichierBrut.send(null);
+    return texteComplet;
 }
-
-function tileMatch(map, x, y){
-
-    var ret = "";
-
-    switch(map[x][y]['decor']){
-        case 'arbre': ret = 0;
-            break;
-        case 'herbe': ret = 2;
-            break;
-        case 'arbre_sombre': ret = 3;
-            break;
-        case 'souche': ret = 6;
-            break;
-        case 'hutte': ret = 5;
-            break;
-        case 'chemin': ret = 1;
-            break;
-        default: ret = map[x][y]['monster'];
-    }
-
-    return ret;
-
-
-}
-
-// function init_canvas(){
-//
-//     var darkness = 1
-//     var fogness = 0.5;
-//     var dark_color = "black";
-//     var fog_color = "black";
-//     var global_vision = new Array;
-//     var width = 700;
-//     var height = 700;
-//
-//     var entity_size = 20;
-//     var entities = new Array;
-//     var entity_color = "yellow";
-//     var entity_spacing = 100;
-//     var entity_vision_radius = 150;
-//
-//     for(var i=0; i<width/entity_size*entity_spacing; i++){
-//         for(var j=0; j<height/entity_size*entity_spacing; j++){
-//             entities.push({
-//                 x: i * (entity_size + entity_spacing)+entity_spacing/2 - entity_size/2,
-//                 y: j * (entity_size + entity_spacing)+entity_spacing/2 - entity_size/2
-//             })
-//         }
-//     }
-//
-//     var canvases = {
-//         main:document.getElementById('main'),
-//         fog:document.getElementById('fog'),
-//         dark:document.getElementById('dark')
-//     };
-//
-//     canvases.main.width = canvases.fog.width = canvases.dark.width = width;
-//     canvases.main.height = canvases.fog.height = canvases.dark.height = height;
-//
-//     var main = canvases.main.getContext("2d");
-//     var fog = canvases.fog.getContext("2d");
-//     var dark = canvases.dark.getContext("2d");
-//
-//
-//     var image = new Image();
-//     image.src = "http://www.gburri.org/bordel/Starcraft%202/Maps/1v1/Kulas_Ravine.jpg";
-//
-//     function draw(e){
-//         var pos = {x:e.clientX, y:e.clientY};
-//
-//         var x = pos.x;
-//         var y = pos.y;
-//
-//         var default_gco = main.globalCompositeOperation;
-//
-//         main.clearRect(0,0,width,height);
-//         fog.clearRect(0,0,width,height);
-//         dark.clearRect(0,0,width,height);
-//
-//         main.drawImage(image,0,0, width,height);
-//         main.fillStyle = entity_color;
-//         for(var i=0; i<entities.length;i++){
-//             var entity = entities[i];
-//             main.fillRect(entity.x, entity.y, entity_size,entity_size);
-//         }
-//
-//         fog.globalAlpha = fogness;
-//         fog.fillStyle = fog_color;
-//         fog.fillRect(0,0,width,height);
-//         fog.globalCompositeOperation = "destination-out";
-//         var fog_gd = fog.createRadialGradient(x,y, entity_vision_radius, x, y, entity_vision_radius/1.2);
-//         fog_gd.addColorStop(0, 'rgba(0,0,0,0)');
-//         fog_gd.addColorStop(1, 'rgba(0,0,0,1)');
-//         fog.fillStyle = fog_gd;
-//         fog.beginPath();
-//         //fog.arc(x,y,entity_vision_radius,0,2*Math.PI);
-//         fog.closePath();
-//         fog.fill();
-//
-//
-//         fog.globalCompositionOperation = dark.globalCompositeOperation = default_gco;
-//
-//     }
-//
-//
-//     canvases.dark.addEventListener("mousemove", draw);
-//
-//     function getDistance(pos1, pos2){
-//         var dx = pos1.x - pos2.x;
-//         var dy = pos1.y - pos2.y;
-//         return Math.sqrt(dx*dx*dy*dy);
-//     }
-//
-// }

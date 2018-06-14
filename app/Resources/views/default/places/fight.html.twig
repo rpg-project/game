@@ -4,7 +4,7 @@
 <div id="map" class="col-lg-8">
     <div class="col-lg-8">
         {% if map is not empty %}
-            <table id="zone" fight="1" style="border:1px solid black;">
+            <table id="zone" fight="1" style="border:1px solid black;display:none;">
                 {% for lines in map %}
                     <tr>
                         {% for col in lines %}
@@ -24,13 +24,14 @@
         {% else %}
             Pas de carte : en construction
         {% endif %}
+        <canvas id="fight" width="{{ map | first | length * 40}}" height="{{ map | length * 40 }}"></canvas>
     </div>
-    <div class="col-lg-2">
-        <div id="dialog"></div>
-    </div>
+
 </div>
 <div id="interface">
+    <ul id="capacity" >
 
+    </ul>
 </div>
 <div id="opponents">
     {% for quickness in order  %}
@@ -58,19 +59,12 @@
         </div>
     {% endfor %}
 
-
-    {#{% for key,type in capacities %}#}
-        {#<div type="{{ key }}"#}
-        {#{% for key,opponent in type %}#}
-            {#opponentid = "{{ key }}"#}
-            {#{% for key, capacities in opponent %}#}
-                {#cap{{ key+1 }} = "{{ capacities }}"#}
-            {#{% endfor %}#}
-        {#{% endfor %}#}
-        {#></div>#}
-    {#{% endfor %}#}
-
 </div>
-    {{ dump(capacities) }}
+    {#{{ dump(capacities) }}#}
 </div>
+    <script src="{{ asset('roland/js/vendor/modernizr-3.5.0.min.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="{{ asset('roland/js/vendor/jquery-3.2.1.min.js') }}"><\/script>')</script>
+    <script src="{{ asset('roland/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('roland/js/fight.js') }}"></script>
 {% endblock %}

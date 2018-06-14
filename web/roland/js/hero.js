@@ -298,13 +298,57 @@ Hero.prototype=
             caps.push($("#"+this.type+this.id).attr(attribut));
             x++;
         }
-
-
         console.log(caps);
         alert(this.getName()+ ': grrr');
     },
     toPlay:function()
     {
-        alert(this.getName()+': paf');
+        var caps = read("/Ressources/capacities.txt");
+        var test = JSON.parse(caps);
+        this.capacities = new Array;
+        var nbCap = $('#hero'+this.id).attr('nbCap');
+        for (var i=1;i<=nbCap;i++){
+            this.capacities.push($('#hero'+this.id).attr('cap'+i));
+        }
+
+        var y = new Array;
+        this.capacities.forEach(function(element){
+            test.forEach(function(e){
+                if(e.id == element){
+                    y.push(e);
+                }
+            })
+        });
+        y.forEach(function(element){
+            var li = "<li title = '"+element.name+"'><img src='"+element.description+"' width='40' height='40'></li>";
+            $("#capacity").append(li);
+        })
+    },
+    teamPlay:function()
+    {
+        var caps = read("/Ressources/capacities.txt");
+        var test = JSON.parse(caps);
+        this.capacities = new Array;
+        var nbCap = $('#team'+this.id).attr('nbCap');
+        for (var i=1;i<=nbCap;i++){
+            this.capacities.push($('#team'+this.id).attr('cap'+i));
+        }
+
+        var y = new Array;
+        this.capacities.forEach(function(element){
+            test.forEach(function(e){
+                if(e.id == element){
+                    y.push(e);
+                }
+            })
+        });
+
+        y.forEach(function(element){
+            var li = "<li title = '"+element.name+"'><img src='"+element.description+"' width='40' height='40'></li>";
+            $("#capacity").append(li);
+        })
+    },
+    figth:function(){
+
     }
 }
