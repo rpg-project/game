@@ -301,7 +301,7 @@ Hero.prototype=
         console.log(caps);
         alert(this.getName()+ ': grrr');
     },
-    toPlay:function()
+    toPlay:function(index)
     {
         var caps = read("/Ressources/capacities.txt");
         var test = JSON.parse(caps);
@@ -323,8 +323,11 @@ Hero.prototype=
             var li = "<li title = '"+element.name+"'><img src='"+element.description+"' width='40' height='40'></li>";
             $("#capacity").append(li);
         })
+        var li = "<li title='fin de tour'><a id='endTurn' index='"+index+"'>Fin de tour</a></li>";
+        $("#capacity").append(li);
+        fightCommand();
     },
-    teamPlay:function()
+    teamPlay:function(index)
     {
         var caps = read("/Ressources/capacities.txt");
         var test = JSON.parse(caps);
@@ -347,8 +350,8 @@ Hero.prototype=
             var li = "<li title = '"+element.name+"'><img src='"+element.description+"' width='40' height='40'></li>";
             $("#capacity").append(li);
         })
-    },
-    figth:function(){
-
+        var li = "<li title='fin de tour'><a id='endTurn' index='"+index+"'>Fin de tour</a></li>";
+        $("#capacity").append(li);
+        fightCommand();
     }
 }
