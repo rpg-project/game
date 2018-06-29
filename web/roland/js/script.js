@@ -111,6 +111,10 @@ function bouton(){
 
 function mapping(map){
 
+	if(map == null || map == undefined){
+		return;
+	}
+
 	var x=0;
 	var limitX = map.length;
 	var limitY = map[0].length;

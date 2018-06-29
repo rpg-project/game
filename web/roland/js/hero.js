@@ -20,6 +20,8 @@ function Hero(X,Y,map)
 	this.type="";
 	this.id="";
 	this.capacities = "";
+	this.targetX = "";
+	this.targetY = "";
 
 }
 Hero.prototype=
@@ -29,6 +31,11 @@ Hero.prototype=
 		this.X=parseInt(X);
 		this.Y=parseInt(Y);
 	},
+    setTargetXY :function(X,Y)
+    {
+        this.targetX=parseInt(X);
+        this.targetY=parseInt(Y);
+    },
 	setMap: function(map)
 	{
 		this.map=map;
@@ -300,6 +307,12 @@ Hero.prototype=
         }
         console.log(caps);
         alert(this.getName()+ ': grrr');
+        //target
+        this.targeting();
+        //path
+        //actions
+
+
     },
     toPlay:function(index)
     {
@@ -353,5 +366,25 @@ Hero.prototype=
         var li = "<li title='fin de tour'><a id='endTurn' index='"+index+"'>Fin de tour</a></li>";
         $("#capacity").append(li);
         fightCommand();
+    },
+    targeting:function(){
+        var map = mapBuilding();
+        var x = 0;
+        while(x < map.length){
+            var y=0;
+            while(y < map[0].length){
+                if(map[x][y]['hero'] == 1){
+                    this.setTargetXY(x,y);
+                }
+                y++;
+            }
+            x++;
+        }
+        console.log(map);
+        console.log(this);
+        // console.log("target :"+target);
+    },
+    path:function(){
+
     }
 }
