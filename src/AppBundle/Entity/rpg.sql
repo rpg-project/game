@@ -150,7 +150,7 @@ CREATE TABLE `capacities` (
   `energy` int(11) DEFAULT NULL,
   `date_info` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -159,7 +159,7 @@ CREATE TABLE `capacities` (
 
 LOCK TABLES `capacities` WRITE;
 /*!40000 ALTER TABLE `capacities` DISABLE KEYS */;
-INSERT INTO `capacities` VALUES (1,'Attaque','/images/epee.jpg',1,1,1,0,0,0,0,0,-1,'2018-04-26 14:59:06'),(2,'Soins','/images/heal.jpg',2,1,1,0,0,0,0,4,-2,'2018-04-26 14:59:06'),(3,'Charge','/images/charge.jpg',1,1,1,3,-3,4,NULL,NULL,-4,'2018-04-26 14:59:06'),(4,'Tir à l\'Arc',NULL,1,1,5,0,0,0,0,0,-1,'2018-04-26 14:59:06'),(5,'Hurlement',NULL,1,0,0,-1,-1,0,0,0,-1,NULL);
+INSERT INTO `capacities` VALUES (1,'Attaque','/images/epee.jpg',1,1,1,0,0,0,0,0,-1,'2018-04-26 14:59:06'),(2,'Soins','/images/heal.jpg',2,1,1,0,0,0,0,4,-2,'2018-04-26 14:59:06'),(3,'Charge','/images/charge.jpg',1,1,1,3,-3,4,NULL,NULL,-4,'2018-04-26 14:59:06'),(4,'Tir à l\'Arc',NULL,1,1,5,0,0,0,0,0,-1,'2018-04-26 14:59:06'),(5,'Hurlement',NULL,1,0,0,-1,-1,0,0,0,-1,'2018-05-30 07:26:27'),(6,'Déplacement','/images/bottes.jpg',1,1,0,0,0,1,0,0,-1,'2018-05-30 07:44:10');
 /*!40000 ALTER TABLE `capacities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -177,7 +177,7 @@ CREATE TABLE `capacitiesByCharacter` (
   PRIMARY KEY (`id`),
   KEY `characterId_idx` (`characterId`),
   CONSTRAINT `characterId` FOREIGN KEY (`characterId`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -186,7 +186,7 @@ CREATE TABLE `capacitiesByCharacter` (
 
 LOCK TABLES `capacitiesByCharacter` WRITE;
 /*!40000 ALTER TABLE `capacitiesByCharacter` DISABLE KEYS */;
-INSERT INTO `capacitiesByCharacter` VALUES (1,27,1);
+INSERT INTO `capacitiesByCharacter` VALUES (1,27,1),(2,27,6);
 /*!40000 ALTER TABLE `capacitiesByCharacter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -209,7 +209,7 @@ CREATE TABLE `capacitiesByFollower` (
   CONSTRAINT `capacity` FOREIGN KEY (`capacityId`) REFERENCES `capacities` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `caracterId` FOREIGN KEY (`characterId`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `follower` FOREIGN KEY (`followerId`) REFERENCES `followers` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -218,6 +218,7 @@ CREATE TABLE `capacitiesByFollower` (
 
 LOCK TABLES `capacitiesByFollower` WRITE;
 /*!40000 ALTER TABLE `capacitiesByFollower` DISABLE KEYS */;
+INSERT INTO `capacitiesByFollower` VALUES (1,1,1,27),(2,4,1,27),(3,6,1,27),(4,9,1,27),(5,11,1,27),(6,1,6,27),(7,4,6,27),(8,6,6,27),(9,9,6,27),(10,11,6,27);
 /*!40000 ALTER TABLE `capacitiesByFollower` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -237,7 +238,7 @@ CREATE TABLE `capacitiesByMonster` (
   KEY `capId_idx` (`capacityId`),
   CONSTRAINT `capId` FOREIGN KEY (`capacityId`) REFERENCES `capacities` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `monsterId` FOREIGN KEY (`monsterId`) REFERENCES `monsters` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -246,6 +247,7 @@ CREATE TABLE `capacitiesByMonster` (
 
 LOCK TABLES `capacitiesByMonster` WRITE;
 /*!40000 ALTER TABLE `capacitiesByMonster` DISABLE KEYS */;
+INSERT INTO `capacitiesByMonster` VALUES (1,1,1),(2,3,1),(3,5,1),(4,6,1);
 /*!40000 ALTER TABLE `capacitiesByMonster` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -981,7 +983,7 @@ CREATE TABLE `quests` (
 
 LOCK TABLES `quests` WRITE;
 /*!40000 ALTER TABLE `quests` DISABLE KEYS */;
-INSERT INTO `quests` VALUES (2,'Enquête','<p>Faire une enquête pour déterminer pourquoi plus de gibier</p>',1,1,1,1,100,25,100,25,0,0,0,1,12,'2018-04-30 11:49:51',2),(3,'Chasse aux Loups','Tracter et chasser ces loups',1,2,3,1,100,50,100,100,0,0,0,1,0,'2018-04-30 13:47:28',2),(4,'test','test',1,3,3,1,100,100,110,0,10,0,0,1,0,'2018-04-30 14:26:08',2),(5,'test','test',1,1,1,1,100,25,100,0,0,0,0,1,0,'2018-05-02 10:58:29',1),(6,'test 2','dfsdf',1,2,3,1,100,100,100,0,0,0,0,1,0,'2018-05-02 11:28:09',1);
+INSERT INTO `quests` VALUES (2,'Enquête','<p>Faire une enquête pour déterminer pourquoi plus de gibier</p>',0,1,1,1,100,25,100,25,0,0,0,1,12,'2018-04-30 11:49:51',2),(3,'Chasse aux Loups','Tracter et chasser ces loups',1,2,3,1,100,50,100,100,0,0,0,1,0,'2018-04-30 13:47:28',2),(4,'test','test',1,3,3,1,100,100,110,0,10,0,0,1,0,'2018-04-30 14:26:08',2),(5,'test','test',1,1,1,1,100,25,100,0,0,0,0,1,0,'2018-05-02 10:58:29',1),(6,'test 2','dfsdf',1,2,3,1,100,100,100,0,0,0,0,1,0,'2018-05-02 11:28:09',1);
 /*!40000 ALTER TABLE `quests` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1115,4 +1117,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-30  9:13:04
+-- Dump completed on 2018-06-29 10:35:39
